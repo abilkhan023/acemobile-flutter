@@ -1,0 +1,7 @@
+{
+  "CORE_URL": "https://ace-core.acegaming.gg/api",
+  "SHOP_URL": "https://ace-shop.acegaming.gg",
+  "FILE_URL": "https://ace-filetransfer.acegaming.gg",
+  "BANKING_URL": "https://ace-banking-service.acegaming.gg",
+  "WS_URL": "wss://ace-sockets.acegaming.gg/ws"
+}

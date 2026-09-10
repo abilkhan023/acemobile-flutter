@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "429859409769",
+    "project_id": "acegaming-17df8",
+    "storage_bucket": "acegaming-17df8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429859409769:android:65b4dc5293dad92f9877f8",
+        "android_client_info": {
+          "package_name": "ace.adamar.solutions"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCveVbHPMlXNTLaF5kxYtldXQg7UZr2Upo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429859409769:android:f602fca04a522dea9877f8",
+        "android_client_info": {
+          "package_name": "com.esportsapp.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCveVbHPMlXNTLaF5kxYtldXQg7UZr2Upo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

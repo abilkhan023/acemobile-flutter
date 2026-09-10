@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "hi": "Hi",
+  "activeSession": "Active session",
+  "pcNumber": "PC #{n}",
+  "timeLeft": "Time left",
+  "tariff": "Tariff",
+  "bonuses": "Bonuses",
+  "stopSession": "End session",
+  "yesStop": "End",
+  "stopSessionConfirm": "Your session at the computer will be ended and the computer will be released. Continue?"
+}

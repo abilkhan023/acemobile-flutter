@@ -1,0 +1,416 @@
+{
+  "@@locale": "ru",
+  "hi": "Привет",
+  "welcome": "Добро пожаловать!",
+  "clubs": "Клубы",
+  "club": "Клуб",
+  "locations": "Локации",
+  "balance": "Баланс",
+  "profile": "Профиль",
+  "myProfile": "Мой профиль",
+  "news": "Новости",
+  "about": "О нас",
+  "back": "Назад",
+  "registration": "Регистрация",
+  "forgotPassword": "Забыли пароль?",
+  "login": "Логин",
+  "password": "Пароль",
+  "email": "Email",
+  "enterData": "Введите данные",
+  "or": "или",
+  "continueGuest": "Продолжить как гость",
+  "continueAction": "Продолжить",
+  "createAccount": "Создание аккаунта",
+  "passwordRecovery": "Восстановление пароля",
+  "requiredField": "Обязательное поле",
+  "enterAtLeast8Characters": "Введите не менее 8 символов",
+  "maxLength": "Максимальная длина",
+  "minLength": "Минимальная длина",
+  "register": "Зарегистрироваться",
+  "restore": "Восстановить",
+  "thisIsEmail": "Введите почту",
+  "anErrorOccurred": "Произошла ошибка",
+  "accountCreated": "Аккаунт создан!",
+  "save": "Сохранить",
+  "changePhoto": "Изменить фото",
+  "changePasswordAction": "Сменить пароля",
+  "oldPassword": "Старый пароль",
+  "newPassword": "Новый пароль",
+  "change": "Изменить",
+  "name": "Имя",
+  "surname": "Фамилия",
+  "logout": "Выйти",
+  "deleteAccount": "Удалить аккаунт",
+  "thereArePlaces": "Есть места",
+  "noSeatsAvailable": "Нет мест",
+  "filter": "Фильтровать",
+  "kitchen": "Кухня",
+  "open": "Открыта",
+  "seatsAvailable": "Есть места",
+  "sortBy": "Сортировать по",
+  "recommended": "Рекомендованные",
+  "rating": "Рейтинг",
+  "distance": "Расстояние",
+  "cost": "Стоимость",
+  "apply": "Применить",
+  "tariffs": "Тарифы",
+  "selectComputer": "Выберите компьютер",
+  "story": "История",
+  "topUpBalance": "Пополнить баланс",
+  "excellent": "Отличный",
+  "good": "Хороший",
+  "bad": "Плохой",
+  "selectPeriod": "Выберите период",
+  "backToHome": "Назад на главную",
+  "home": "Главная",
+  "all": "Все",
+  "catalog": "Каталог",
+  "shop": "Магазин",
+  "reservation": "Бронь",
+  "currentBalance": "Текущий баланс",
+  "balanceReplenishment": "Пополнить баланс",
+  "paymentMethods": "Способы оплаты",
+  "paymentHistory": "История платажей",
+  "clubsDirectory": "Каталог клубов",
+  "reset": "Сбросить",
+  "search": "Поиск",
+  "enterTheClubName": "Введите название клуба",
+  "computerBackup": "Резерв компьютера",
+  "selectTime": "Выбрать время",
+  "bookingDate": "Дата",
+  "ready": "Готово",
+  "sorting": "Сортировка",
+  "reviews": "Отзывы",
+  "getDirections": "Проложить маршрут",
+  "lastActivity": "Последняя активность",
+  "repeatBooking": "Повторить бронь",
+  "notifications": "Уведомления",
+  "basket": "Корзина",
+  "loginToAceGaming": "Войти в ACE GAMING",
+  "toLogIntoTheApplicationChooseAMethodConvenientForYou": "Для входа в приложение, \nвыберите удобный для вас способ",
+  "byLoggingInYouAgreeToThePrivacyPolicy": "Авторизовавшись, вы соглашаетесь с \nПолитикой конфиденциальности",
+  "loginViaApple": "Войти через Apple",
+  "loginViaGoogle": "Войти через Google",
+  "loginViaEmail": "Войти через e-mail",
+  "loginViaTelegram": "Войти через Telegram",
+  "enterYourEmailAndPassword": "Введите ваш e-mail и пароль",
+  "enterEmail": "Введите e-mail",
+  "enter": "Войти",
+  "enterPassword": "Введите пароль",
+  "enterYourEmail": "Введите ваш e-mail",
+  "weWillSendAConfirmationCodeToYourRegisteredEmailToChangeYour": "На зарегистрированный e-mail мы отправим код подтверждения для смены пароля",
+  "weWillSendYouANewPasswordToYourRegisteredEmail": "На зарегистрированный e-mail мы отправим вам новый пароль",
+  "codeFromTheLetter": "Код из письма",
+  "enterCode": "Введите код",
+  "didNotReceiveTheCode": "Не получили код?",
+  "resend": "Отправить снова",
+  "createANewPassword": "Придумайте новый пароль",
+  "createANewPasswordForYourAccount": "Создайте новый пароль для своего аккаунта",
+  "createAPassword": "Создать пароль",
+  "repeatPassword": "Повторите пароль",
+  "listOfComputerClubs": "Список компьютерных клубов",
+  "eachClubHasItsOwnBalance": "У вас в каждом клубе есть собственный баланс",
+  "replenishment": "Пополнение",
+  "paymentDetails": "Детали платежа",
+  "print": "Распечатать",
+  "sendByEmail": "Отправить на email",
+  "selectAComputerClub": "Выберите компьютерный клуб",
+  "currentBalanceSum": "Текущий остаток: {sum} ₸",
+  "@currentBalanceSum": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "next": "Далее",
+  "topUpAmountT": "Сумма пополнения, ₸",
+  "enterAmount": "Введите сумму",
+  "selectPaymentMethod": "Выберите способ оплаты",
+  "replenishmentMethods": "Способы пополнения",
+  "myCards": "Мои карты",
+  "otherPaymentMethods": "Другие способы оплаты",
+  "addANewCard": "Добавить новую карту",
+  "confirmation": "Подтверждение",
+  "paymentMethod": "Способ оплаты",
+  "topUpAmount": "Сумма пополнения",
+  "pay": "Оплатить",
+  "card": "Карта",
+  "setAsDefault": "Установить по умолчанию",
+  "removeCard": "Удалить карту",
+  "addNewCard": "Добавить новую карту",
+  "validityPeriod": "Срок действия",
+  "cardNumber": "Номер карты",
+  "addACard": "Добавить карту",
+  "totalPayable": "Итого к оплате",
+  "confirmPayment": "Подтвердите оплату",
+  "oopsSomethingWentWrong": "Упс, что то пошло не так",
+  "tryAgain": "Попробуйте заново",
+  "yourOrderWillBeDeliveredToYourTable": "Ваш заказ будет доставлен к вашему столу ",
+  "thankYouForChoosingOurServiceWeWishYouBonAppetit": "Спасибо, что выбрали наш сервис! Желаем приятного аппетита!",
+  "goingTo": "Собирается",
+  "goToDetails": "Перейти к деталям",
+  "paymentAccepted": "Оплата принята",
+  "orderDetails": "Детали заказа",
+  "orderContents": "Состав заказа:",
+  "personalInformation": "Личные данные",
+  "changePassword": "Изменить пароль",
+  "selectLanguage": "Выбрать язык",
+  "promocode": "Промокод",
+  "whatIsYourName": "Как вас зовут?",
+  "enterName": "Введите имя",
+  "activate": "Активировать",
+  "enterPromocode": "Введите промокод",
+  "writeAReview": "Написать отзыв",
+  "review": "Отзыв",
+  "startWritingOptional": "Начните писать...(по желанию)",
+  "send": "Отправить",
+  "cancel": "Отмена",
+  "enterYourName": "Введите ваше имя",
+  "createAPasswordRegist": "Создайте пароль",
+  "alreadyHaveAnAccount": "Уже есть аккаунт?",
+  "enterLogin": "Введите логин",
+  "enterYourEmailAndCreateAPassword": "Введите ваш e-mail и создайте пароль",
+  "differentPasswords": "Разные пароли",
+  "symbols": "символов",
+  "thereAreNoComputersInTheCurrentZone": "В текущей зоне нет компьютеров",
+  "soonDots": "Скоро...",
+  "noBalancesAvailable": "Нет доступных балансов",
+  "loginViaLogin": "Войти через логин",
+  "enterYourLoginAndPassword": "Введите свой логин пароль",
+  "yesDelete": "Да, удалить",
+  "deleteAccountWarning": "При удалении аккаунта все ваши данные будут безвозвратно удалены, включая баланс, игровой прогресс, статистику, историю бронирований и другие связанные данные. Восстановить удаленный аккаунт будет невозможно. Вы уверены, что хотите продолжить?",
+  "areYouSureYouWantToExit": "Вы уверены, что хотите выйти?",
+  "attention": "Внимание",
+  "yesLogout": "Да, выйти",
+  "minimum": "Минимально",
+  "maximum": "Максимально",
+  "selectAction": "Выберите действие",
+  "minutes": "{n, plural, one{{n} минута} few{{n} минуты} many{{n} минут} other{{n} минут}}",
+  "@minutes": {
+    "placeholders": {
+      "n": {
+        "type": "num"
+      }
+    }
+  },
+  "activeSession": "Активная сессия",
+  "pcNumber": "ПК №{n}",
+  "@pcNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "timeLeft": "Осталось",
+  "tariff": "Тариф",
+  "bonuses": "Бонусы",
+  "stopSession": "Завершить сессию",
+  "yesStop": "Завершить",
+  "stopSessionConfirm": "Сессия за компьютером будет завершена, компьютер освободится. Продолжить?",
+  "somethingWentWrong": "Что-то пошло не так",
+  "newPasswordSent": "Новый пароль отправлен на вашу почту.",
+  "resetPasswordFailed": "Не удалось сбросить пароль.",
+  "accountDeleted": "Аккаунт успешно удален",
+  "accountDeleteFailed": "Не удалось удалить аккаунт",
+  "passwordChanged": "Пароль успешно изменен",
+  "passwordChangeFailed": "Не удалось изменить пароль",
+  "notificationsDenied": "Доступ к уведомлениям запрещен!",
+  "aceQr": "Ace QR",
+  "langRussian": "Русский",
+  "langEnglish": "Английский",
+  "langKazakh": "Казахский",
+  "privacyPolicyLink": "Политика конфиденциальности >",
+  "sessionEnded": "Сессия завершена",
+  "noActiveSession": "Активной сессии нет",
+  "sessionExpired": "Сессия истекла, войдите заново",
+  "shopOrderPlaced": "Заказ в магазине оформлен",
+  "balanceUpdated": "Баланс обновлён",
+  "walletBalance": "Баланс",
+  "walletBonuses": "Бонусы",
+  "topUpBy": "{wallet}: пополнение на {sum}",
+  "@topUpBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "withdrawBy": "{wallet}: списание {sum}",
+  "@withdrawBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffPerMinute": "Поминутно",
+  "tariffFree": "Бесплатно",
+  "tariffDefault": "Тариф",
+  "clubsNearby": "Клубы неподалеку",
+  "exclusiveInAce": "Эксклюзивно в ACE",
+  "cancelBooking": "Отменить бронь",
+  "viewDetails": "Посмотреть детали",
+  "pcActiveBooking": "ПК №{n}, активная бронь",
+  "@pcActiveBooking": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pcBookingAt": "Бронь ПК №{n}, {day} в {time}",
+  "@pcBookingAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCancelled": "Бронь успешно отменена",
+  "bookingCancelFailed": "Не удалось отменить бронь",
+  "branchesLoadFailed": "Не удалось загрузить филиалы",
+  "authFailed": "Не удалось авторизоваться",
+  "soonBadge": "Скоро",
+  "tariffsLoadFailed": "Не удалось загрузить тарифы",
+  "selectTariff": "Выберите тариф",
+  "bookingPcAt": "Бронирование ПК №{n}, {date}",
+  "@bookingPcAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reserve": "Забронировать",
+  "bookingSuccess": "Успешное бронирование!",
+  "pcReserved": "ПК №{n} забронирован. Ждем вас!",
+  "@pcReserved": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingDetails": "Детали бронирования: {date}",
+  "@bookingDetails": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "thanksForChoosing": "Спасибо, что выбрали наш сервис!\nЖелаем вам отличной игры!",
+  "couldNotReserve": "Мы не смогли забронировать для вас ПК №{n}. Пожалуйста попробуйте заново",
+  "@couldNotReserve": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "startOver": "Начать заново",
+  "noTariffsAvailable": "Упс, нет доступных тарифов",
+  "useMinuteBilling": "Вы можете воспользоваться по минутной оплатой",
+  "openOnMap": "Открыть на карте",
+  "fromPerHour": "от 500 ₸/час",
+  "seeMore": "Смотреть подробнее",
+  "excellentRating": "Отлично, 8.8",
+  "reviewsCount1000": "1000 отзывов",
+  "changeDateTime": "Изменить дату и время",
+  "selectedPc": "Выбран ПК №{n}",
+  "@selectedPc": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "legendFree": "Свободен",
+  "legendBusySoon": "Бронь · сервис",
+  "legendBusy": "Занят",
+  "legendOff": "Выключен",
+  "noComputers": "Нет компьютеров",
+  "today": "Сегодня",
+  "tomorrow": "Завтра",
+  "hoursLabel": "Часы",
+  "minutesLabel": "Минуты",
+  "shareTitle": "Интересный раздел",
+  "shareClubsText": "Сейчас я нахожусь в разделе \"Клубы\". Посмотри здесь!",
+  "shareNewsText": "Сейчас я читаю новость. Посмотри здесь!",
+  "outOf10": "из 10",
+  "reviews15": "15 отзывов",
+  "reviewTimeAgo": "5 часов назад",
+  "reviewAuthor": "Deadpool 2016",
+  "reviewText": "Все отлично работает, удобное приложение",
+  "morningTariff": "Утро (08:00 - 12:00)",
+  "dayTariff": "День (12:00 - 18:00)",
+  "nightTariff": "Ночь (22:00 - 08:00)",
+  "twoGis": "2ГИС",
+  "yandexMaps": "Yandex Карты",
+  "googleMaps": "Google Карты",
+  "appleMaps": "Apple Карты",
+  "tryAgainLater": "Повторите попытку позднее",
+  "topUp100Kaspi": "Пополнить на 100тг через Kaspi QR",
+  "aroundTheClock": "Круглосуточно",
+  "cameraPermissionDenied": "Разрешите доступ к камере в настройках.",
+  "authError": "Ошибка авторизации",
+  "scannerOnlyInApp": "Сканер доступен только в приложении",
+  "priceByTariff": "Цена по тарифу \"{name}”",
+  "@priceByTariff": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffDuration": "Продолжительность тарифа",
+  "activityStub": "activity",
+  "goToBasket": "Перейти в корзину ({n})",
+  "@goToBasket": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "goToPayment": "Перейти к оплате ({sum})",
+  "@goToPayment": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatus": "Статус заказа",
+  "paidViaKaspi": "Оплачено через Kaspi.kz",
+  "orderDeliveredToTable": "Заказ будет доставлен к вашему столу",
+  "completedAtSample": "Завершен, 18.12.2024 в 3:00",
+  "chargedByTariffNight": "Списано с баланса, по тарифу “Ночь”",
+  "sessionDuration": "Продолжительность сессии",
+  "minutes120": "120 минут",
+  "notifTopUpTitle": "Баланс в Adamar Solutions пополнен на сумму 5 000 ₸",
+  "notifTopUpMeta": "Пополнение • 21.12.2024, 23:43",
+  "notifBookingTitle": "✅ Новая бронь подтверждена",
+  "notifChargeTitle": "💸 Списаны 2 500 ₸ по тарифу “ночь”",
+  "notifOrderTitle": "🛒 Оформлен новый заказ в магазине на сумму 2 500 ₸",
+  "notifMeta": "Adamar Solutions • 21.12.2024, 23:43",
+  "sampleClubName": "Adamar Solutions",
+  "sampleClubAddress": "пр. Аль-Фараби 101"
+}
