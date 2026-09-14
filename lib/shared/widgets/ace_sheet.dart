@@ -8,6 +8,7 @@ Future<T?> showAceSheet<T>(BuildContext context, {String? title, required Widget
   return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
+    useRootNavigator: true,
     useSafeArea: false,
     backgroundColor: Colors.transparent,
     barrierColor: AceColors.sheetOverlay,

@@ -22,7 +22,8 @@ class DefaultLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final showFooter = !meta.hideFooter && !path.contains('login');
     final mq = MediaQuery.of(context);
-    final body = showFooter
+    final keyboard = mq.viewInsets.bottom > 0;
+    final body = showFooter && !keyboard
         ? MediaQuery(
             data: mq.copyWith(padding: mq.padding.copyWith(bottom: mq.padding.bottom + footerOverlayHeight)),
             child: child,
@@ -44,7 +45,17 @@ class DefaultLayout extends StatelessWidget {
               ),
             ),
           ),
-          if (showFooter) Positioned(left: 0, right: 0, bottom: 0, child: AceFooter(path: path)),
+          if (showFooter)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: AnimatedSlide(
+                duration: const Duration(milliseconds: 200),
+                offset: keyboard ? const Offset(0, 1.5) : Offset.zero,
+                child: IgnorePointer(ignoring: keyboard, child: AceFooter(path: path)),
+              ),
+            ),
         ],
       ),
     );
