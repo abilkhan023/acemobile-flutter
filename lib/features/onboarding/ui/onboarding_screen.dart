@@ -56,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ],
         ),
         const Spacer(),
-        AceButton(label: l.next, style: AceButtonStyle.white, onPressed: () => context.go('/')),
+        AceButton(label: l.next, style: AceButtonStyle.red, onPressed: () => context.go('/')),
       ],
     );
   }

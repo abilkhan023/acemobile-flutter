@@ -943,4 +943,22 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get sampleClubAddress => 'пр. Аль-Фараби 101';
+
+  @override
+  String get qrLogin => 'QR-вход';
+
+  @override
+  String dateAtTime(String date, String time) {
+    return '$date в $time';
+  }
+
+  @override
+  String get loadFailed => 'Не удалось загрузить данные';
+
+  @override
+  String get noActivityYet =>
+      'Пока нет активности — забронируйте компьютер или войдите по QR';
+
+  @override
+  String get commonHall => 'Общий зал';
 }

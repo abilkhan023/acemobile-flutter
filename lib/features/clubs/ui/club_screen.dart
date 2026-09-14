@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../core/env.dart';
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
+import '../../home/providers/home_providers.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_button.dart';
@@ -23,23 +23,30 @@ import '../data/clubs_api.dart';
 import '../data/models.dart';
 import '../logic/map_layout.dart';
 import '../providers/club_title.dart';
+import '../widgets/club_card.dart';
 import '../widgets/computer_map.dart';
 import '../widgets/date_strip.dart';
 import '../widgets/review_card.dart';
 import '../widgets/tariffs_list.dart';
 import '../widgets/time_wheel.dart';
 
-const _bannerFallback = 'https://hyperpc.ru/images/project/gaming-club/hyperpc-gaming-club-banner.jpg';
-
-Widget clubHeaderActions(BuildContext context) => const _ClubTitle();
+Widget clubHeaderTitle(BuildContext context, String path) => _ClubTitle(branchId: path.split('/').last);
 
 class _ClubTitle extends ConsumerWidget {
-  const _ClubTitle();
+  const _ClubTitle({required this.branchId});
+
+  final String branchId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final title = ref.watch(clubTitleProvider);
-    return Center(child: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 16, weight: FontWeight.w600)));
+    final title = ref.watch(clubTitleProvider(branchId));
+    return Text(
+      title,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
+      style: AceText.style(size: 16, weight: FontWeight.w600),
+    );
   }
 }
 
@@ -54,6 +61,7 @@ class ClubScreen extends ConsumerStatefulWidget {
 
 class _ClubScreenState extends ConsumerState<ClubScreen> {
   bool _loading = true;
+  bool _loadingBooking = true;
   Branch? _branch;
   GameCenter? _center;
   List<Zone> _zones = const [];
@@ -78,6 +86,13 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   @override
   void initState() {
     super.initState();
+    final cards = branchCardsOf(ref.read(homeBranchesProvider));
+    final card = cards.where((c) => c.branch.id == widget.branchId).firstOrNull;
+    if (card != null) {
+      _branch = card.branch;
+      _center = card.center;
+      _loading = false;
+    }
     _load();
   }
 
@@ -95,7 +110,10 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       _branch = branch;
       if (branch.gameCenterId != null) {
         _center = await clubs.gameCenter(branch.gameCenterId!);
-        ref.read(clubTitleProvider.notifier).set(_center?.name ?? '');
+      }
+      if (mounted) {
+        ref.read(clubTitleProvider(widget.branchId).notifier).set(_center?.name ?? branch.name ?? '');
+        setState(() => _loading = false);
       }
       _zones = await booking.zones(widget.branchId);
       final datetime = await booking.serverDatetime();
@@ -106,10 +124,13 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       }
       await Future.wait(_zones.map((z) async => _computersByZone[z.id] = await booking.computersByZone(z.id)));
       if (_book.isNotEmpty) await _applyDatetimeStates();
-    } catch (e) {
-      debugPrint('[club] load failed: $e');
-    } finally {
-      if (mounted) setState(() => _loading = false);
+    } catch (_) {} finally {
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _loadingBooking = false;
+        });
+      }
       _createWallet();
     }
   }
@@ -143,9 +164,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       } else {
         await _applyDatetimeStates();
       }
-    } catch (e) {
-      debugPrint('[club] computers refresh failed: $e');
-    }
+    } catch (_) {}
     if (mounted) setState(() {});
   }
 
@@ -165,27 +184,27 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final dt = DateTime.tryParse(_book);
     if (dt == null) return '';
     final locale = Localizations.localeOf(context).toString();
-    return '${DateFormat('d MMM yyyy', locale).format(dt)} в ${DateFormat('H:mm').format(dt)}';
+    return context.l10n.dateAtTime(DateFormat('d MMM yyyy', locale).format(dt), DateFormat('H:mm').format(dt));
   }
 
   String _formatDone(String value) {
     final dt = DateTime.tryParse(value);
     if (dt == null) return value;
     final locale = Localizations.localeOf(context).toString();
-    return '${DateFormat('d MMM yyyy', locale).format(dt)}, в ${DateFormat('HH:mm').format(dt)}';
+    return context.l10n.dateAtTime(DateFormat('d MMM yyyy', locale).format(dt), DateFormat('HH:mm').format(dt));
   }
 
   Future<void> _share() async {
     final l = context.l10n;
     try {
-      await SharePlus.instance.share(ShareParams(
-        text: '${l.shareClubsText} https://${Env.deepLinkHost}/clubs/${widget.branchId}',
-        subject: l.shareTitle,
-        title: l.shareTitle,
-      ));
-    } catch (e) {
-      debugPrint('share failed: $e');
-    }
+      await SharePlus.instance.share(
+        ShareParams(
+          text: '${l.shareClubsText} https://${Env.deepLinkHost}/clubs/${widget.branchId}',
+          subject: l.shareTitle,
+          title: l.shareTitle,
+        ),
+      );
+    } catch (_) {}
   }
 
   Future<void> _continueToTariffs() async {
@@ -196,7 +215,10 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     try {
       final zoneId = computer.zoneId ?? (_zones.isNotEmpty ? _zones.first.id : '');
       final tariffs = await ref.read(bookingApiProvider).availableTariffs(zoneId: zoneId, datetime: '$_book:00');
-      _tariffs = [for (final t in tariffs) if ((t.duration ?? 0) > 60) t];
+      _tariffs = [
+        for (final t in tariffs)
+          if ((t.duration ?? 0) > 60) t,
+      ];
       if (mounted) _openTariffSheet();
     } catch (_) {
       ref.read(toastProvider.notifier).danger(l.tariffsLoadFailed);
@@ -224,7 +246,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
             TariffsList(tariffs: _tariffs, selected: selected, serverTime: _serverTime, onSelect: (v) => setSheet(() => selected = v)),
             AceButton(
               label: l.reserve,
-              style: AceButtonStyle.white,
+              style: AceButtonStyle.red,
               loading: reserving,
               disabled: selected == null,
               onPressed: () async {
@@ -243,11 +265,14 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   Future<bool> _reserve({required String tariffId, required Computer computer, required String book}) async {
     final api = ref.read(bookingApiProvider);
     try {
-      final userTariffId = await api.createUserTariff(tariffId: tariffId, gameCenterId: _center?.id ?? '', branchId: _branch?.id ?? widget.branchId);
+      final userTariffId = await api.createUserTariff(
+        tariffId: tariffId,
+        gameCenterId: _center?.id ?? '',
+        branchId: _branch?.id ?? widget.branchId,
+      );
       await ref.read(reservationsApiProvider).create(dateTime: '$book:00', computerId: computer.id, userTariffId: userTariffId);
       return true;
-    } catch (e) {
-      debugPrint('[club] reserve failed: $e');
+    } catch (_) {
       return false;
     }
   }
@@ -273,13 +298,13 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                 Text(l.pcReserved(name), style: AceText.title),
                 Text(l.bookingDetails(_formatDone('$book:00')), style: AceText.text),
                 Text(l.thanksForChoosing, style: AceText.text),
-                AceButton(label: l.ready, style: AceButtonStyle.white, onPressed: () => Navigator.of(ctx).pop()),
+                AceButton(label: l.ready, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
               ]
             : [
                 SvgPicture.asset('assets/images/WarningExclamination.svg', width: 40, height: 40, alignment: Alignment.centerLeft),
                 Text(l.somethingWentWrong, style: AceText.title),
                 Text(l.couldNotReserve(name), style: AceText.text),
-                AceButton(label: l.startOver, style: AceButtonStyle.white, onPressed: () => Navigator.of(ctx).pop()),
+                AceButton(label: l.startOver, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
               ],
       ),
     ).then((_) {
@@ -361,10 +386,16 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                           Expanded(
                             child: Stack(
                               children: [
-                                Container(height: 6, decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(15))),
+                                Container(
+                                  height: 6,
+                                  decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(15)),
+                                ),
                                 FractionallySizedBox(
                                   widthFactor: 0.63,
-                                  child: Container(height: 6, decoration: BoxDecoration(color: AceColors.white, borderRadius: BorderRadius.circular(15))),
+                                  child: Container(
+                                    height: 6,
+                                    decoration: BoxDecoration(color: AceColors.white, borderRadius: BorderRadius.circular(15)),
+                                  ),
                                 ),
                               ],
                             ),
@@ -380,8 +411,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
           const Column(spacing: 10, children: [ReviewCard(), ReviewCard(), ReviewCard()]),
           AceButton(
             label: l.writeAReview,
-            borderColor: AceColors.white,
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 28),
+            style: AceButtonStyle.gray,
             onPressed: () {
               Navigator.of(ctx).pop();
               _openWriteReview();
@@ -401,10 +431,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: 24,
         children: [
-          Row(
-            spacing: 8,
-            children: [for (var i = 0; i < 5; i++) const AceIcon('star', size: 36, color: AceColors.accent)],
-          ),
+          Row(spacing: 8, children: [for (var i = 0; i < 5; i++) const AceIcon('star', size: 36, color: AceColors.accent)]),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             spacing: 20,
@@ -414,7 +441,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 spacing: 10,
                 children: [
-                  AceButton(label: l.send, style: AceButtonStyle.white, onPressed: () => Navigator.of(ctx).pop()),
+                  AceButton(label: l.send, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
                   AceButton(label: l.cancel, onPressed: () => Navigator.of(ctx).pop()),
                 ],
               ),
@@ -425,33 +452,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     );
   }
 
-  Widget _infoItem({String? icon, required String title, required String text, Widget? extra, required VoidCallback onTap, bool centerTitle = false}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
-        child: Row(
-          spacing: 10,
-          children: [
-            if (icon != null) AceIcon(icon, size: 28, color: AceColors.accent),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: centerTitle ? double.infinity : null, child: Text(title, textAlign: centerTitle ? TextAlign.center : TextAlign.start, style: AceText.style(size: 16, weight: FontWeight.w600))),
-                  const SizedBox(height: 2),
-                  Text(text, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
-                  ?extra,
-                ],
-              ),
-            ),
-            const AceIcon('chevron-right', size: 28),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _chip({required Widget child, VoidCallback? onTap}) =>
+      AcePill(height: 30, padding: const EdgeInsets.symmetric(horizontal: 12), onTap: onTap, child: child);
 
   @override
   Widget build(BuildContext context) {
@@ -464,114 +466,107 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     return Stack(
       children: [
         AcePage(
-          gap: 0,
-          padding: EdgeInsets.fromLTRB(16, 16, 16, _barVisible ? 136 : 16),
+          gap: 16,
+          padding: EdgeInsets.fromLTRB(20, 8, 20, _barVisible ? 120 : 20),
           children: [
             Container(
-              constraints: const BoxConstraints(minHeight: 110),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(16)),
-              child: Stack(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AceColors.card,
+                borderRadius: BorderRadius.circular(AceRadius.card),
+                boxShadow: AceShadows.card,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 14,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24,
-                    children: [
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CachedNetworkImage(imageUrl: _bannerFallback, fit: BoxFit.cover, errorWidget: (_, _, _) => const ColoredBox(color: AceColors.surface)),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(center?.name ?? '', style: AceText.style(size: 20, weight: FontWeight.w600)),
-                          const SizedBox(height: 6),
-                          Text(branch?.address ?? '', style: AceText.style(size: 16, weight: FontWeight.w500, color: AceColors.muted)),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: GestureDetector(behavior: HitTestBehavior.opaque, onTap: _share, child: const AceIcon('arrow-up-from-bracket', size: 24)),
+                  ClubLogo(url: center?.logo, size: 64),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 6,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: Text(center?.name ?? '', style: AceText.title)),
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: _share,
+                              child: const AceIcon('arrow-up-from-bracket', size: 22, color: AceColors.dim),
+                            ),
+                          ],
+                        ),
+                        Text(branch?.address ?? '', style: AceText.text),
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: [
+                            _chip(
+                              onTap: _openReviews,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 4,
+                                children: [
+                                  const AceIcon('star-filled', size: 12, color: AceColors.accent),
+                                  Text('8.8', style: AceText.style(size: 12, weight: FontWeight.w600)),
+                                ],
+                              ),
+                            ),
+                            _chip(
+                              onTap: _openTariffInfo,
+                              child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600)),
+                            ),
+                            _chip(
+                              onTap: _openMaps,
+                              child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 16,
-              children: [
-                _infoItem(
-                  title: l.excellentRating,
-                  text: l.reviewsCount1000,
-                  extra: const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        AceIcon('star-full', size: 28, color: AceColors.accent),
-                        AceIcon('star-full', size: 28, color: AceColors.accent),
-                        AceIcon('star-full', size: 28, color: AceColors.accent),
-                        AceIcon('star-50', size: 28, color: AceColors.accent),
-                        AceIcon('star', size: 28, color: AceColors.accent),
-                      ],
-                    ),
-                  ),
-                  onTap: _openReviews,
-                ),
-                _infoItem(icon: 'location-pin-alt-1', title: branch?.address ?? '', text: l.openOnMap, onTap: _openMaps, centerTitle: true),
-                _infoItem(icon: 'coin-vertical', title: l.fromPerHour, text: l.seeMore, onTap: _openTariffInfo),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(_step == 1 ? l.computerBackup : l.selectComputer, style: AceText.title),
             ),
-            const SizedBox(height: 36),
-            Text(l.computerBackup, style: AceText.title),
-            const SizedBox(height: 24),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 150),
-              child: _step == 1
+              child: _loadingBooking
+                  ? const Padding(
+                      key: ValueKey(0),
+                      padding: EdgeInsets.symmetric(vertical: 40),
+                      child: Center(child: AceSpinner(color: AceColors.accent)),
+                    )
+                  : _step == 1
                   ? Column(
                       key: const ValueKey(1),
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 20,
+                      spacing: 18,
                       children: [
                         DateStrip(value: _bookDay, onChanged: _setBookDay, label: l.bookingDate),
                         TimeWheel(value: _bookTime, onChanged: _setBookTime, label: l.selectTime),
-                        AceButton(label: l.continueAction, style: AceButtonStyle.white, disabled: _book.isEmpty, onPressed: () => setState(() => _step = 2)),
+                        AceButton(
+                          label: l.continueAction,
+                          style: AceButtonStyle.red,
+                          disabled: _book.isEmpty,
+                          onPressed: () => setState(() => _step = 2),
+                        ),
                       ],
                     )
                   : Column(
                       key: const ValueKey(2),
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 20,
+                      spacing: 14,
                       children: [
-                        GestureDetector(
+                        LinkMenu(
+                          title: _reserveDateLabel(),
+                          subtitle: l.changeDateTime,
+                          icon: 'calendar-alt',
                           onTap: () => setState(() => _step = 1),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                            decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
-                            child: Row(
-                              spacing: 12,
-                              children: [
-                                const AceIcon('calendar-alt', size: 24, color: AceColors.accent),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(_reserveDateLabel(), style: AceText.style(size: 16, weight: FontWeight.w600)),
-                                      const SizedBox(height: 2),
-                                      Text(l.changeDateTime, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
-                                    ],
-                                  ),
-                                ),
-                                const AceIcon('chevron-right', size: 24),
-                              ],
-                            ),
-                          ),
                         ),
-                        Text(l.selectComputer, style: AceText.style(size: 14, weight: FontWeight.w600)),
                         ComputerMap(
                           size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
                           zones: _zones,
@@ -582,32 +577,49 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                       ],
                     ),
             ),
-            const SizedBox(height: 12),
           ],
         ),
         Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
+          left: 20,
+          right: 20,
+          bottom: bottom + 22,
           child: AnimatedSlide(
             duration: const Duration(milliseconds: 250),
-            offset: _barVisible ? Offset.zero : const Offset(0, 1),
+            offset: _barVisible ? Offset.zero : const Offset(0, 1.6),
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 250),
               opacity: _barVisible ? 1 : 0,
               child: IgnorePointer(
                 ignoring: !_barVisible,
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 28, 16, bottom + 16),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, stops: [0, 0.3], colors: [Colors.transparent, AceColors.bg]),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    spacing: 10,
+                  height: 64,
+                  padding: const EdgeInsets.fromLTRB(22, 0, 8, 0),
+                  decoration: BoxDecoration(color: AceColors.accent, borderRadius: BorderRadius.circular(32), boxShadow: AceShadows.accent),
+                  child: Row(
                     children: [
-                      Text(l.selectedPc(_computer?.name ?? ''), textAlign: TextAlign.center, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
-                      AceButton(label: l.continueAction, style: AceButtonStyle.white, loading: _loadingContinue, onPressed: _continueToTariffs),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.selectedPc(_computer?.name ?? ''),
+                              style: AceText.style(size: 15, weight: FontWeight.w700, color: AceColors.white),
+                            ),
+                            Text(_reserveDateLabel(), style: AceText.style(size: 12, color: const Color(0xD9FFFFFF))),
+                          ],
+                        ),
+                      ),
+                      AceButton(
+                        label: l.continueAction,
+                        style: AceButtonStyle.white,
+                        expand: false,
+                        loading: _loadingContinue,
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        onPressed: _continueToTariffs,
+                      ),
                     ],
                   ),
                 ),

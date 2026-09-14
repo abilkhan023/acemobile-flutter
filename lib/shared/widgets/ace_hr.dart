@@ -11,16 +11,16 @@ class AceHr extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32),
+      padding: const EdgeInsets.symmetric(vertical: 28),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Container(height: 1, color: AceColors.divider),
           if (title != null)
             Container(
-              padding: const EdgeInsets.all(10),
-              color: AceColors.bg,
-              child: Text(title!, style: AceText.style(size: 12)),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(color: AceColors.bg, borderRadius: BorderRadius.circular(AceRadius.pill)),
+              child: Text(title!, style: AceText.caption),
             ),
         ],
       ),

@@ -17,6 +17,7 @@ class RouteMeta {
     this.isDeep = false,
     this.layout = AceLayout.normal,
     this.headerActions,
+    this.titleWidget,
   });
 
   final TitleBuilder? title;
@@ -27,15 +28,17 @@ class RouteMeta {
   final bool isDeep;
   final AceLayout layout;
   final HeaderActionsBuilder? headerActions;
+  final Widget Function(BuildContext context, String path)? titleWidget;
 
   RouteMeta copyWith({AceLayout? layout}) => RouteMeta(
-        title: title,
-        isGuest: isGuest,
-        hideBack: hideBack,
-        hideFooter: hideFooter,
-        hideHeader: hideHeader,
-        isDeep: isDeep,
-        layout: layout ?? this.layout,
-        headerActions: headerActions,
-      );
+    title: title,
+    isGuest: isGuest,
+    hideBack: hideBack,
+    hideFooter: hideFooter,
+    hideHeader: hideHeader,
+    isDeep: isDeep,
+    layout: layout ?? this.layout,
+    headerActions: headerActions,
+    titleWidget: titleWidget,
+  );
 }

@@ -220,12 +220,10 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
         return;
       }
       _channel = channel;
-      debugPrint('[mobileSocket] open');
       state = state.copyWith(status: SocketStatus.open);
       _sub = channel.stream.listen(_onMessage, onDone: _onClosed, onError: (Object e) => _onClosed());
       requestInfo();
-    } catch (e) {
-      debugPrint('[mobileSocket] connect failed: $e');
+    } catch (_) {
       _channel = null;
       state = state.copyWith(status: SocketStatus.closed);
       _scheduleReconnect();
@@ -233,7 +231,6 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
   }
 
   void _onClosed() {
-    debugPrint('[mobileSocket] disconnected');
     _sub?.cancel();
     _sub = null;
     _channel = null;
@@ -311,7 +308,6 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
   void _bumpWallets() => state = state.copyWith(walletsVersion: state.walletsVersion + 1);
 
   void _onMessage(dynamic raw) {
-    debugPrint('[mobileSocket] <- ${raw.toString().substring(0, raw.toString().length.clamp(0, 160))}');
     Map<String, dynamic> data;
     try {
       final decoded = jsonDecode(raw as String);
@@ -349,7 +345,6 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
         _bumpWallets();
         requestInfo();
       case 'error':
-        debugPrint('[mobileSocket] server error: $data');
         final kind = data['kind']?.toString();
         if (kind == 'invalid_token' || kind == 'token_expired') _handleInvalidToken(kind!);
         if (kind == 'session_not_found') {

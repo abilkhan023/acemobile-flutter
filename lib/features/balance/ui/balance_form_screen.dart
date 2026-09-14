@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
+import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_button.dart';
@@ -41,6 +42,7 @@ class _BalanceFormScreenState extends ConsumerState<BalanceFormScreen> {
   }
 
   void _openConfirmation() {
+    FocusManager.instance.primaryFocus?.unfocus();
     final l = context.l10n;
     final sum = _sum.text.trim();
     var loading = false;
@@ -56,23 +58,23 @@ class _BalanceFormScreenState extends ConsumerState<BalanceFormScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 8,
               children: [
-                Text(l.paymentMethod, style: AceText.style(size: 16, weight: FontWeight.w500)),
+                Text(l.paymentMethod, style: AceText.title),
                 ChoiceCard(value: _method, blockSelect: true),
               ],
             ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 24),
-              decoration: const BoxDecoration(border: Border(top: BorderSide(color: AceColors.cardAlt), bottom: BorderSide(color: AceColors.cardAlt))),
+              decoration: const BoxDecoration(border: Border(top: BorderSide(color: AceColors.divider), bottom: BorderSide(color: AceColors.divider))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(l.topUpAmount, style: AceText.style(size: 16, weight: FontWeight.w500, color: AceColors.muted)),
-                  Text('$sum ₸', style: AceText.style(size: 20, weight: FontWeight.w600)),
+                  Text(l.topUpAmount, style: AceText.style(size: 15, color: AceColors.muted)),
+                  Text(formatMoney(sum), style: AceText.style(size: 20, weight: FontWeight.w600)),
                 ],
               ),
             ),
             AceButton(
-              style: AceButtonStyle.white,
+              style: AceButtonStyle.red,
               label: '${l.pay} ($sum ₸)',
               loading: loading,
               onPressed: () async {
@@ -100,8 +102,7 @@ class _BalanceFormScreenState extends ConsumerState<BalanceFormScreen> {
           );
       if (url == null) throw StateError('no redirect url');
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    } catch (e) {
-      debugPrint('kaspi pay failed: $e');
+    } catch (_) {
       toast.danger(l.tryAgainLater);
     }
   }
@@ -121,7 +122,7 @@ class _BalanceFormScreenState extends ConsumerState<BalanceFormScreen> {
             children: [
               ClubCard(
                 title: club?.club.name ?? '',
-                subtitle: club?.club.address ?? club?.club.description ?? l.currentBalanceSum('${club?.balance ?? 0}'),
+                subtitle: club?.club.address ?? club?.club.description ?? l.currentBalanceSum(formatMoney(club?.balance ?? 0).replaceAll(' ₸', '')),
                 logo: club?.club.logo,
                 preview: true,
               ),
@@ -139,10 +140,10 @@ class _BalanceFormScreenState extends ConsumerState<BalanceFormScreen> {
         Positioned(
           left: 16,
           right: 16,
-          bottom: 32,
+          bottom: MediaQuery.paddingOf(context).bottom + 24,
           child: AceButton(
             label: l.next,
-            style: AceButtonStyle.white,
+            style: AceButtonStyle.red,
             disabled: !canNext,
             onPressed: () {
               if (_form.currentState!.validate()) _openConfirmation();

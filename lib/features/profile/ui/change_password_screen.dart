@@ -67,7 +67,7 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
             ],
           ),
           const Spacer(),
-          AceButton(style: AceButtonStyle.white, label: l.save, loading: _loading, onPressed: _submit),
+          AceButton(style: AceButtonStyle.red, label: l.save, loading: _loading, onPressed: _submit),
         ],
       ),
     );

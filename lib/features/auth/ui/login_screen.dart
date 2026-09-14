@@ -34,8 +34,8 @@ class LoginScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(16, 36, 16, 45 + bottom),
             decoration: const BoxDecoration(
               color: AceColors.card,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(36)),
-              boxShadow: [BoxShadow(color: Color(0x14FFFFFF), offset: Offset(0, -12), blurRadius: 24)],
+              borderRadius: BorderRadius.vertical(top: Radius.circular(AceRadius.card)),
+              boxShadow: AceShadows.bar,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -45,8 +45,8 @@ class LoginScreen extends StatelessWidget {
                 Column(
                   spacing: 12,
                   children: [
-                    Text(l.loginToAceGaming, textAlign: TextAlign.center, style: AceText.style(size: 24, weight: FontWeight.w600)),
-                    Text(l.toLogIntoTheApplicationChooseAMethodConvenientForYou, textAlign: TextAlign.center, style: AceText.style(size: 15, weight: FontWeight.w500, color: AceColors.muted)),
+                    Text(l.loginToAceGaming, textAlign: TextAlign.center, style: AceText.titleBig),
+                    Text(l.toLogIntoTheApplicationChooseAMethodConvenientForYou, textAlign: TextAlign.center, style: AceText.style(size: 14, color: AceColors.muted)),
                   ],
                 ),
                 Padding(
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                         label: l.loginViaEmail,
                         icon: 'email-icon',
                         gap: 12,
-                        padding: const EdgeInsets.symmetric(vertical: 14.5, horizontal: 16),
+                        textColor: AceColors.bg,
                         onPressed: () => context.push('/login/email'),
                       ),
                       AceButton(
@@ -67,13 +67,12 @@ class LoginScreen extends StatelessWidget {
                         label: l.loginViaTelegram,
                         leading: Image.asset('assets/images/telegram-icon.png', width: 20, height: 20),
                         gap: 12,
-                        padding: const EdgeInsets.symmetric(vertical: 14.5, horizontal: 16),
                         onPressed: () => launchUrl(Uri.parse(Env.telegramBotUrl), mode: LaunchMode.inAppBrowserView),
                       ),
                     ],
                   ),
                 ),
-                Text(l.byLoggingInYouAgreeToThePrivacyPolicy, textAlign: TextAlign.center, style: AceText.style(size: 13, weight: FontWeight.w500, color: AceColors.muted)),
+                Text(l.byLoggingInYouAgreeToThePrivacyPolicy, textAlign: TextAlign.center, style: AceText.caption),
               ],
             ),
           ),

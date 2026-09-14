@@ -18,14 +18,13 @@ class AceCheckbox extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: 18,
-          height: 18,
+          width: 22,
+          height: 22,
           decoration: BoxDecoration(
-            color: AceColors.bg,
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: AceColors.white),
+            color: active ? AceColors.accent : AceColors.cardAlt,
+            borderRadius: BorderRadius.circular(7),
           ),
-          child: active ? const AceIcon('check', size: 17) : null,
+          child: active ? const AceIcon('check', size: 16) : null,
         ),
       );
     }
@@ -46,16 +45,16 @@ class AceChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
         decoration: BoxDecoration(
           color: active ? AceColors.accent : AceColors.cardAlt,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AceRadius.pill),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          spacing: 4,
+          spacing: 6,
           children: [
-            Text(label, style: AceText.style(size: 12)),
+            Text(label, style: AceText.style(size: 13, weight: FontWeight.w500)),
             if (active) const AceIcon('circle-xmark', size: 16),
           ],
         ),
@@ -75,8 +74,8 @@ class AceRadioChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 12,
-      runSpacing: 12,
+      spacing: 10,
+      runSpacing: 10,
       children: [
         for (final o in options)
           AceChip(label: labelOf(o), active: value == o, onTap: () => onChanged?.call(value == o ? null : o)),

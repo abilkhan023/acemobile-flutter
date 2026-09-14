@@ -77,7 +77,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               AceInput(controller: _repeat, label: l.repeatPassword, placeholder: l.repeatPassword, type: 'password', rules: const ['required'], errorText: _repeatError, onChanged: (_) => _checkRepeat(), onSubmitted: (_) => _submit()),
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: AceButton(style: AceButtonStyle.white, label: l.register, loading: _loading, onPressed: _submit),
+                child: AceButton(style: AceButtonStyle.red, label: l.register, loading: _loading, onPressed: _submit),
               ),
             ],
           ),
@@ -90,14 +90,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: Text.rich(
               TextSpan(
                 text: '${l.alreadyHaveAnAccount} ',
-                style: AceText.style(size: 16, weight: FontWeight.w700, color: AceColors.muted),
-                children: [TextSpan(text: l.enter, style: AceText.style(size: 16, weight: FontWeight.w700))],
+                style: AceText.style(size: 15, weight: FontWeight.w500, color: AceColors.muted),
+                children: [TextSpan(text: l.enter, style: AceText.style(size: 15, weight: FontWeight.w600))],
               ),
               textAlign: TextAlign.center,
             ),
           ),
         ),
-        Text(l.byLoggingInYouAgreeToThePrivacyPolicy, textAlign: TextAlign.center, style: AceText.style(size: 13, weight: FontWeight.w500, color: AceColors.muted)),
+        Text(l.byLoggingInYouAgreeToThePrivacyPolicy, textAlign: TextAlign.center, style: AceText.caption),
       ],
     );
   }

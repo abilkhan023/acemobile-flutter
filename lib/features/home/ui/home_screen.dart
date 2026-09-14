@@ -5,20 +5,22 @@ import 'package:intl/intl.dart';
 
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
+import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_button.dart';
 import '../../../shared/widgets/ace_icon.dart';
 import '../../../shared/widgets/ace_page.dart';
 import '../../../shared/widgets/ace_sheet.dart';
-import '../../../shared/widgets/scroll_carousel.dart';
+import '../../../shared/widgets/link_menu.dart';
 import '../../auth/providers/auth_controller.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../balance/providers/balance_providers.dart';
 import '../../clubs/data/models.dart';
+import '../../clubs/widgets/club_card.dart';
 import '../../session/active_session_card.dart';
 import '../providers/home_providers.dart';
 import '../widgets/balance_sheet.dart';
-import '../widgets/links_section.dart';
 
 Widget homeHeaderActions(BuildContext context) => const _HomeHeader();
 
@@ -29,21 +31,45 @@ class _HomeHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final auth = ref.watch(authProvider);
-    final name = auth.isAuth ? '${l.hi}, ${auth.user?.username?.isNotEmpty == true ? auth.user!.username : 'User'}' : l.hi;
-    return Padding(
-      padding: const EdgeInsets.only(left: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(child: Text('$name!', maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.titleBig)),
-          AceButton(
-            label: auth.isAuth ? l.balance : l.enter,
-            style: AceButtonStyle.gray,
-            expand: false,
-            onPressed: () => auth.isAuth ? showBalanceSheet(context) : context.push('/login'),
+    final wallets = auth.isAuth ? ref.watch(walletClubsProvider).value : null;
+    num? total;
+    if (wallets != null) {
+      final own = wallets.where((w) => w.club != null).toList();
+      if (own.isNotEmpty) total = own.fold<num>(0, (acc, w) => acc + (num.tryParse(w.balance.toString()) ?? 0));
+    }
+    final name = auth.isAuth ? (auth.user?.username?.isNotEmpty == true ? auth.user!.username! : 'User') : '';
+    return Row(
+      children: [
+        Container(
+          width: 44,
+          height: 44,
+          decoration: const BoxDecoration(color: AceColors.cardAlt, shape: BoxShape.circle),
+          child: const Center(child: AceIcon('user', size: 22)),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l.hi, style: AceText.text),
+              Text(auth.isAuth ? name : l.enter, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 20, weight: FontWeight.w600)),
+            ],
           ),
-        ],
-      ),
+        ),
+        AcePill(
+          height: 44,
+          padding: const EdgeInsets.fromLTRB(16, 0, 14, 0),
+          onTap: () => auth.isAuth ? showBalanceSheet(context) : context.push('/login'),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 8,
+            children: [
+              Text(auth.isAuth ? (total == null ? l.balance : formatMoney(total)) : l.enter, style: AceText.style(size: 15, weight: FontWeight.w600)),
+              AceIcon(auth.isAuth ? 'plus' : 'login', size: 16, color: AceColors.accent),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -58,7 +84,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  static const _images = ['assets/images/main.png', 'assets/images/main.png', 'assets/images/main.png', 'assets/images/main.png', 'assets/images/main.png'];
   bool _branchesErrorShown = false;
 
   @override
@@ -89,14 +114,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       title: l.selectAction,
       builder: (ctx) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: 20,
+        spacing: 16,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(AceRadius.row)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 10,
+              spacing: 8,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,7 +130,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     _ActiveDot(active: active),
                   ],
                 ),
-                Text(_activityText(item, l), style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
+                Text(_activityText(item, l), style: AceText.text),
               ],
             ),
           ),
@@ -114,17 +139,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             spacing: 10,
             children: [
               if (active)
-                _ActionRow(
-                  icon: 'x-circle',
+                LinkMenu(
                   title: l.cancelBooking,
+                  icon: 'x-circle',
+                  color: AceColors.cardAlt,
                   onTap: () {
                     Navigator.of(ctx).pop();
                     _cancel(item.id);
                   },
                 ),
-              _ActionRow(
-                icon: 'ace-logo',
+              LinkMenu(
                 title: l.viewDetails,
+                icon: 'ace-logo',
+                color: AceColors.cardAlt,
                 onTap: () {
                   Navigator.of(ctx).pop();
                   context.push('/activity/${item.id}');
@@ -177,50 +204,99 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
     final activityItems = activity.value ?? const <Reservation>[];
 
-    List<Widget> clubCards() => [
-          for (final c in branchCards)
-            LinkCard(
-              title: c.title,
-              text: c.text,
-              img: c.img?.isNotEmpty == true ? c.img : 'assets/images/just_icon.png',
-              onTap: () => context.push('/clubs/${c.branch.id}'),
-            ),
-        ];
-
     return AcePage(
-      gap: 20,
+      gap: 18,
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
       children: [
-        ScrollCarousel(images: _images),
         if (isAuth) const ActiveSessionCard(),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Row(
-            spacing: 6,
-            children: [
-              Expanded(child: _MenuCard(icon: 'comp', label: l.reservation, onTap: () => context.push('/clubs'))),
-              Expanded(child: _MenuCard(icon: 'shop', label: l.shop, soon: true)),
-            ],
-          ),
-        ),
-        LinksSection(
-          title: l.lastActivity,
-          loading: activity.isLoading && activityItems.isEmpty,
+        Row(
+          spacing: 12,
           children: [
-            for (final item in activityItems)
-              LinkCard(
-                title: item.gameCenterName,
-                text: _activityText(item, l),
-                icon: item.isActive == true ? null : 'arrow-counter-clockwise',
-                row: true,
-                mini: true,
-                trailingTitle: _ActiveDot(active: item.isActive == true),
-                onTap: () => _openActivity(item),
-              ),
+            Expanded(child: _ActionCard(icon: 'comp', label: l.reservation, onTap: () => context.push('/clubs'))),
+            Expanded(child: _ActionCard(icon: 'qr-code', label: l.qrLogin, onTap: () => context.push('/qr-code'))),
           ],
         ),
-        LinksSection(title: l.clubsNearby, loading: branches.isLoading, onAll: () => context.push('/clubs'), children: clubCards()),
-        LinksSection(title: l.exclusiveInAce, loading: branches.isLoading, onAll: () => context.push('/clubs'), children: clubCards()),
+        _SectionHeader(title: l.clubsNearby, action: l.all, onAction: () => context.push('/clubs')),
+        if (branches.isLoading && branchCards.isEmpty)
+          const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Center(child: AceSpinner(color: AceColors.accent)))
+        else
+          for (final c in branchCards)
+            ClubCard(title: c.title, subtitle: c.text, logo: c.img, onTap: () => context.push('/clubs/${c.branch.id}')),
+        if (isAuth) ...[
+          _SectionHeader(title: l.lastActivity),
+          if (activity.isLoading && activityItems.isEmpty)
+            const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Center(child: AceSpinner(color: AceColors.accent)))
+          else if (activityItems.isEmpty)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.row)),
+              child: Text(l.noActivityYet, style: AceText.text),
+            )
+          else
+            for (final item in activityItems)
+              LinkMenu(
+                title: item.gameCenterName,
+                subtitle: _activityText(item, l),
+                icon: item.isActive == true ? 'comp' : 'arrow-counter-clockwise',
+                onTap: () => _openActivity(item),
+              ),
+        ],
       ],
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title, this.action, this.onAction});
+
+  final String title;
+  final String? action;
+  final VoidCallback? onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: AceText.title),
+          if (action != null)
+            AcePill(onTap: onAction, child: Text(action!, style: AceText.style(size: 13, weight: FontWeight.w600))),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionCard extends StatelessWidget {
+  const _ActionCard({required this.icon, required this.label, this.onTap});
+
+  final String icon;
+  final String label;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.card), boxShadow: AceShadows.card),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(color: AceColors.cardAlt, shape: BoxShape.circle),
+              child: Center(child: AceIcon(icon, size: 22, color: AceColors.accent)),
+            ),
+            Text(label, style: AceText.style(size: 16, weight: FontWeight.w600)),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -239,88 +315,6 @@ class _ActiveDot extends StatelessWidget {
         color: active ? AceColors.success : Colors.transparent,
         shape: BoxShape.circle,
         border: active ? null : Border.all(color: AceColors.success),
-      ),
-    );
-  }
-}
-
-class _ActionRow extends StatelessWidget {
-  const _ActionRow({required this.icon, required this.title, required this.onTap});
-
-  final String icon;
-  final String title;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-        decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(16)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              spacing: 12,
-              children: [
-                AceIcon(icon),
-                Text(title, style: AceText.style(size: 16, weight: FontWeight.w700)),
-              ],
-            ),
-            const AceIcon('caret-right'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MenuCard extends StatelessWidget {
-  const _MenuCard({required this.icon, required this.label, this.soon = false, this.onTap});
-
-  final String icon;
-  final String label;
-  final bool soon;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = soon ? AceColors.footer : AceColors.white;
-    return GestureDetector(
-      onTap: soon ? null : onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Stack(
-          children: [
-            Container(
-              constraints: const BoxConstraints(minHeight: 110, minWidth: double.infinity),
-              padding: const EdgeInsets.fromLTRB(26, 18, 26, 26),
-              decoration: const BoxDecoration(color: AceColors.card),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 8,
-                children: [
-                  AceIcon(icon, size: 36, color: soon ? AceColors.footer : AceColors.accent),
-                  Text(label, textAlign: TextAlign.center, style: AceText.style(size: 14, weight: FontWeight.w500, color: color)),
-                ],
-              ),
-            ),
-            if (soon)
-              Positioned(
-                left: 0,
-                bottom: 0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 6),
-                  decoration: const BoxDecoration(
-                    color: AceColors.accent,
-                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), topRight: Radius.circular(16)),
-                  ),
-                  child: Text(context.l10n.soonBadge, style: AceText.style(size: 12, weight: FontWeight.w500)),
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }

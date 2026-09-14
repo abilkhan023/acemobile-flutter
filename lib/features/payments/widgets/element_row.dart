@@ -14,19 +14,24 @@ class ElementRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-      decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.row), boxShadow: AceShadows.card),
       child: Row(
-        spacing: 10,
+        spacing: 14,
         children: [
-          AceIcon(icon, size: 24, color: AceColors.accent),
+          Container(
+            width: 44,
+            height: 44,
+            decoration: const BoxDecoration(color: AceColors.cardAlt, shape: BoxShape.circle),
+            child: Center(child: AceIcon(icon, size: 22, color: AceColors.accent)),
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 3,
               children: [
                 Text(title, style: AceText.style(size: 16, weight: FontWeight.w600)),
-                Text(description, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
+                Text(description, style: AceText.text),
               ],
             ),
           ),

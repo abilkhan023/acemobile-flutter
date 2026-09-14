@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'l10n.dart';
+import 'money.dart';
 
 String _find(String prefix, List<String> rules) {
   final item = rules.firstWhere((r) => r.startsWith(prefix), orElse: () => '');
@@ -33,8 +34,8 @@ FormFieldValidator<String> aceValidator(BuildContext context, List<String> rules
     } else {
       final n = num.tryParse(v.replaceAll(' ', ''));
       if (n != null) {
-        if (max.isNotEmpty && n > num.parse(max)) return '${l.maximum} $max ₸';
-        if (min.isNotEmpty && n < num.parse(min)) return '${l.minimum} $min ₸';
+        if (max.isNotEmpty && n > num.parse(max)) return '${l.maximum} ${formatMoney(max)}';
+        if (min.isNotEmpty && n < num.parse(min)) return '${l.minimum} ${formatMoney(min)}';
       }
     }
     return null;

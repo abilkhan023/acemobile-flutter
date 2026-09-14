@@ -15,6 +15,12 @@ class BranchCard {
   String? get img => center?.logo;
 }
 
+List<BranchCard> branchCardsOf(AsyncValue<List<BranchCard>> value) => value.maybeWhen(
+      data: (c) => c,
+      error: (e, _) => e is BranchesLoadException ? e.cards : const <BranchCard>[],
+      orElse: () => const <BranchCard>[],
+    );
+
 class BranchesLoadException implements Exception {
   const BranchesLoadException(this.cards);
 

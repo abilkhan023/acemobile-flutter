@@ -59,7 +59,7 @@ class _RecoverEmailScreenState extends ConsumerState<RecoverEmailScreen> {
             spacing: 20,
             children: [
               AceInput(controller: _email, label: 'Email', placeholder: l.enterEmail, rules: const ['required', 'email', 'min-5'], onSubmitted: (_) => _submit()),
-              AceButton(style: AceButtonStyle.white, label: l.continueAction, loading: _loading, onPressed: _submit),
+              AceButton(style: AceButtonStyle.red, label: l.continueAction, loading: _loading, onPressed: _submit),
             ],
           ),
         ),

@@ -13,9 +13,10 @@ class AceTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(8)),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.pill)),
       child: Row(
-        spacing: 2,
+        spacing: 4,
         children: [
           for (final (i, t) in tabs.indexed)
             Expanded(
@@ -23,13 +24,13 @@ class AceTabs extends StatelessWidget {
                 onTap: () => onActive(i),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
                   decoration: BoxDecoration(
                     color: active == i ? AceColors.white : Colors.transparent,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(AceRadius.pill),
                   ),
                   alignment: Alignment.center,
-                  child: Text(t, style: AceText.style(size: 16, weight: FontWeight.w600, color: active == i ? AceColors.accent : AceColors.muted)),
+                  child: Text(t, style: AceText.style(size: 14, weight: FontWeight.w600, color: active == i ? AceColors.accentDark : AceColors.muted)),
                 ),
               ),
             ),

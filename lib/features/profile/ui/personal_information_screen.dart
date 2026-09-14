@@ -59,7 +59,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             ],
           ),
           const Spacer(),
-          AceButton(style: AceButtonStyle.white, label: l.save, onPressed: () => _form.currentState!.validate()),
+          AceButton(style: AceButtonStyle.red, label: l.save, onPressed: () => _form.currentState!.validate()),
         ],
       ),
     );

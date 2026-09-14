@@ -84,12 +84,12 @@ class _AceInputState extends State<AceInput> {
       validator: widget.rules.isEmpty ? null : aceValidator(context, widget.rules, isNumber: _isNumber),
       builder: (field) {
         final error = widget.errorText?.isNotEmpty == true ? widget.errorText : field.errorText;
-        final filled = _focus.hasFocus || hasValue;
+        final borderColor = error != null ? AceColors.accent : (_focus.hasFocus ? AceColors.accent : Colors.transparent);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8,
           children: [
-            if (widget.label != null) Text(widget.label!, style: AceText.label),
+            if (widget.label != null) Padding(padding: const EdgeInsets.only(left: 6), child: Text(widget.label!, style: AceText.label)),
             Stack(
               alignment: Alignment.centerRight,
               children: [
@@ -104,8 +104,8 @@ class _AceInputState extends State<AceInput> {
                   inputFormatters: formatters,
                   autocorrect: false,
                   enableSuggestions: false,
-                  style: AceText.style(size: 14),
-                  cursorColor: AceColors.white,
+                  style: AceText.style(size: 15, weight: FontWeight.w500),
+                  cursorColor: AceColors.accent,
                   onChanged: (v) {
                     field.didChange(v);
                     widget.onChanged?.call(v);
@@ -114,41 +114,38 @@ class _AceInputState extends State<AceInput> {
                   decoration: InputDecoration(
                     isDense: true,
                     filled: true,
-                    fillColor: filled ? AceColors.fillFocused : Colors.transparent,
+                    fillColor: AceColors.card,
                     hintText: widget.placeholder ?? context.l10n.enterData,
-                    hintStyle: AceText.style(size: 14, color: AceColors.muted),
-                    contentPadding: EdgeInsets.fromLTRB(24, 20, hasTrailing ? 42 : 24, 20),
-                    enabledBorder: _border(error != null ? AceColors.accent : AceColors.border),
-                    focusedBorder: _border(error != null ? AceColors.accent : AceColors.border),
-                    disabledBorder: _border(AceColors.border),
-                    border: _border(AceColors.border),
+                    hintStyle: AceText.style(size: 15, weight: FontWeight.w400, color: AceColors.dim),
+                    contentPadding: EdgeInsets.fromLTRB(20, 18, hasTrailing ? 48 : 20, 18),
+                    enabledBorder: _border(borderColor),
+                    focusedBorder: _border(borderColor),
+                    disabledBorder: _border(Colors.transparent),
+                    border: _border(Colors.transparent),
                   ),
                 ),
                 if (hasTrailing)
                   Positioned(
-                    right: 24,
-                    child: Opacity(
-                      opacity: 0.7,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          if (_isPassword) {
-                            setState(() => _visiblePassword = !_visiblePassword);
-                          } else if (showClear) {
-                            _controller.clear();
-                            field.didChange('');
-                            widget.onChanged?.call('');
-                          } else {
-                            widget.onIcon?.call();
-                          }
-                        },
-                        child: AceIcon(_isPassword ? (_visiblePassword ? 'eye-close' : 'eye') : trailingIcon!),
-                      ),
+                    right: 18,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (_isPassword) {
+                          setState(() => _visiblePassword = !_visiblePassword);
+                        } else if (showClear) {
+                          _controller.clear();
+                          field.didChange('');
+                          widget.onChanged?.call('');
+                        } else {
+                          widget.onIcon?.call();
+                        }
+                      },
+                      child: AceIcon(_isPassword ? (_visiblePassword ? 'eye-close' : 'eye') : trailingIcon!, color: AceColors.dim),
                     ),
                   ),
               ],
             ),
-            if (error != null) Text(error, style: AceText.style(size: 12, color: AceColors.accent)),
+            if (error != null) Padding(padding: const EdgeInsets.only(left: 6), child: Text(error, style: AceText.style(size: 12, color: AceColors.accent))),
           ],
         );
       },
@@ -156,7 +153,7 @@ class _AceInputState extends State<AceInput> {
   }
 
   OutlineInputBorder _border(Color color) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AceRadius.input),
         borderSide: BorderSide(color: color),
       );
 }

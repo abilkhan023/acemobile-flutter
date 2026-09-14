@@ -412,5 +412,20 @@
   "notifOrderTitle": "🛒 Оформлен новый заказ в магазине на сумму 2 500 ₸",
   "notifMeta": "Adamar Solutions • 21.12.2024, 23:43",
   "sampleClubName": "Adamar Solutions",
-  "sampleClubAddress": "пр. Аль-Фараби 101"
+  "sampleClubAddress": "пр. Аль-Фараби 101",
+  "qrLogin": "QR-вход",
+  "dateAtTime": "{date} в {time}",
+  "@dateAtTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "loadFailed": "Не удалось загрузить данные",
+  "noActivityYet": "Пока нет активности — забронируйте компьютер или войдите по QR",
+  "commonHall": "Общий зал"
 }

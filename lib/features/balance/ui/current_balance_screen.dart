@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/l10n.dart';
+import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_icon.dart';
@@ -24,8 +25,8 @@ class CurrentBalanceScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8,
           children: [
-            Text(l.listOfComputerClubs, style: AceText.style(size: 20, weight: FontWeight.w600)),
-            Text(l.eachClubHasItsOwnBalance, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
+            Text(l.listOfComputerClubs, style: AceText.title),
+            Text(l.eachClubHasItsOwnBalance, style: AceText.text),
           ],
         ),
         if (wallets.isLoading && items.isEmpty)
@@ -37,8 +38,8 @@ class CurrentBalanceScreen extends ConsumerWidget {
             children: [
               for (final w in items)
                 ClubCard(
-                  title: w.name,
-                  subtitle: w.club?.address ?? w.club?.description ?? l.currentBalanceSum('${w.balance}'),
+                  title: w.displayName,
+                  subtitle: l.currentBalanceSum(formatMoney(w.ownBalance).replaceAll(' ₸', '')),
                   logo: w.club?.logo,
                   preview: true,
                 ),

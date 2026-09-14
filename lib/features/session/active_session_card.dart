@@ -63,10 +63,7 @@ class _ActiveSessionCardState extends ConsumerState<ActiveSessionCard> {
     final ok = await showAceModal(
       context,
       title: l.attention,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 4, bottom: 8),
-        child: Text(l.stopSessionConfirm, style: AceText.style(size: 16, weight: FontWeight.w500, color: AceColors.muted, height: 1.4)),
-      ),
+      body: Text(l.stopSessionConfirm, style: AceText.style(size: 15, weight: FontWeight.w400, color: AceColors.muted, height: 1.4)),
       actions: [l.yesStop, l.cancel],
       submit: l.yesStop,
     );
@@ -74,9 +71,7 @@ class _ActiveSessionCardState extends ConsumerState<ActiveSessionCard> {
     setState(() => _stopping = true);
     try {
       await ref.read(mobileSocketProvider.notifier).stopSession();
-    } catch (e) {
-      debugPrint('[ActiveSession] stop failed: $e');
-    } finally {
+    } catch (_) {} finally {
       if (mounted) setState(() => _stopping = false);
     }
   }
@@ -92,60 +87,52 @@ class _ActiveSessionCardState extends ConsumerState<ActiveSessionCard> {
     }
     _prevRemaining = remaining;
     final balance = s.balance;
-
-    Widget cell(String label, String value, {bool danger = false}) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: AceText.style(size: 12, color: AceColors.muted)),
-            const SizedBox(height: 4),
-            Text(value, style: AceText.style(size: 18, weight: FontWeight.w600, color: danger ? AceColors.accent : AceColors.white)),
-          ],
-        );
+    final details = [
+      '${l.tariff} ${_tariffLabel(s.session, l)}',
+      if (balance != null) '${l.balance} ${formatMoney(balance.balance)}',
+      if (balance != null) '${l.bonuses} ${formatMoney(balance.bonuses)}',
+    ].join(' · ');
 
     return Container(
-      margin: const EdgeInsets.only(top: 4),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: AceColors.card,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AceColors.accent),
+        gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AceColors.accent, AceColors.accentDark]),
+        borderRadius: BorderRadius.circular(AceRadius.card),
+        boxShadow: AceShadows.accent,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: 14,
         children: [
           Row(
-            spacing: 8,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF3DDC84),
-                  shape: BoxShape.circle,
-                  boxShadow: [BoxShadow(color: Color(0x333DDC84), spreadRadius: 4)],
-                ),
+              AcePill(
+                height: 30,
+                color: const Color(0x2EFFFFFF),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(l.activeSession, style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.white)),
               ),
-              Text(l.activeSession, style: AceText.style(size: 16, weight: FontWeight.w600)),
-              const Spacer(),
-              Text(l.pcNumber(s.context?.computerName ?? '—'), style: AceText.style(size: 14, color: AceColors.muted)),
+              Text(l.pcNumber(s.context?.computerName ?? '—'), style: AceText.style(size: 13, weight: FontWeight.w500, color: const Color(0xD9FFFFFF))),
             ],
           ),
+          Text(_format(remaining), style: AceText.style(size: 44, weight: FontWeight.w700, color: AceColors.white, height: 1).copyWith(letterSpacing: -0.5)),
           Row(
+            spacing: 12,
             children: [
-              Expanded(child: cell(l.timeLeft, _format(remaining), danger: remaining <= 300)),
-              const SizedBox(width: 12),
-              Expanded(child: cell(l.tariff, _tariffLabel(s.session, l))),
+              Expanded(child: Text(details, maxLines: 2, style: AceText.style(size: 13, weight: FontWeight.w500, color: const Color(0xD9FFFFFF)))),
+              AceButton(
+                label: l.stopSession,
+                style: AceButtonStyle.white,
+                expand: false,
+                loading: _stopping,
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                onPressed: _confirmStop,
+              ),
             ],
           ),
-          Row(
-            children: [
-              Expanded(child: cell(l.balance, balance == null ? '—' : formatMoney(balance.balance))),
-              const SizedBox(width: 12),
-              Expanded(child: cell(l.bonuses, balance == null ? '—' : formatMoney(balance.bonuses))),
-            ],
-          ),
-          AceButton(style: AceButtonStyle.red, label: l.stopSession, loading: _stopping, onPressed: _confirmStop),
         ],
       ),
     );

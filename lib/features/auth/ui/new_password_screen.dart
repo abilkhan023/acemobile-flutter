@@ -42,7 +42,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               AceInput(controller: _password, label: l.newPassword, placeholder: l.createAPassword, type: 'password', rules: const ['required', 'min-3']),
               AceInput(controller: _repeat, label: l.repeatPassword, placeholder: l.repeatPassword, type: 'password', rules: const ['required', 'min-3']),
               AceButton(
-                style: AceButtonStyle.white,
+                style: AceButtonStyle.red,
                 label: l.continueAction,
                 onPressed: () {
                   if (_form.currentState!.validate()) context.go('/');

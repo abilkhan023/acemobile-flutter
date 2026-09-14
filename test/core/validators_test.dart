@@ -2,6 +2,7 @@ import 'package:ace_mobile/core/utils/validators.dart';
 import 'package:ace_mobile/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ace_mobile/core/utils/money.dart';
 
 void main() {
   Future<FormFieldValidator<String> Function(List<String>, {bool isNumber})> pump(WidgetTester tester) async {
@@ -33,7 +34,7 @@ void main() {
   testWidgets('number rules compare numerically with tenge', (tester) async {
     final v = await pump(tester);
     expect(v(['required', 'number', 'min-100', 'max-50000'], isNumber: true)('50'), 'Минимально 100 ₸');
-    expect(v(['required', 'number', 'min-100', 'max-50000'], isNumber: true)('60000'), 'Максимально 50000 ₸');
+    expect(v(['required', 'number', 'min-100', 'max-50000'], isNumber: true)('60000'), 'Максимально ${formatMoney(50000)}');
     expect(v(['required', 'number', 'min-100', 'max-50000'], isNumber: true)('500'), isNull);
     expect(rulesHaveNumber(['required', 'number']), isTrue);
     expect(rulesHaveNumber(['required']), isFalse);

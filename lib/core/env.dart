@@ -1,6 +1,5 @@
 abstract final class Env {
   static const flavor = String.fromEnvironment('FLAVOR', defaultValue: 'dev');
-  static const debugGuest = bool.fromEnvironment('DEBUG_GUEST');
   static const coreUrl = String.fromEnvironment('CORE_URL', defaultValue: 'https://ace-core.acegaming.gg/api');
   static const shopUrl = String.fromEnvironment('SHOP_URL', defaultValue: 'https://ace-shop.acegaming.gg');
   static const fileUrl = String.fromEnvironment('FILE_URL', defaultValue: 'https://ace-filetransfer.acegaming.gg');

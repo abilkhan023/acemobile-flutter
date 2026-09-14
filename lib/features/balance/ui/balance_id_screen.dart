@@ -37,8 +37,7 @@ class _BalanceIdScreenState extends ConsumerState<BalanceIdScreen> {
       final url = await ref.read(bankingApiProvider).kaspiPay(sum: 100, username: user?.username ?? '', clubSlug: w?.club?.slug ?? '');
       if (url == null) throw StateError('no redirect url');
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    } catch (e) {
-      debugPrint('kaspi pay failed: $e');
+    } catch (_) {
       toast.danger(l.tryAgainLater);
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -67,7 +66,7 @@ class _BalanceIdScreenState extends ConsumerState<BalanceIdScreen> {
             data: 'https://${Env.deepLinkHost}/balance/${widget.walletId}',
             size: (width - 32) * 0.8,
             padding: const EdgeInsets.all(12),
-            backgroundColor: const Color(0xFF242424),
+            backgroundColor: AceColors.card,
             eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: AceColors.white),
             dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: AceColors.white),
           ),

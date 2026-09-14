@@ -66,15 +66,15 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => context.push('/login/recover-password/input-email'),
-                child: Text(l.forgotPassword, textAlign: TextAlign.right, style: AceText.style(size: 16, weight: FontWeight.w500, color: AceColors.muted)),
+                child: Text(l.forgotPassword, textAlign: TextAlign.right, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
               ),
-              AceButton(style: AceButtonStyle.white, label: l.enter, loading: _loading, onPressed: _submit),
+              AceButton(style: AceButtonStyle.red, label: l.enter, loading: _loading, onPressed: _submit),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => context.push('/register'),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(18, 14, 18, 18),
-                  child: Text(l.register, textAlign: TextAlign.center, style: AceText.style(size: 16, weight: FontWeight.w700)),
+                  child: Text(l.register, textAlign: TextAlign.center, style: AceText.style(size: 15, weight: FontWeight.w600)),
                 ),
               ),
             ],
@@ -82,7 +82,7 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
         ),
         GestureDetector(
           onTap: () => launchUrl(Uri.parse(Env.privacyPdfUrl), mode: LaunchMode.inAppBrowserView),
-          child: Text(l.byLoggingInYouAgreeToThePrivacyPolicy, textAlign: TextAlign.center, style: AceText.style(size: 13, weight: FontWeight.w500, color: AceColors.muted)),
+          child: Text(l.byLoggingInYouAgreeToThePrivacyPolicy, textAlign: TextAlign.center, style: AceText.caption),
         ),
       ],
     );

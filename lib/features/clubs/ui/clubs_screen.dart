@@ -115,12 +115,8 @@ class ClubsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final branches = ref.watch(homeBranchesProvider);
-    final cards = branches.maybeWhen(
-      data: (c) => c,
-      error: (e, _) => e is BranchesLoadException ? e.cards : const <BranchCard>[],
-      orElse: () => const <BranchCard>[],
-    );
-    if (branches.isLoading) {
+    final cards = branchCardsOf(branches);
+    if (branches.isLoading && cards.isEmpty) {
       return const Center(child: AceSpinner(color: AceColors.accent));
     }
     return AcePage(
@@ -130,7 +126,7 @@ class ClubsScreen extends ConsumerWidget {
           ClubCard(
             title: c.center?.name ?? c.branch.name ?? '',
             subtitle: c.branch.address ?? '',
-            logo: null,
+            logo: c.center?.logo,
             onTap: () => context.push('/clubs/${c.branch.id}'),
           ),
       ],

@@ -37,7 +37,7 @@ class _SelectLanguageState extends ConsumerState<SelectLanguage> {
       spacing: 24,
       children: [
         Container(
-          decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
+          decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(AceRadius.row)),
           child: Column(
             children: [
               for (final (i, item) in langs.indexed)
@@ -45,9 +45,9 @@ class _SelectLanguageState extends ConsumerState<SelectLanguage> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () => setState(() => _selected = _selected == item.locale ? null : item.locale),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     decoration: BoxDecoration(
-                      border: i == langs.length - 1 ? null : const Border(bottom: BorderSide(color: AceColors.cardAlt)),
+                      border: i == langs.length - 1 ? null : const Border(bottom: BorderSide(color: AceColors.card)),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +60,7 @@ class _SelectLanguageState extends ConsumerState<SelectLanguage> {
                             Text(item.translate, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
                           ],
                         ),
-                        AceIcon(_selected == item.locale ? 'circle-check' : 'circle'),
+                        AceIcon(_selected == item.locale ? 'circle-check' : 'circle', color: _selected == item.locale ? AceColors.accent : AceColors.dim),
                       ],
                     ),
                   ),
@@ -69,7 +69,7 @@ class _SelectLanguageState extends ConsumerState<SelectLanguage> {
           ),
         ),
         AceButton(
-          style: AceButtonStyle.white,
+          style: AceButtonStyle.red,
           label: l.selectLanguage,
           onPressed: () async {
             final locale = _selected;

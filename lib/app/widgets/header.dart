@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/utils/l10n.dart';
 import '../../shared/theme/ace_theme.dart';
-import '../../shared/widgets/ace_icon.dart';
+import '../../shared/widgets/ace_button.dart';
 import '../route_meta.dart';
 
 class AceHeader extends StatelessWidget {
@@ -19,40 +19,48 @@ class AceHeader extends StatelessWidget {
     final isGoBack = canPop && path != '/' && !meta.hideBack;
     final showBack = isGoBack || !meta.hideBack;
     final title = meta.title?.call(context.l10n) ?? '';
-    final bigTitle = Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 24, weight: FontWeight.w700));
+    final titleWidget = meta.titleWidget?.call(context, path);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: SizedBox(
-        height: 50,
+        height: 52,
         child: Stack(
           children: [
-            if (title.isNotEmpty && isGoBack)
+            if (titleWidget != null || (title.isNotEmpty && isGoBack))
               Positioned.fill(
-                child: Center(child: Text(title, style: AceText.style(size: 16, weight: FontWeight.w400))),
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 16, 0),
-              child: Row(
-                children: [
-                  if (showBack)
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => canPop ? context.pop() : context.go('/'),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: AceIcon('chevron-left', size: 24),
-                      ),
-                    ),
-                  if (title.isNotEmpty && !isGoBack)
-                    Padding(padding: EdgeInsets.only(left: showBack ? 6 : 6), child: bigTitle),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: meta.headerActions?.call(context) ?? const SizedBox.shrink(),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 56),
+                  child: Center(
+                    child:
+                        titleWidget ??
+                        Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AceText.style(size: 16, weight: FontWeight.w600),
+                        ),
                   ),
-                ],
+                ),
               ),
+            Row(
+              spacing: 12,
+              children: [
+                if (showBack) AceCircleButton(icon: 'chevron-left', onTap: () => canPop ? context.pop() : context.go('/')),
+                if (title.isNotEmpty && !isGoBack)
+                  Expanded(
+                    child: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.titleBig),
+                  )
+                else
+                  const Spacer(),
+                if (meta.headerActions != null)
+                  if (title.isNotEmpty)
+                    meta.headerActions!(context)
+                  else
+                    Expanded(
+                      flex: 1000,
+                      child: Align(alignment: Alignment.centerRight, child: meta.headerActions!(context)),
+                    ),
+              ],
             ),
           ],
         ),

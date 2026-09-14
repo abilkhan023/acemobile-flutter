@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/utils/l10n.dart';
 import '../../shared/theme/ace_colors.dart';
 import '../../shared/theme/ace_theme.dart';
+import '../../shared/widgets/ace_button.dart';
 import '../../shared/widgets/ace_icon.dart';
 import '../route_meta.dart';
 import '../widgets/footer.dart';
@@ -20,45 +21,55 @@ class DefaultLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final showFooter = !meta.hideFooter && !path.contains('login');
+    final mq = MediaQuery.of(context);
+    final body = showFooter
+        ? MediaQuery(
+            data: mq.copyWith(padding: mq.padding.copyWith(bottom: mq.padding.bottom + footerOverlayHeight)),
+            child: child,
+          )
+        : child;
     return Scaffold(
       backgroundColor: AceColors.bg,
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            AceHeader(meta: meta, path: path, canPop: canPop),
-            Expanded(child: child),
-            if (showFooter) AceFooter(path: path),
-          ],
-        ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: SafeArea(
+              bottom: false,
+              child: Column(
+                children: [
+                  AceHeader(meta: meta, path: path, canPop: canPop),
+                  Expanded(child: body),
+                ],
+              ),
+            ),
+          ),
+          if (showFooter) Positioned(left: 0, right: 0, bottom: 0, child: AceFooter(path: path)),
+        ],
       ),
     );
   }
 }
 
 class _BackChip extends StatelessWidget {
-  const _BackChip({required this.label, required this.color});
+  const _BackChip({required this.label});
 
   final String label;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return AcePill(
+      height: 44,
+      color: AceColors.card,
+      padding: const EdgeInsets.fromLTRB(10, 0, 18, 0),
       onTap: () => context.canPop() ? context.pop() : context.go('/'),
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(8, 6, 12, 6),
-        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 4,
-          children: [
-            const AceIcon('chevron-left', size: 20),
-            Text(label, style: AceText.style(size: 14)),
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 6,
+        children: [
+          const AceIcon('chevron-left', size: 20),
+          Text(label, style: AceText.style(size: 14, weight: FontWeight.w500)),
+        ],
       ),
     );
   }
@@ -79,11 +90,11 @@ class EmptyLayout extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(child: child),
-          if (canPop && path != '/')
+          if (path != '/')
             Positioned(
-              top: top + 19,
-              left: 2,
-              child: _BackChip(label: context.l10n.back, color: const Color(0xAA000000)),
+              top: top + 12,
+              left: 16,
+              child: _BackChip(label: context.l10n.back),
             ),
         ],
       ),
@@ -105,12 +116,12 @@ class QrLayout extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(child: child),
-          if (canPop && path != '/')
+          if (path != '/')
             Positioned(
-              bottom: 70,
+              bottom: MediaQuery.paddingOf(context).bottom + 40,
               left: 0,
               right: 0,
-              child: Center(child: _BackChip(label: context.l10n.backToHome, color: const Color(0x6B000000))),
+              child: Center(child: _BackChip(label: context.l10n.backToHome)),
             ),
         ],
       ),
@@ -157,8 +168,8 @@ class SoonLayout extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   spacing: 12,
                   children: [
-                    Image.asset('assets/images/ace.png', width: 250, height: 250),
-                    Text(context.l10n.soonDots, style: AceText.style(size: 22, weight: FontWeight.w600)),
+                    Image.asset('assets/images/ace.png', width: 220, height: 220),
+                    Text(context.l10n.soonDots, style: AceText.style(size: 20, weight: FontWeight.w600)),
                   ],
                 ),
               ),

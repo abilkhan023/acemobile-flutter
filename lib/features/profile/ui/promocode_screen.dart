@@ -32,7 +32,7 @@ class _PromocodeScreenState extends State<PromocodeScreen> {
         children: [
           AceInput(controller: _code, label: l.promocode, placeholder: l.enterPromocode, icon: 'qr-code', rules: const ['required', 'min-3']),
           const Spacer(),
-          AceButton(style: AceButtonStyle.white, label: l.activate, onPressed: () => _form.currentState!.validate()),
+          AceButton(style: AceButtonStyle.red, label: l.activate, onPressed: () => _form.currentState!.validate()),
         ],
       ),
     );

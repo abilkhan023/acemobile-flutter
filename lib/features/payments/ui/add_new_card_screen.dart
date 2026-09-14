@@ -49,7 +49,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
             ],
           ),
           const Spacer(),
-          AceButton(label: l.addACard, style: AceButtonStyle.white, onPressed: () => _form.currentState!.validate()),
+          AceButton(label: l.addACard, style: AceButtonStyle.red, onPressed: () => _form.currentState!.validate()),
         ],
       ),
     );

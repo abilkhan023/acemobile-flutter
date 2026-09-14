@@ -32,7 +32,7 @@ class BalanceScreen extends ConsumerWidget {
             onTap: () => context.push('/balance/${w.key}'),
             child: Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(border: Border.all(color: AceColors.divider), borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.row), boxShadow: AceShadows.card),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 spacing: 16,
@@ -41,13 +41,13 @@ class BalanceScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(w.displayName, style: AceText.style(size: 16)),
+                        Text(w.displayName, style: AceText.style(size: 16, weight: FontWeight.w600)),
                         const SizedBox(height: 6),
-                        Text(w.club?.address ?? '', style: AceText.style(size: 14)),
+                        Text(w.club?.address ?? '', style: AceText.text),
                       ],
                     ),
                   ),
-                  Text(formatMoney(w.ownBalance), style: AceText.style(size: 18)),
+                  Text(formatMoney(w.ownBalance), style: AceText.style(size: 18, weight: FontWeight.w600)),
                 ],
               ),
             ),

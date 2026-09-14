@@ -40,7 +40,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
             children: [
               AceInput(controller: _code, label: l.codeFromTheLetter, placeholder: l.enterCode, rules: const ['required', 'number', 'min-5']),
               AceButton(
-                style: AceButtonStyle.white,
+                style: AceButtonStyle.red,
                 label: l.continueAction,
                 onPressed: () {
                   if (_form.currentState!.validate()) context.push('/login/recover-password/new-password');

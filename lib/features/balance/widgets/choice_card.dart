@@ -18,6 +18,7 @@ class ChoiceCard extends StatelessWidget {
 
   void _open(BuildContext context) {
     final l = context.l10n;
+    FocusManager.instance.primaryFocus?.unfocus();
     showAceSheet(
       context,
       title: l.replenishmentMethods,
@@ -27,7 +28,7 @@ class ChoiceCard extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 2),
-            child: Text(l.myCards, style: AceText.style(size: 16, weight: FontWeight.w500)),
+            child: Text(l.myCards, style: AceText.title),
           ),
           AceListItem(
             title: kaspiMethod.name,
@@ -50,22 +51,22 @@ class ChoiceCard extends StatelessWidget {
     return GestureDetector(
       onTap: blockSelect ? null : () => _open(context),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        decoration: BoxDecoration(border: Border.all(color: AceColors.white), borderRadius: BorderRadius.circular(16)),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.input)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             if (v == null)
-              Text(l.selectPaymentMethod, style: AceText.style(size: 14))
+              Text(l.selectPaymentMethod, style: AceText.style(size: 15, weight: FontWeight.w500, color: AceColors.muted))
             else
               Row(
                 spacing: 10,
                 children: [
                   Image.asset(v.img, width: 25, height: 25),
-                  Text(v.name, style: AceText.style(size: 14)),
+                  Text(v.name, style: AceText.style(size: 15, weight: FontWeight.w600)),
                 ],
               ),
-            if (!preview) const AceIcon('chevron-right', size: 24),
+            if (!preview) const AceIcon('chevron-right', size: 20, color: AceColors.dim),
           ],
         ),
       ),

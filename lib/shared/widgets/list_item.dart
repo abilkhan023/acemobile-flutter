@@ -14,27 +14,32 @@ class AceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fg = active ? AceColors.bg : AceColors.white;
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
         decoration: BoxDecoration(
-          color: active ? AceColors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AceColors.white),
+          color: active ? AceColors.accent : AceColors.cardAlt,
+          borderRadius: BorderRadius.circular(AceRadius.row),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              spacing: 16,
+              spacing: 14,
               children: [
-                Image.asset(image, width: 25, height: 25, fit: BoxFit.contain),
-                Text(title, style: AceText.style(size: 16, weight: FontWeight.w500, color: fg)),
+                Container(
+                  width: 40,
+                  height: 40,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(color: active ? const Color(0x33FFFFFF) : AceColors.card, shape: BoxShape.circle),
+                  child: Image.asset(image, fit: BoxFit.contain),
+                ),
+                Text(title, style: AceText.style(size: 15, weight: FontWeight.w600)),
               ],
             ),
-            AceIcon('chevron-right', size: 24, color: fg),
+            AceIcon(active ? 'check-circle' : 'chevron-right', size: 22, color: active ? AceColors.white : AceColors.dim),
           ],
         ),
       ),

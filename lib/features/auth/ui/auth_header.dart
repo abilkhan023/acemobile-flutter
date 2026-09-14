@@ -15,8 +15,8 @@ class AuthHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 12,
       children: [
-        Text(title, style: AceText.style(size: 24, weight: FontWeight.w600)),
-        if (subtitle != null) Text(subtitle!, style: AceText.style(size: 15, weight: FontWeight.w500, color: AceColors.muted)),
+        Text(title, style: AceText.titleBig),
+        if (subtitle != null) Text(subtitle!, style: AceText.style(size: 14, color: AceColors.muted)),
       ],
     );
   }

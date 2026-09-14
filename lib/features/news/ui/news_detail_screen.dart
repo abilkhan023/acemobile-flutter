@@ -24,9 +24,7 @@ class NewsDetailScreen extends ConsumerWidget {
         subject: l.shareTitle,
         title: l.shareTitle,
       ));
-    } catch (e) {
-      debugPrint('share failed: $e');
-    }
+    } catch (_) {}
   }
 
   @override

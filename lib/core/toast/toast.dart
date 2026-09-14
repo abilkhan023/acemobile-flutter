@@ -58,8 +58,8 @@ class ToastStack extends ConsumerWidget {
     final items = ref.watch(toastProvider);
     if (items.isEmpty) return const SizedBox.shrink();
     return Positioned(
-      top: 50,
-      right: 30,
+      top: MediaQuery.viewPaddingOf(context).top + 16,
+      right: 20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         spacing: 16,
@@ -104,16 +104,16 @@ class _ToastState extends ConsumerState<_Toast> with SingleTickerProviderStateMi
         width: (width - 60).clamp(200, 326).toDouble(),
         constraints: const BoxConstraints(minHeight: 64),
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(color: _color, borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(color: _color, borderRadius: BorderRadius.circular(AceRadius.input), boxShadow: AceShadows.card),
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Row(
                 spacing: 16,
                 children: [
                   const AceIcon('circle-information', size: 24),
-                  Expanded(child: Text(widget.item.text, style: AceText.style(size: 16, weight: FontWeight.w500))),
+                  Expanded(child: Text(widget.item.text, style: AceText.style(size: 15, weight: FontWeight.w500, color: AceColors.white))),
                   GestureDetector(
                     onTap: () => ref.read(toastProvider.notifier).remove(widget.item.id),
                     child: const AceIcon('xmark', size: 24),
@@ -131,7 +131,7 @@ class _ToastState extends ConsumerState<_Toast> with SingleTickerProviderStateMi
                   height: 6,
                   decoration: const BoxDecoration(
                     color: Color(0x3C000000),
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(8), bottomRight: Radius.circular(8), bottomLeft: Radius.circular(8)),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(6), bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
                   ),
                 ),
               ),

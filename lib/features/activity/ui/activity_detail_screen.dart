@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/api/api_client.dart';
 import '../../../core/utils/l10n.dart';
+import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_icon.dart';
@@ -49,7 +50,7 @@ class ActivityDetailScreen extends ConsumerWidget {
 
   final String id;
 
-  String _date(String? raw) {
+  String _date(BuildContext context, String? raw) {
     if (raw == null) return '';
     var dt = DateTime.tryParse(raw);
     if (dt == null) return raw;
@@ -57,23 +58,28 @@ class ActivityDetailScreen extends ConsumerWidget {
       dt = DateTime.utc(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second);
     }
     final local = dt.toLocal();
-    return '${DateFormat('dd.MM.yyyy').format(local)} в ${DateFormat('HH:mm').format(local)}';
+    return context.l10n.dateAtTime(DateFormat('dd.MM.yyyy').format(local), DateFormat('HH:mm').format(local));
   }
 
   Widget _box({required String icon, required String title, required String text}) => Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.row), boxShadow: AceShadows.card),
         child: Row(
-          spacing: 10,
+          spacing: 14,
           children: [
-            AceIcon(icon, size: 28, color: AceColors.accent),
+            Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(color: AceColors.cardAlt, shape: BoxShape.circle),
+              child: Center(child: AceIcon(icon, size: 22, color: AceColors.accent)),
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, style: AceText.style(size: 16, weight: FontWeight.w600)),
                   const SizedBox(height: 2),
-                  Text(text, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
+                  Text(text, style: AceText.text),
                 ],
               ),
             ),
@@ -84,7 +90,12 @@ class ActivityDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final details = ref.watch(reservationDetailsProvider(id)).value;
+    final async = ref.watch(reservationDetailsProvider(id));
+    final details = async.value;
+    if (async.hasError && details == null) {
+      return Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(l.loadFailed, textAlign: TextAlign.center, style: AceText.text)));
+    }
+    if (async.isLoading && details == null) return const Center(child: AceSpinner(color: AceColors.accent));
     final minutes = ((details?.durationSec ?? 0) / 60).round();
     return AcePage(
       gap: 16,
@@ -92,7 +103,7 @@ class ActivityDetailScreen extends ConsumerWidget {
         Container(
           constraints: const BoxConstraints(minHeight: 110),
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(16)),
+          decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.card), boxShadow: AceShadows.card),
           child: Column(
             spacing: 8,
             children: [
@@ -108,8 +119,8 @@ class ActivityDetailScreen extends ConsumerWidget {
             ],
           ),
         ),
-        _box(icon: 'comp', title: l.pcNumber(details?.computerName ?? ''), text: _date(details?.dateTime)),
-        _box(icon: 'coin-vertical', title: '${details?.tariff?.basePrice ?? ''} ₸', text: l.priceByTariff(details?.tariff?.name ?? '')),
+        _box(icon: 'comp', title: l.pcNumber(details?.computerName ?? ''), text: _date(context, details?.dateTime)),
+        _box(icon: 'coin-vertical', title: formatMoney(details?.tariff?.basePrice), text: l.priceByTariff(details?.tariff?.name ?? '')),
         _box(icon: 'refresh-ccw-clock', title: l.minutes(minutes), text: l.tariffDuration),
       ],
     );

@@ -1857,6 +1857,36 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'пр. Аль-Фараби 101'**
   String get sampleClubAddress;
+
+  /// No description provided for @qrLogin.
+  ///
+  /// In ru, this message translates to:
+  /// **'QR-вход'**
+  String get qrLogin;
+
+  /// No description provided for @dateAtTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'{date} в {time}'**
+  String dateAtTime(String date, String time);
+
+  /// No description provided for @loadFailed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Не удалось загрузить данные'**
+  String get loadFailed;
+
+  /// No description provided for @noActivityYet.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пока нет активности — забронируйте компьютер или войдите по QR'**
+  String get noActivityYet;
+
+  /// No description provided for @commonHall.
+  ///
+  /// In ru, this message translates to:
+  /// **'Общий зал'**
+  String get commonHall;
 }
 
 class _AppLocalizationsDelegate

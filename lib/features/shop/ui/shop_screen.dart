@@ -99,11 +99,11 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(l.totalPayable, style: AceText.style(size: 16, weight: FontWeight.w500, color: AceColors.muted)),
-                    Text('$total', style: AceText.style(size: 20, weight: FontWeight.w600)),
+                    Text(formatMoney(total), style: AceText.style(size: 20, weight: FontWeight.w600)),
                   ],
                 ),
               ),
-              AceButton(label: '${l.pay} ($total) ₸', style: AceButtonStyle.white, onPressed: () {}),
+              AceButton(label: '${l.pay} (${formatMoney(total)})', style: AceButtonStyle.white, onPressed: () {}),
             ],
             if (confirm == 'da') ...[
               for (final p in products) ProductCard(item: p, row: true, disabled: true),
@@ -147,7 +147,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           Positioned(
             left: width * 0.1,
             width: width * 0.8,
-            bottom: 70,
+            bottom: MediaQuery.paddingOf(context).bottom + 40,
             child: AceButton(label: l.goToBasket('${basket.length}'), style: AceButtonStyle.white, onPressed: () => _openBasket(products)),
           ),
       ],

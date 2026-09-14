@@ -118,7 +118,7 @@ class _TimeWheelState extends State<TimeWheel> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
       children: [
-        if (widget.label != null) Text(widget.label!, textAlign: TextAlign.center, style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
+        if (widget.label != null) Text(widget.label!, textAlign: TextAlign.center, style: AceText.text),
         SizedBox(
           height: _itemHeight * _rows,
           child: Stack(
@@ -129,7 +129,7 @@ class _TimeWheelState extends State<TimeWheel> {
                 right: 0,
                 child: Container(
                   height: 64,
-                  decoration: BoxDecoration(border: Border.all(color: AceColors.cardAlt), borderRadius: BorderRadius.circular(16)),
+                  decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.input)),
                 ),
               ),
               Row(
@@ -173,11 +173,11 @@ class _WheelItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (size, weight, color, blur, opacity) = switch (distance) {
-      0 => (32.0, FontWeight.w700, AceColors.white, 0.0, 1.0),
-      1 => (24.0, FontWeight.w600, const Color(0xFF8A8A8A), 0.3, 1.0),
-      2 => (20.0, FontWeight.w400, const Color(0xFF4A4A4A), 0.8, 1.0),
-      3 => (20.0, FontWeight.w500, const Color(0xFF2E2E2E), 1.4, 1.0),
-      _ => (20.0, FontWeight.w500, const Color(0xFF2E2E2E), 1.4, 0.0),
+      0 => (32.0, FontWeight.w600, AceColors.white, 0.0, 1.0),
+      1 => (24.0, FontWeight.w500, AceColors.muted, 0.3, 1.0),
+      2 => (20.0, FontWeight.w400, AceColors.dim, 0.8, 0.8),
+      3 => (20.0, FontWeight.w400, AceColors.dim, 1.4, 0.4),
+      _ => (20.0, FontWeight.w400, AceColors.dim, 1.4, 0.0),
     };
     Widget child = Center(
       child: AnimatedDefaultTextStyle(

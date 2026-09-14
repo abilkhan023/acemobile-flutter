@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
+import '../../../shared/widgets/ace_button.dart';
 import '../../../shared/widgets/ace_icon.dart';
 import '../../clubs/data/clubs_api.dart';
 import '../../clubs/data/models.dart';
@@ -97,14 +98,18 @@ class _LocationsScreenState extends ConsumerState<LocationsScreen> {
                       height: 44,
                       alignment: Alignment.topCenter,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(color: AceColors.white, borderRadius: BorderRadius.circular(8)),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: AceColors.card,
+                          borderRadius: BorderRadius.circular(AceRadius.pill),
+                          boxShadow: AceShadows.card,
+                        ),
                         child: Text(
                           c.name?.isNotEmpty == true ? c.name! : (c.address ?? ''),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: AceText.style(size: 13, color: AceColors.bg),
+                          style: AceText.style(size: 13, weight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -116,34 +121,14 @@ class _LocationsScreenState extends ConsumerState<LocationsScreen> {
           right: 10,
           bottom: bottom + 10,
           child: Column(
+            spacing: 8,
             children: [
-              _ZoomButton(icon: 'plus', onTap: () => _zoomBy(1)),
-              _ZoomButton(icon: 'minus', onTap: () => _zoomBy(-1)),
+              AceCircleButton(icon: 'plus', onTap: () => _zoomBy(1)),
+              AceCircleButton(icon: 'minus', onTap: () => _zoomBy(-1)),
             ],
           ),
         ),
       ],
-    );
-  }
-}
-
-class _ZoomButton extends StatelessWidget {
-  const _ZoomButton({required this.icon, required this.onTap});
-
-  final String icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 30,
-        height: 30,
-        margin: const EdgeInsets.only(top: 1),
-        decoration: BoxDecoration(color: AceColors.white, border: Border.all(color: const Color(0xFFCCCCCC))),
-        child: Center(child: AceIcon(icon, size: 16, color: AceColors.bg)),
-      ),
     );
   }
 }

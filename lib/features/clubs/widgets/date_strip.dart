@@ -26,7 +26,7 @@ class DateStrip extends StatefulWidget {
 
 class _DateStripState extends State<DateStrip> {
   final _controller = ScrollController();
-  static const _itemWidth = 64.0;
+  static const _itemWidth = 60.0;
   static const _gap = 8.0;
 
   DateTime get _start {
@@ -99,12 +99,12 @@ class _DateStripState extends State<DateStrip> {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              Text(widget.label!, style: AceText.style(size: 14, weight: FontWeight.w600)),
-              Text(_caption(l, locale), style: AceText.style(size: 14, weight: FontWeight.w500, color: AceColors.muted)),
+              Text(widget.label!, style: AceText.style(size: 15, weight: FontWeight.w600)),
+              Text(_caption(l, locale), style: AceText.text),
             ],
           ),
         SizedBox(
-          height: 82,
+          height: 76,
           child: ListView.separated(
             controller: _controller,
             scrollDirection: Axis.horizontal,
@@ -122,13 +122,17 @@ class _DateStripState extends State<DateStrip> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   width: _itemWidth,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(color: active ? AceColors.accent : AceColors.card, borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: active ? AceColors.accent : AceColors.card,
+                    borderRadius: BorderRadius.circular(AceRadius.input),
+                    boxShadow: active ? AceShadows.accent : null,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 4,
                     children: [
-                      Text(DateFormat.E(locale).format(day).toLowerCase(), style: AceText.style(size: 12, weight: FontWeight.w500, color: color ?? AceColors.muted)),
+                      Text(DateFormat.E(locale).format(day).toLowerCase(), style: AceText.style(size: 12, weight: FontWeight.w500, color: color ?? AceColors.dim)),
                       Text('${day.day}', style: AceText.style(size: 20, weight: FontWeight.w700, color: color ?? AceColors.white).copyWith(fontFeatures: const [FontFeature.tabularFigures()])),
                     ],
                   ),

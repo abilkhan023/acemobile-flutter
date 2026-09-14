@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_icon.dart';
@@ -43,11 +44,11 @@ class TariffsList extends StatelessWidget {
             onTap: () => onSelect(selected == t.id ? null : t.id),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               decoration: BoxDecoration(
-                color: AceColors.cardAlt,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: selected == t.id ? AceColors.white : Colors.transparent, width: 2),
+                color: selected == t.id ? AceColors.accent : AceColors.cardAlt,
+                borderRadius: BorderRadius.circular(AceRadius.row),
+                boxShadow: selected == t.id ? AceShadows.accent : null,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,8 +58,8 @@ class TariffsList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 8,
                       children: [
-                        Text('${t.basePrice ?? ''} ₸', style: AceText.style(size: 16, weight: FontWeight.w700)),
-                        Text('${t.name ?? ''} (${tariffTimeToBuy(t, serverTime)})', style: AceText.style(size: 12, weight: FontWeight.w500, color: AceColors.muted)),
+                        Text(formatMoney(t.basePrice), style: AceText.style(size: 17, weight: FontWeight.w600)),
+                        Text('${t.name ?? ''} (${tariffTimeToBuy(t, serverTime)})', style: AceText.style(size: 13, weight: FontWeight.w400, color: selected == t.id ? const Color(0xD9FFFFFF) : AceColors.muted)),
                       ],
                     ),
                   ),

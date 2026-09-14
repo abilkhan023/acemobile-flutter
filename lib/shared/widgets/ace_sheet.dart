@@ -25,8 +25,8 @@ class AceSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final bottom = MediaQuery.paddingOf(context).bottom;
     final keyboard = MediaQuery.viewInsetsOf(context).bottom;
+    final bottom = keyboard > 0 ? 0.0 : MediaQuery.viewPaddingOf(context).bottom;
     final body = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,7 +39,12 @@ class AceSheet extends StatelessWidget {
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.of(context).pop(),
-              child: const AceIcon('x-circle-empty-body', size: 22),
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: const BoxDecoration(color: AceColors.cardAlt, shape: BoxShape.circle),
+                child: const Center(child: AceIcon('xmark', size: 18)),
+              ),
             ),
           ],
         ),
@@ -51,13 +56,27 @@ class AceSheet extends StatelessWidget {
       padding: EdgeInsets.only(bottom: keyboard),
       child: Container(
         constraints: BoxConstraints(minHeight: size.height * 0.3, maxHeight: size.height * 0.92),
-        padding: EdgeInsets.fromLTRB(16, 34, 16, (bottom > 0 ? bottom : 16) + 12),
+        padding: EdgeInsets.fromLTRB(20, 12, 20, (bottom > 0 ? bottom : 16) + 12),
         decoration: const BoxDecoration(
           color: AceColors.card,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(36)),
-          boxShadow: [BoxShadow(color: Color(0x14FFFFFF), offset: Offset(0, -12), blurRadius: 24)],
+          borderRadius: BorderRadius.vertical(top: Radius.circular(AceRadius.card)),
+          boxShadow: AceShadows.bar,
         ),
-        child: scrollable ? SingleChildScrollView(child: body) : body,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
+              child: Container(
+                width: 36,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 18),
+                decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(2)),
+              ),
+            ),
+            Flexible(child: scrollable ? SingleChildScrollView(child: body) : body),
+          ],
+        ),
       ),
     );
   }
