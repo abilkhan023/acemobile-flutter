@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
@@ -7,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../core/env.dart';
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
+import '../../../core/utils/money.dart';
 import '../../home/providers/home_providers.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
@@ -17,38 +19,20 @@ import '../../../shared/widgets/ace_page.dart';
 import '../../../shared/widgets/ace_sheet.dart';
 import '../../../shared/widgets/link_menu.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../balance/providers/balance_providers.dart';
 import '../data/booking_api.dart';
 import '../data/booking_models.dart';
 import '../data/clubs_api.dart';
 import '../data/models.dart';
 import '../logic/map_layout.dart';
-import '../providers/club_title.dart';
-import '../widgets/club_card.dart';
+import '../providers/favorites.dart';
 import '../widgets/computer_map.dart';
 import '../widgets/date_strip.dart';
 import '../widgets/review_card.dart';
 import '../widgets/tariffs_list.dart';
 import '../widgets/time_wheel.dart';
 
-Widget clubHeaderTitle(BuildContext context, String path) => _ClubTitle(branchId: path.split('/').last);
-
-class _ClubTitle extends ConsumerWidget {
-  const _ClubTitle({required this.branchId});
-
-  final String branchId;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final title = ref.watch(clubTitleProvider(branchId));
-    return Text(
-      title,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
-      style: AceText.style(size: 16, weight: FontWeight.w600),
-    );
-  }
-}
+enum _When { now, today, tomorrow, custom }
 
 class ClubScreen extends ConsumerStatefulWidget {
   const ClubScreen({super.key, required this.branchId});
@@ -68,7 +52,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   final Map<String, List<Computer>> _computersByZone = {};
   DateTime? _serverTime;
 
-  int _step = 1;
+  _When _when = _When.now;
   String? _bookDay;
   String _bookTime = '12:00';
   Computer? _computer;
@@ -80,8 +64,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   String get _book => _bookDay == null ? '' : '${_bookDay}T$_bookTime';
 
   List<Computer> get _allComputers => [for (final list in _computersByZone.values) ...list];
-
-  bool get _barVisible => _step == 2 && _computer != null;
 
   @override
   void initState() {
@@ -111,17 +93,14 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       if (branch.gameCenterId != null) {
         _center = await clubs.gameCenter(branch.gameCenterId!);
       }
-      if (mounted) {
-        ref.read(clubTitleProvider(widget.branchId).notifier).set(_center?.name ?? branch.name ?? '');
-        setState(() => _loading = false);
-      }
+      if (mounted) setState(() => _loading = false);
       _zones = await booking.zones(widget.branchId);
       final datetime = await booking.serverDatetime();
       final parsed = datetime == null ? null : DateTime.tryParse(datetime);
-      if (parsed != null) {
-        _serverTime = parsed;
-        _bookTime = DateFormat('HH:mm').format(parsed);
-      }
+      final now = parsed ?? DateTime.now();
+      _serverTime = now;
+      _bookTime = DateFormat('HH:mm').format(now);
+      _bookDay = dateKey(now);
       await Future.wait(_zones.map((z) async => _computersByZone[z.id] = await booking.computersByZone(z.id)));
       if (_book.isNotEmpty) await _applyDatetimeStates();
     } catch (_) {} finally {
@@ -136,6 +115,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   }
 
   Future<void> _createWallet() async {
+    if (!mounted) return;
     final user = ref.read(authProvider).user;
     final gameCenterId = _branch?.gameCenterId;
     if (user == null || gameCenterId == null) return;
@@ -145,6 +125,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   }
 
   Future<void> _applyDatetimeStates() async {
+    if (!mounted) return;
     final states = await ref.read(bookingApiProvider).computersMap(branchId: widget.branchId, datetime: '$_book:00');
     final byId = {for (final c in states) c.id: c};
     for (final entry in _computersByZone.entries) {
@@ -156,6 +137,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   }
 
   Future<void> _refreshComputers() async {
+    if (!mounted) return;
     _computer = null;
     final booking = ref.read(bookingApiProvider);
     try {
@@ -168,17 +150,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     if (mounted) setState(() {});
   }
 
-  void _setBookDay(String? day) {
-    if (_bookDay == day) return;
-    setState(() => _bookDay = day);
-    _refreshComputers();
-  }
 
-  void _setBookTime(String time) {
-    if (_bookTime == time) return;
-    setState(() => _bookTime = time);
-    _refreshComputers();
-  }
 
   String _reserveDateLabel() {
     final dt = DateTime.tryParse(_book);
@@ -234,18 +206,21 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final dateLabel = _reserveDateLabel();
     String? selected;
     var reserving = false;
+    final zoneName = _zones.where((z) => z.id == computer?.zoneId).firstOrNull?.name ?? '';
+    final wallet = (ref.read(walletsProvider).value ?? const []).where((w) => w.gameCenterId == _center?.id).firstOrNull;
     showAceSheet(
       context,
-      title: l.selectTariff,
+      title: l.pcInZone(computer?.name ?? '', zoneName),
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setSheet) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 20,
+          spacing: 16,
           children: [
             Text(l.bookingPcAt(computer?.name ?? '', dateLabel), style: AceText.text),
             TariffsList(tariffs: _tariffs, selected: selected, serverTime: _serverTime, onSelect: (v) => setSheet(() => selected = v)),
+            if (wallet != null) Text(l.chargedFromClubBalance(_center?.name ?? '', formatMoney(wallet.balance)), style: AceText.text),
             AceButton(
-              label: l.reserve,
+              label: selected == null ? l.reserve : l.reserveFor(formatMoney(_tariffs.where((t) => t.id == selected).firstOrNull?.basePrice)),
               style: AceButtonStyle.red,
               loading: reserving,
               disabled: selected == null,
@@ -259,7 +234,77 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
           ],
         ),
       ),
+    ).then((_) {
+      if (mounted && _computer != null) setState(() => _computer = null);
+    });
+  }
+
+  DateTime get _now => DateTime.now();
+
+  DateTime _roundUp(DateTime t) => DateTime(t.year, t.month, t.day, t.hour + 1);
+
+  void _setWhen(_When w) {
+    if (w == _When.custom) {
+      _openDateSheet();
+      return;
+    }
+    final now = _now;
+    final target = switch (w) {
+      _When.now => now,
+      _When.today => _roundUp(now),
+      _ => _roundUp(now).add(const Duration(days: 1)),
+    };
+    setState(() {
+      _when = w;
+      _bookDay = dateKey(target);
+      _bookTime = w == _When.now ? DateFormat('HH:mm').format(now) : DateFormat('HH:00').format(target);
+    });
+    _refreshComputers();
+  }
+
+  void _openDateSheet() {
+    final l = context.l10n;
+    var day = _bookDay ?? dateKey(_now);
+    var time = _bookTime;
+    showAceSheet(
+      context,
+      title: l.selectDate,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setSheet) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 20,
+          children: [
+            DateStrip(value: day, onChanged: (v) => setSheet(() => day = v)),
+            TimeWheel(value: time, onChanged: (v) => setSheet(() => time = v)),
+            AceButton(
+              label: l.apply,
+              style: AceButtonStyle.red,
+              onPressed: () {
+                Navigator.of(ctx).pop();
+                setState(() {
+                  _when = _When.custom;
+                  _bookDay = day;
+                  _bookTime = time;
+                });
+                _refreshComputers();
+              },
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  String _whenLabel(_When w, AppLocalizations l) {
+    final now = _now;
+    return switch (w) {
+      _When.now => l.now,
+      _When.today => '${l.today} ${DateFormat('HH:00').format(_roundUp(now))}',
+      _When.tomorrow => '${l.tomorrow} ${DateFormat('HH:00').format(_roundUp(now))}',
+      _When.custom => _when == _When.custom && _bookDay != null
+          ? '${DateFormat('d MMM', Localizations.localeOf(context).toString()).format(parseDateKey(_bookDay!))}, $_bookTime'
+          : l.pickDate,
+    };
   }
 
   Future<bool> _reserve({required String tariffId, required Computer computer, required String book}) async {
@@ -279,11 +324,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
 
   void _afterReserve(bool ok, Computer computer, String book) {
     if (!mounted) return;
-    setState(() {
-      _bookDay = null;
-      _computer = null;
-      _step = 1;
-    });
+    setState(() => _computer = null);
+    _refreshComputers();
     final l = context.l10n;
     final name = computer.name ?? '';
     showAceSheet(
@@ -307,9 +349,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                 AceButton(label: l.startOver, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
               ],
       ),
-    ).then((_) {
-      if (mounted) setState(() => _bookDay = null);
-    });
+    );
   }
 
   void _openTariffInfo() {
@@ -458,174 +498,110 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    if (_loading) return const Center(child: AceSpinner(color: AceColors.accent));
-    final bottom = MediaQuery.paddingOf(context).bottom;
     final branch = _branch;
     final center = _center;
-
-    return Stack(
+    final fav = ref.watch(favoritesProvider).contains(widget.branchId);
+    final free = _allComputers.where((c) => ComputerMap.stateOf(c) == 'FREE').length;
+    return Column(
       children: [
-        AcePage(
-          gap: 16,
-          padding: EdgeInsets.fromLTRB(20, 8, 20, _barVisible ? 120 : 20),
-          children: [
-            Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: AceColors.card,
-                borderRadius: BorderRadius.circular(AceRadius.card),
-                boxShadow: AceShadows.card,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 14,
-                children: [
-                  ClubLogo(url: center?.logo, size: 64),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 6,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(child: Text(center?.name ?? '', style: AceText.title)),
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: _share,
-                              child: const AceIcon('arrow-up-from-bracket', size: 22, color: AceColors.dim),
-                            ),
-                          ],
-                        ),
-                        Text(branch?.address ?? '', style: AceText.text),
-                        Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-                          children: [
-                            _chip(
-                              onTap: _openReviews,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 4,
-                                children: [
-                                  const AceIcon('star-filled', size: 12, color: AceColors.accent),
-                                  Text('8.8', style: AceText.style(size: 12, weight: FontWeight.w600)),
-                                ],
-                              ),
-                            ),
-                            _chip(
-                              onTap: _openTariffInfo,
-                              child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600)),
-                            ),
-                            _chip(
-                              onTap: _openMaps,
-                              child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600)),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(_step == 1 ? l.computerBackup : l.selectComputer, style: AceText.title),
-            ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 150),
-              child: _loadingBooking
-                  ? const Padding(
-                      key: ValueKey(0),
-                      padding: EdgeInsets.symmetric(vertical: 40),
-                      child: Center(child: AceSpinner(color: AceColors.accent)),
-                    )
-                  : _step == 1
-                  ? Column(
-                      key: const ValueKey(1),
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 18,
-                      children: [
-                        DateStrip(value: _bookDay, onChanged: _setBookDay, label: l.bookingDate),
-                        TimeWheel(value: _bookTime, onChanged: _setBookTime, label: l.selectTime),
-                        AceButton(
-                          label: l.continueAction,
-                          style: AceButtonStyle.red,
-                          disabled: _book.isEmpty,
-                          onPressed: () => setState(() => _step = 2),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      key: const ValueKey(2),
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 14,
-                      children: [
-                        LinkMenu(
-                          title: _reserveDateLabel(),
-                          subtitle: l.changeDateTime,
-                          icon: 'calendar-alt',
-                          onTap: () => setState(() => _step = 1),
-                        ),
-                        ComputerMap(
-                          size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
-                          zones: _zones,
-                          computers: _allComputers,
-                          selected: _computer,
-                          onSelect: (c) => setState(() => _computer = c),
-                        ),
-                      ],
-                    ),
-            ),
-          ],
-        ),
-        Positioned(
-          left: 20,
-          right: 20,
-          bottom: bottom + 22,
-          child: AnimatedSlide(
-            duration: const Duration(milliseconds: 250),
-            offset: _barVisible ? Offset.zero : const Offset(0, 1.6),
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: _barVisible ? 1 : 0,
-              child: IgnorePointer(
-                ignoring: !_barVisible,
-                child: Container(
-                  height: 64,
-                  padding: const EdgeInsets.fromLTRB(22, 0, 8, 0),
-                  decoration: BoxDecoration(color: AceColors.accent, borderRadius: BorderRadius.circular(32), boxShadow: AceShadows.accent),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              l.selectedPc(_computer?.name ?? ''),
-                              style: AceText.style(size: 15, weight: FontWeight.w700, color: AceColors.white),
-                            ),
-                            Text(_reserveDateLabel(), style: AceText.style(size: 12, color: const Color(0xD9FFFFFF))),
-                          ],
-                        ),
-                      ),
-                      AceButton(
-                        label: l.continueAction,
-                        style: AceButtonStyle.white,
-                        expand: false,
-                        loading: _loadingContinue,
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        onPressed: _continueToTariffs,
-                      ),
-                    ],
-                  ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 6),
+          child: Row(
+            spacing: 12,
+            children: [
+              AceCircleButton(icon: 'chevron-left', onTap: () => context.canPop() ? context.pop() : context.go('/')),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(center?.name ?? branch?.name ?? '', maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 16, weight: FontWeight.w600)),
+                    if ((branch?.address ?? '').isNotEmpty) Text(branch!.address!, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.caption),
+                  ],
                 ),
               ),
-            ),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => ref.read(favoritesProvider.notifier).toggle(widget.branchId),
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: const BoxDecoration(color: AceColors.card, shape: BoxShape.circle),
+                  child: Icon(fav ? Icons.favorite : Icons.favorite_border, size: 22, color: fav ? AceColors.accent : AceColors.text),
+                ),
+              ),
+            ],
           ),
+        ),
+        Expanded(
+          child: _loading
+              ? const Center(child: AceSpinner(color: AceColors.accent))
+              : AcePage(
+                  gap: 14,
+                  padding: const EdgeInsets.fromLTRB(20, 6, 20, 24),
+                  children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      clipBehavior: Clip.none,
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          for (final w in _When.values)
+                            AcePill(
+                              height: 34,
+                              color: _when == w ? AceColors.accent : AceColors.cardAlt,
+                              onTap: () => _setWhen(w),
+                              child: Text(_whenLabel(w, l), style: AceText.style(size: 13, weight: FontWeight.w600, color: _when == w ? AceColors.white : AceColors.text)),
+                            ),
+                        ],
+                      ),
+                    ),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [
+                        _chip(
+                          onTap: _openReviews,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 4,
+                            children: [
+                              const AceIcon('star-filled', size: 12, color: AceColors.accent),
+                              Text('8.8', style: AceText.style(size: 12, weight: FontWeight.w600)),
+                            ],
+                          ),
+                        ),
+                        _chip(onTap: _openTariffInfo, child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600))),
+                        _chip(onTap: _openMaps, child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600))),
+                        _chip(onTap: _share, child: const AceIcon('arrow-up-from-bracket', size: 14)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: Text(l.selectComputer, style: AceText.title)),
+                        if (!_loadingBooking)
+                          AcePill(
+                            height: 28,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            color: const Color(0x2434C77B),
+                            child: Text(l.freeCount('$free'), style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success)),
+                          ),
+                      ],
+                    ),
+                    if (_loadingBooking)
+                      const Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Center(child: AceSpinner(color: AceColors.accent)))
+                    else
+                      ComputerMap(
+                        size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
+                        zones: _zones,
+                        computers: _allComputers,
+                        selected: _computer,
+                        onSelect: (c) {
+                          if (_loadingContinue) return;
+                          setState(() => _computer = c);
+                          _continueToTariffs();
+                        },
+                      ),
+                  ],
+                ),
         ),
       ],
     );

@@ -961,4 +961,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonHall => 'Общий зал';
+
+  @override
+  String get wallet => 'Кошелёк';
+
+  @override
+  String get activity => 'Активность';
+
+  @override
+  String get freeNow => 'Свободно сейчас';
+
+  @override
+  String get favorites => 'Избранные';
+
+  @override
+  String get now => 'Сейчас';
+
+  @override
+  String get pickDate => 'Дата…';
+
+  @override
+  String get selectDate => 'Выберите дату и время';
+
+  @override
+  String get topUp => 'Пополнить';
+
+  @override
+  String get totalAcrossNetwork => 'Всего по сети';
+
+  @override
+  String get byClubs => 'По клубам';
+
+  @override
+  String get noFavoritesYet =>
+      'Нет избранных клубов — нажмите ♡ на экране клуба';
+
+  @override
+  String get noFreeNow => 'Сейчас нет клубов со свободными ПК';
+
+  @override
+  String freeCount(String n) {
+    return '$n свободно';
+  }
+
+  @override
+  String freeOf(String free, String total) {
+    return '$free из $total свободно';
+  }
+
+  @override
+  String zoneBusy(String zone) {
+    return '$zone занят';
+  }
+
+  @override
+  String tariffNow(String name, String price) {
+    return 'сейчас тариф «$name» $price';
+  }
+
+  @override
+  String chargedFromClubBalance(String club, String sum) {
+    return 'Спишется с баланса $club: $sum';
+  }
+
+  @override
+  String reserveFor(String price) {
+    return 'Забронировать · $price';
+  }
+
+  @override
+  String pcInZone(String pc, String zone) {
+    return 'ПК №$pc · $zone';
+  }
+
+  @override
+  String computersCount(String n) {
+    return '$n ПК';
+  }
 }
