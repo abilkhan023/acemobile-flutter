@@ -122,8 +122,8 @@ List<RouteBase> _routes() => [
       _route('/activity', RouteMeta(title: (l) => l.activity, hideBack: true), (s) => RefreshOnEnter(providers: [activityProvider], child: const ActivityScreen())),
       _route('/activity/:id', RouteMeta(title: (l) => l.lastActivity, hideFooter: true), (s) => ActivityDetailScreen(key: ValueKey(s.pathParameters['id']), id: s.pathParameters['id']!)),
       _route('/locations', RouteMeta(title: (l) => l.locations, layout: AceLayout.empty, isDeep: true), (s) => RefreshOnEnter(providers: [availableGameCentersProvider], child: const LocationsScreen())),
-      _route('/balance', RouteMeta(title: (l) => l.wallet, hideBack: true, headerActions: balanceHeaderActions), (s) => RefreshOnEnter(providers: [walletsProvider, gameCentersProvider], child: const BalanceScreen())),
-      _route('/balance/story', RouteMeta(title: (l) => l.story), (s) => const BalanceStoryScreen()),
+      _route('/balance', RouteMeta(title: (l) => l.wallet, hideBack: true), (s) => RefreshOnEnter(providers: [walletsProvider, gameCentersProvider], child: const BalanceScreen())),
+      _route('/balance/story', RouteMeta(title: (l) => l.story, layout: AceLayout.soon), (s) => const BalanceStoryScreen()),
       _route('/balance/form', RouteMeta(title: (l) => l.balance, hideFooter: true, isDeep: true), (s) => const BalanceFormScreen()),
       _route('/balance/:id', RouteMeta(title: (l) => l.topUpBalance), (s) => RefreshOnEnter(providers: [walletsProvider], child: BalanceIdScreen(key: ValueKey(s.pathParameters['id']), walletId: s.pathParameters['id']!))),
       _route('/profile', RouteMeta(title: (l) => l.profile, hideBack: true), (s) => RefreshOnEnter(providers: [walletsProvider], child: const ProfileScreen())),
@@ -174,6 +174,19 @@ final routerProvider = Provider<GoRouter>((ref) {
   return router;
 });
 
+bool routerCanPop(GoRouter router) {
+  var matches = router.routerDelegate.currentConfiguration.matches;
+  while (true) {
+    if (matches.length > 1) return true;
+    final last = matches.lastOrNull;
+    if (last is ShellRouteMatch) {
+      matches = last.matches;
+      continue;
+    }
+    return false;
+  }
+}
+
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.state, required this.child});
 
@@ -184,7 +197,7 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final meta = metaForState(state);
     final path = state.uri.path;
-    final canPop = ref.read(routerProvider).canPop();
+    final canPop = routerCanPop(ref.read(routerProvider));
     return switch (meta.layout) {
       AceLayout.normal => DefaultLayout(meta: meta, path: path, canPop: canPop, child: child),
       AceLayout.empty => EmptyLayout(path: path, canPop: canPop, child: child),

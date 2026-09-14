@@ -12,12 +12,6 @@ import '../../../shared/widgets/ace_page.dart';
 import '../../clubs/widgets/club_card.dart';
 import '../providers/balance_providers.dart';
 
-Widget balanceHeaderActions(BuildContext context) => GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => context.push('/balance/story'),
-      child: Text(context.l10n.story, style: AceText.style(size: 14, color: AceColors.link)),
-    );
-
 class BalanceScreen extends ConsumerWidget {
   const BalanceScreen({super.key});
 
@@ -25,9 +19,9 @@ class BalanceScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final wallets = ref.watch(walletClubsProvider);
-    final items = wallets.value ?? const <WalletClub>[];
+    final items = (wallets.value ?? const <WalletClub>[]).where((w) => w.club != null).toList();
     if (wallets.isLoading && items.isEmpty) return const Center(child: AceSpinner(color: AceColors.accent));
-    final own = items.where((w) => w.club != null).toList();
+    final own = items;
     final total = own.fold<num>(0, (acc, w) => acc + (num.tryParse(w.balance.toString()) ?? 0));
     return AcePage(
       gap: 14,

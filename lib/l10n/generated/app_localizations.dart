@@ -2007,6 +2007,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'{n} ПК'**
   String computersCount(String n);
+
+  /// No description provided for @searchClubs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поиск по клубам'**
+  String get searchClubs;
+
+  /// No description provided for @nothingFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ничего не найдено'**
+  String get nothingFound;
 }
 
 class _AppLocalizationsDelegate

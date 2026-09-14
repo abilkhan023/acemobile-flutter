@@ -244,45 +244,46 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   DateTime _roundUp(DateTime t) => DateTime(t.year, t.month, t.day, t.hour + 1);
 
   void _setWhen(_When w) {
-    if (w == _When.custom) {
-      _openDateSheet();
+    if (w == _When.now) {
+      final now = _now;
+      setState(() {
+        _when = w;
+        _bookDay = dateKey(now);
+        _bookTime = DateFormat('HH:mm').format(now);
+      });
+      _refreshComputers();
       return;
     }
     final now = _now;
-    final target = switch (w) {
-      _When.now => now,
-      _When.today => _roundUp(now),
-      _ => _roundUp(now).add(const Duration(days: 1)),
+    final day = switch (w) {
+      _When.today => dateKey(now),
+      _When.tomorrow => dateKey(now.add(const Duration(days: 1))),
+      _ => _when == _When.custom ? (_bookDay ?? dateKey(now)) : dateKey(now),
     };
-    setState(() {
-      _when = w;
-      _bookDay = dateKey(target);
-      _bookTime = w == _When.now ? DateFormat('HH:mm').format(now) : DateFormat('HH:00').format(target);
-    });
-    _refreshComputers();
+    _openDateSheet(w, day, w == _When.custom);
   }
 
-  void _openDateSheet() {
+  void _openDateSheet(_When w, String initialDay, bool pickDay) {
     final l = context.l10n;
-    var day = _bookDay ?? dateKey(_now);
-    var time = _bookTime;
+    var day = initialDay;
+    var time = _when == w ? _bookTime : DateFormat('HH:00').format(_roundUp(_now));
     showAceSheet(
       context,
-      title: l.selectDate,
+      title: pickDay ? l.selectDate : (w == _When.today ? l.today : l.tomorrow),
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setSheet) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 20,
           children: [
-            DateStrip(value: day, onChanged: (v) => setSheet(() => day = v)),
+            if (pickDay) DateStrip(value: day, onChanged: (v) => setSheet(() => day = v)),
             TimeWheel(value: time, onChanged: (v) => setSheet(() => time = v)),
             AceButton(
-              label: l.apply,
+              label: '${l.apply} · ${_dayLabel(day, l)}, $time',
               style: AceButtonStyle.red,
               onPressed: () {
                 Navigator.of(ctx).pop();
                 setState(() {
-                  _when = _When.custom;
+                  _when = w;
                   _bookDay = day;
                   _bookTime = time;
                 });
@@ -295,15 +296,20 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     );
   }
 
-  String _whenLabel(_When w, AppLocalizations l) {
+  String _dayLabel(String day, AppLocalizations l) {
     final now = _now;
+    if (day == dateKey(now)) return l.today;
+    if (day == dateKey(now.add(const Duration(days: 1)))) return l.tomorrow;
+    return DateFormat('d MMM', Localizations.localeOf(context).toString()).format(parseDateKey(day));
+  }
+
+  String _whenLabel(_When w, AppLocalizations l) {
+    final selected = _when == w;
     return switch (w) {
       _When.now => l.now,
-      _When.today => '${l.today} ${DateFormat('HH:00').format(_roundUp(now))}',
-      _When.tomorrow => '${l.tomorrow} ${DateFormat('HH:00').format(_roundUp(now))}',
-      _When.custom => _when == _When.custom && _bookDay != null
-          ? '${DateFormat('d MMM', Localizations.localeOf(context).toString()).format(parseDateKey(_bookDay!))}, $_bookTime'
-          : l.pickDate,
+      _When.today => selected ? '${l.today}, $_bookTime' : l.today,
+      _When.tomorrow => selected ? '${l.tomorrow}, $_bookTime' : l.tomorrow,
+      _When.custom => selected && _bookDay != null ? '${_dayLabel(_bookDay!, l)}, $_bookTime' : l.pickDate,
     };
   }
 

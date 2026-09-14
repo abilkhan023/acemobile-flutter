@@ -10,6 +10,7 @@ import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
 import '../../../shared/widgets/ace_button.dart';
 import '../../../shared/widgets/ace_icon.dart';
+import '../../../shared/widgets/ace_input.dart';
 import '../../../shared/widgets/ace_page.dart';
 import '../../../shared/widgets/ace_sheet.dart';
 import '../../auth/providers/auth_controller.dart';
@@ -36,6 +37,14 @@ class ClubsFeedScreen extends ConsumerStatefulWidget {
 
 class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
   _Filter _filter = _Filter.all;
+  final _search = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -80,9 +89,12 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
       final own = wallets.where((w) => w.club != null).toList();
       if (own.isNotEmpty) total = own.fold<num>(0, (acc, w) => acc + (num.tryParse(w.balance.toString()) ?? 0));
     }
+    final q = _query.trim().toLowerCase();
     final visible = [
       for (final c in cards)
-        if (_filter != _Filter.favorites || favorites.contains(c.branch.id)) c,
+        if ((_filter != _Filter.favorites || favorites.contains(c.branch.id)) &&
+            (q.isEmpty || c.title.toLowerCase().contains(q) || c.text.toLowerCase().contains(q)))
+          c,
     ];
     return Stack(
       children: [
@@ -111,25 +123,29 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
                   AcePill(
                     height: 40,
                     color: AceColors.card,
-                    padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
                     onTap: hasSession ? _openSession : () => showBalanceSheet(context),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      spacing: 10,
+                      spacing: 8,
                       children: [
                         if (hasSession) ...[
                           Container(width: 8, height: 8, decoration: const BoxDecoration(color: AceColors.success, shape: BoxShape.circle)),
                           Text(l.pcNumber(socket?.context?.computerName ?? ''), style: AceText.style(size: 13, weight: FontWeight.w600)),
-                        ],
-                        AcePill(
-                          height: 28,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(total == null ? l.balance : formatMoney(total), style: AceText.style(size: 13, weight: FontWeight.w600)),
-                        ),
+                          Container(width: 1, height: 16, color: AceColors.divider),
+                        ] else
+                          const AceIcon('coin-vertical', size: 16, color: AceColors.accent),
+                        Text(total == null ? l.balance : formatMoney(total), style: AceText.style(size: 14, weight: FontWeight.w600)),
                       ],
                     ),
                   ),
               ],
+            ),
+            AceInput(
+              controller: _search,
+              placeholder: l.searchClubs,
+              icon: 'search',
+              onChanged: (v) => setState(() => _query = v),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -146,7 +162,7 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
             if (branches.isLoading && cards.isEmpty)
               const Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Center(child: AceSpinner(color: AceColors.accent)))
             else if (visible.isEmpty)
-              _EmptyCard(text: _filter == _Filter.favorites ? l.noFavoritesYet : l.noFreeNow)
+              _EmptyCard(text: q.isNotEmpty ? l.nothingFound : (_filter == _Filter.favorites ? l.noFavoritesYet : l.noFreeNow))
             else
               for (final c in visible)
                 _ClubFeedCard(

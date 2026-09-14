@@ -17,7 +17,7 @@ class CurrentBalanceScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final wallets = ref.watch(walletClubsProvider);
-    final items = wallets.value ?? const <WalletClub>[];
+    final items = (wallets.value ?? const <WalletClub>[]).where((w) => w.club != null).toList();
     return AcePage(
       gap: 16,
       children: [

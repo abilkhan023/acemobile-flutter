@@ -1038,4 +1038,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String computersCount(String n) {
     return '$n ПК';
   }
+
+  @override
+  String get searchClubs => 'Поиск по клубам';
+
+  @override
+  String get nothingFound => 'Ничего не найдено';
 }

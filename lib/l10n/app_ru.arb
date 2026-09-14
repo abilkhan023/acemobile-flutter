@@ -455,5 +455,7 @@
   "pcInZone": "ПК №{pc} · {zone}",
   "@pcInZone": {"placeholders": {"pc": {"type": "String"}, "zone": {"type": "String"}}},
   "computersCount": "{n} ПК",
-  "@computersCount": {"placeholders": {"n": {"type": "String"}}}
+  "@computersCount": {"placeholders": {"n": {"type": "String"}}},
+  "searchClubs": "Поиск по клубам",
+  "nothingFound": "Ничего не найдено"
 }

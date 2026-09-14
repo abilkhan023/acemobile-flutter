@@ -129,7 +129,7 @@ class _TimeWheelState extends State<TimeWheel> {
                 right: 0,
                 child: Container(
                   height: 64,
-                  decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.input)),
+                  decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(AceRadius.input)),
                 ),
               ),
               Row(

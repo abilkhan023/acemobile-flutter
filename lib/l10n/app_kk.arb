@@ -1,12 +1,521 @@
 {
   "@@locale": "kk",
-  "hi": "Салем",
+  "hi": "Сәлем",
+  "welcome": "Қош келдіңіз!",
+  "clubs": "Клубтар",
+  "club": "Клуб",
+  "locations": "Мекенжайлар",
+  "balance": "Баланс",
+  "profile": "Профиль",
+  "myProfile": "Менің профилім",
+  "news": "Жаңалықтар",
+  "about": "Біз туралы",
+  "back": "Артқа",
+  "registration": "Тіркелу",
+  "forgotPassword": "Құпиясөзді ұмыттыңыз ба?",
+  "login": "Логин",
+  "password": "Құпиясөз",
+  "email": "Email",
+  "enterData": "Деректерді енгізіңіз",
+  "or": "немесе",
+  "continueGuest": "Қонақ ретінде жалғастыру",
+  "continueAction": "Жалғастыру",
+  "createAccount": "Аккаунт құру",
+  "passwordRecovery": "Құпиясөзді қалпына келтіру",
+  "requiredField": "Міндетті өріс",
+  "enterAtLeast8Characters": "Кемінде 8 таңба енгізіңіз",
+  "maxLength": "Ең үлкен ұзындық",
+  "minLength": "Ең кіші ұзындық",
+  "register": "Тіркелу",
+  "restore": "Қалпына келтіру",
+  "thisIsEmail": "Поштаны енгізіңіз",
+  "anErrorOccurred": "Қате орын алды",
+  "accountCreated": "Аккаунт құрылды!",
+  "save": "Сақтау",
+  "changePhoto": "Фотоны өзгерту",
+  "changePasswordAction": "Құпиясөзді өзгерту",
+  "oldPassword": "Ескі құпиясөз",
+  "newPassword": "Жаңа құпиясөз",
+  "change": "Өзгерту",
+  "name": "Аты",
+  "surname": "Тегі",
+  "logout": "Шығу",
+  "deleteAccount": "Аккаунтты жою",
+  "thereArePlaces": "Орын бар",
+  "noSeatsAvailable": "Орын жоқ",
+  "filter": "Сүзгі",
+  "kitchen": "Асхана",
+  "open": "Ашық",
+  "seatsAvailable": "Орын бар",
+  "sortBy": "Сұрыптау",
+  "recommended": "Ұсынылған",
+  "rating": "Рейтинг",
+  "distance": "Қашықтық",
+  "cost": "Бағасы",
+  "apply": "Қолдану",
+  "tariffs": "Тарифтер",
+  "selectComputer": "Компьютерді таңдаңыз",
+  "story": "Тарих",
+  "topUpBalance": "Балансты толтыру",
+  "excellent": "Керемет",
+  "good": "Жақсы",
+  "bad": "Нашар",
+  "selectPeriod": "Кезеңді таңдаңыз",
+  "backToHome": "Басты бетке",
+  "home": "Басты бет",
+  "all": "Барлығы",
+  "catalog": "Каталог",
+  "shop": "Дүкен",
+  "reservation": "Брондау",
+  "currentBalance": "Ағымдағы баланс",
+  "balanceReplenishment": "Балансты толтыру",
+  "paymentMethods": "Төлем тәсілдері",
+  "paymentHistory": "Төлем тарихы",
+  "clubsDirectory": "Клубтар каталогы",
+  "reset": "Тазалау",
+  "search": "Іздеу",
+  "enterTheClubName": "Клуб атауын енгізіңіз",
+  "computerBackup": "Компьютерді брондау",
+  "selectTime": "Уақытты таңдау",
+  "bookingDate": "Күні",
+  "ready": "Дайын",
+  "sorting": "Сұрыптау",
+  "reviews": "Пікірлер",
+  "getDirections": "Бағыт салу",
+  "lastActivity": "Соңғы белсенділік",
+  "repeatBooking": "Қайта брондау",
+  "notifications": "Хабарламалар",
+  "basket": "Себет",
+  "loginToAceGaming": "ACE GAMING-ке кіру",
+  "toLogIntoTheApplicationChooseAMethodConvenientForYou": "Қолданбаға кіру үшін\nыңғайлы тәсілді таңдаңыз",
+  "byLoggingInYouAgreeToThePrivacyPolicy": "Кіре отырып, сіз\nҚұпиялылық саясатымен келісесіз",
+  "loginViaApple": "Apple арқылы кіру",
+  "loginViaGoogle": "Google арқылы кіру",
+  "loginViaEmail": "E-mail арқылы кіру",
+  "loginViaTelegram": "Telegram арқылы кіру",
+  "enterYourEmailAndPassword": "E-mail мен құпиясөзді енгізіңіз",
+  "enterEmail": "E-mail енгізіңіз",
+  "enter": "Кіру",
+  "enterPassword": "Құпиясөзді енгізіңіз",
+  "enterYourEmail": "E-mail енгізіңіз",
+  "weWillSendAConfirmationCodeToYourRegisteredEmailToChangeYour": "Құпиясөзді өзгерту үшін тіркелген e-mail-ге растау кодын жібереміз",
+  "weWillSendYouANewPasswordToYourRegisteredEmail": "Тіркелген e-mail-ге жаңа құпиясөз жібереміз",
+  "codeFromTheLetter": "Хаттағы код",
+  "enterCode": "Кодты енгізіңіз",
+  "didNotReceiveTheCode": "Код келмеді ме?",
+  "resend": "Қайта жіберу",
+  "createANewPassword": "Жаңа құпиясөз ойлап табыңыз",
+  "createANewPasswordForYourAccount": "Аккаунтыңыз үшін жаңа құпиясөз құрыңыз",
+  "createAPassword": "Құпиясөз құру",
+  "repeatPassword": "Құпиясөзді қайталаңыз",
+  "listOfComputerClubs": "Компьютерлік клубтар тізімі",
+  "eachClubHasItsOwnBalance": "Әр клубта сіздің жеке балансыңыз бар",
+  "replenishment": "Толтыру",
+  "paymentDetails": "Төлем мәліметтері",
+  "print": "Басып шығару",
+  "sendByEmail": "Email-ге жіберу",
+  "selectAComputerClub": "Компьютерлік клубты таңдаңыз",
+  "currentBalanceSum": "Ағымдағы қалдық: {sum} ₸",
+  "@currentBalanceSum": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "next": "Әрі қарай",
+  "topUpAmountT": "Толтыру сомасы, ₸",
+  "enterAmount": "Соманы енгізіңіз",
+  "selectPaymentMethod": "Төлем тәсілін таңдаңыз",
+  "replenishmentMethods": "Толтыру тәсілдері",
+  "myCards": "Менің карталарым",
+  "otherPaymentMethods": "Басқа төлем тәсілдері",
+  "addANewCard": "Жаңа карта қосу",
+  "confirmation": "Растау",
+  "paymentMethod": "Төлем тәсілі",
+  "topUpAmount": "Толтыру сомасы",
+  "pay": "Төлеу",
+  "card": "Карта",
+  "setAsDefault": "Әдепкі етіп орнату",
+  "removeCard": "Картаны жою",
+  "addNewCard": "Жаңа карта қосу",
+  "validityPeriod": "Жарамдылық мерзімі",
+  "cardNumber": "Карта нөмірі",
+  "addACard": "Карта қосу",
+  "totalPayable": "Төлеуге барлығы",
+  "confirmPayment": "Төлемді растаңыз",
+  "oopsSomethingWentWrong": "Упс, бірдеңе дұрыс болмады",
+  "tryAgain": "Қайталап көріңіз",
+  "yourOrderWillBeDeliveredToYourTable": "Тапсырысыңыз үстеліңізге жеткізіледі",
+  "thankYouForChoosingOurServiceWeWishYouBonAppetit": "Қызметімізді таңдағаныңызға рахмет! Ас болсын!",
+  "goingTo": "Дайындалуда",
+  "goToDetails": "Мәліметтерге өту",
+  "paymentAccepted": "Төлем қабылданды",
+  "orderDetails": "Тапсырыс мәліметтері",
+  "orderContents": "Тапсырыс құрамы:",
+  "personalInformation": "Жеке деректер",
+  "changePassword": "Құпиясөзді өзгерту",
+  "selectLanguage": "Тілді таңдау",
+  "promocode": "Промокод",
+  "whatIsYourName": "Атыңыз кім?",
+  "enterName": "Атыңызды енгізіңіз",
+  "activate": "Белсендіру",
+  "enterPromocode": "Промокодты енгізіңіз",
+  "writeAReview": "Пікір жазу",
+  "review": "Пікір",
+  "startWritingOptional": "Жаза бастаңыз... (міндетті емес)",
+  "send": "Жіберу",
+  "cancel": "Бас тарту",
+  "enterYourName": "Атыңызды енгізіңіз",
+  "createAPasswordRegist": "Құпиясөз құрыңыз",
+  "alreadyHaveAnAccount": "Аккаунтыңыз бар ма?",
+  "enterLogin": "Логинді енгізіңіз",
+  "enterYourEmailAndCreateAPassword": "E-mail енгізіп, құпиясөз құрыңыз",
+  "differentPasswords": "Құпиясөздер сәйкес емес",
+  "symbols": "таңба",
+  "thereAreNoComputersInTheCurrentZone": "Бұл аймақта компьютер жоқ",
+  "soonDots": "Жақында...",
+  "noBalancesAvailable": "Қолжетімді баланс жоқ",
+  "loginViaLogin": "Логин арқылы кіру",
+  "enterYourLoginAndPassword": "Логин мен құпиясөзді енгізіңіз",
+  "yesDelete": "Иә, жою",
+  "deleteAccountWarning": "Аккаунтты жойғанда барлық деректеріңіз, соның ішінде баланс, ойын прогресі, статистика, брондау тарихы және басқа да байланысты деректер қайтарымсыз жойылады. Жойылған аккаунтты қалпына келтіру мүмкін емес. Жалғастырғыңыз келетініне сенімдісіз бе?",
+  "areYouSureYouWantToExit": "Шыққыңыз келетініне сенімдісіз бе?",
+  "attention": "Назар аударыңыз",
+  "yesLogout": "Иә, шығу",
+  "minimum": "Ең азы",
+  "maximum": "Ең көбі",
+  "selectAction": "Әрекетті таңдаңыз",
+  "minutes": "{n} минут",
+  "@minutes": {
+    "placeholders": {
+      "n": {
+        "type": "num"
+      }
+    }
+  },
   "activeSession": "Белсенді сессия",
   "pcNumber": "ПК №{n}",
+  "@pcNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "timeLeft": "Қалды",
   "tariff": "Тариф",
   "bonuses": "Бонустар",
   "stopSession": "Сессияны аяқтау",
   "yesStop": "Аяқтау",
-  "stopSessionConfirm": "Компьютердегі сессия аяқталып, компьютер босатылады. Жалғастыру керек пе?"
+  "stopSessionConfirm": "Компьютердегі сессия аяқталып, компьютер босатылады. Жалғастыру керек пе?",
+  "somethingWentWrong": "Бірдеңе дұрыс болмады",
+  "newPasswordSent": "Жаңа құпиясөз поштаңызға жіберілді.",
+  "resetPasswordFailed": "Құпиясөзді қалпына келтіру мүмкін болмады.",
+  "accountDeleted": "Аккаунт сәтті жойылды",
+  "accountDeleteFailed": "Аккаунтты жою мүмкін болмады",
+  "passwordChanged": "Құпиясөз сәтті өзгертілді",
+  "passwordChangeFailed": "Құпиясөзді өзгерту мүмкін болмады",
+  "notificationsDenied": "Хабарламаларға рұқсат жоқ!",
+  "aceQr": "Ace QR",
+  "langRussian": "Орысша",
+  "langEnglish": "Ағылшынша",
+  "langKazakh": "Қазақша",
+  "privacyPolicyLink": "Құпиялылық саясаты >",
+  "sessionEnded": "Сессия аяқталды",
+  "noActiveSession": "Белсенді сессия жоқ",
+  "sessionExpired": "Сессия мерзімі өтті, қайта кіріңіз",
+  "shopOrderPlaced": "Дүкендегі тапсырыс рәсімделді",
+  "balanceUpdated": "Баланс жаңартылды",
+  "walletBalance": "Баланс",
+  "walletBonuses": "Бонустар",
+  "topUpBy": "{wallet}: {sum} толтырылды",
+  "@topUpBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "withdrawBy": "{wallet}: {sum} шегерілді",
+  "@withdrawBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffPerMinute": "Минуттап",
+  "tariffFree": "Тегін",
+  "tariffDefault": "Тариф",
+  "clubsNearby": "Жақын клубтар",
+  "exclusiveInAce": "Тек ACE-те",
+  "cancelBooking": "Бронды жою",
+  "viewDetails": "Мәліметтерді қарау",
+  "pcActiveBooking": "ПК №{n}, белсенді брон",
+  "@pcActiveBooking": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pcBookingAt": "ПК №{n} броны, {day} {time}",
+  "@pcBookingAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCancelled": "Брон сәтті жойылды",
+  "bookingCancelFailed": "Бронды жою мүмкін болмады",
+  "branchesLoadFailed": "Филиалдарды жүктеу мүмкін болмады",
+  "authFailed": "Кіру мүмкін болмады",
+  "soonBadge": "Жақында",
+  "tariffsLoadFailed": "Тарифтерді жүктеу мүмкін болмады",
+  "selectTariff": "Тарифті таңдаңыз",
+  "bookingPcAt": "ПК №{n} брондау, {date}",
+  "@bookingPcAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reserve": "Брондау",
+  "bookingSuccess": "Брон сәтті жасалды!",
+  "pcReserved": "ПК №{n} бронталды. Күтеміз!",
+  "@pcReserved": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingDetails": "Брон мәліметтері: {date}",
+  "@bookingDetails": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "thanksForChoosing": "Қызметімізді таңдағаныңызға рахмет!\nЖақсы ойын тілейміз!",
+  "couldNotReserve": "ПК №{n} брондау мүмкін болмады. Қайталап көріңіз",
+  "@couldNotReserve": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "startOver": "Қайта бастау",
+  "noTariffsAvailable": "Упс, қолжетімді тариф жоқ",
+  "useMinuteBilling": "Минуттап төлемді пайдалана аласыз",
+  "openOnMap": "Картада ашу",
+  "fromPerHour": "500 ₸/сағаттан",
+  "seeMore": "Толығырақ",
+  "excellentRating": "Керемет, 8.8",
+  "reviewsCount1000": "1000 пікір",
+  "changeDateTime": "Күн мен уақытты өзгерту",
+  "selectedPc": "ПК №{n} таңдалды",
+  "@selectedPc": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "legendFree": "Бос",
+  "legendBusySoon": "Брон · қызмет",
+  "legendBusy": "Бос емес",
+  "legendOff": "Өшірулі",
+  "noComputers": "Компьютер жоқ",
+  "today": "Бүгін",
+  "tomorrow": "Ертең",
+  "hoursLabel": "Сағат",
+  "minutesLabel": "Минут",
+  "shareTitle": "Қызықты бөлім",
+  "shareClubsText": "Қазір мен «Клубтар» бөліміндемін. Мұнда қара!",
+  "shareNewsText": "Қазір мен жаңалық оқып отырмын. Мұнда қара!",
+  "outOf10": "10-нан",
+  "reviews15": "15 пікір",
+  "reviewTimeAgo": "5 сағат бұрын",
+  "reviewAuthor": "Deadpool 2016",
+  "reviewText": "Бәрі керемет жұмыс істейді, ыңғайлы қолданба",
+  "morningTariff": "Таң (08:00 - 12:00)",
+  "dayTariff": "Күн (12:00 - 18:00)",
+  "nightTariff": "Түн (22:00 - 08:00)",
+  "twoGis": "2ГИС",
+  "yandexMaps": "Yandex Карталар",
+  "googleMaps": "Google Карталар",
+  "appleMaps": "Apple Карталар",
+  "tryAgainLater": "Кейінірек қайталап көріңіз",
+  "topUp100Kaspi": "Kaspi QR арқылы 100 тг толтыру",
+  "aroundTheClock": "Тәулік бойы",
+  "cameraPermissionDenied": "Баптауларда камераға рұқсат беріңіз.",
+  "authError": "Авторизация қатесі",
+  "scannerOnlyInApp": "Сканер тек қолданбада қолжетімді",
+  "priceByTariff": "«{name}» тарифі бойынша баға",
+  "@priceByTariff": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffDuration": "Тариф ұзақтығы",
+  "activityStub": "activity",
+  "goToBasket": "Себетке өту ({n})",
+  "@goToBasket": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "goToPayment": "Төлемге өту ({sum})",
+  "@goToPayment": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatus": "Тапсырыс күйі",
+  "paidViaKaspi": "Kaspi.kz арқылы төленді",
+  "orderDeliveredToTable": "Тапсырыс үстеліңізге жеткізіледі",
+  "completedAtSample": "Аяқталды, 18.12.2024, 3:00",
+  "chargedByTariffNight": "«Түн» тарифі бойынша баланстан шегерілді",
+  "sessionDuration": "Сессия ұзақтығы",
+  "minutes120": "120 минут",
+  "notifTopUpTitle": "Adamar Solutions балансы 5 000 ₸ сомасына толтырылды",
+  "notifTopUpMeta": "Толтыру • 21.12.2024, 23:43",
+  "notifBookingTitle": "✅ Жаңа брон расталды",
+  "notifChargeTitle": "💸 «түн» тарифі бойынша 2 500 ₸ шегерілді",
+  "notifOrderTitle": "🛒 Дүкенде 2 500 ₸ сомасына жаңа тапсырыс рәсімделді",
+  "notifMeta": "Adamar Solutions • 21.12.2024, 23:43",
+  "sampleClubName": "Adamar Solutions",
+  "sampleClubAddress": "Әл-Фараби даңғ. 101",
+  "qrLogin": "QR-кіру",
+  "dateAtTime": "{date}, {time}",
+  "@dateAtTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "loadFailed": "Деректерді жүктеу мүмкін болмады",
+  "noActivityYet": "Әзірге белсенділік жоқ — компьютер брондаңыз немесе QR арқылы кіріңіз",
+  "commonHall": "Жалпы зал",
+  "wallet": "Әмиян",
+  "activity": "Белсенділік",
+  "freeNow": "Қазір бос",
+  "favorites": "Таңдаулылар",
+  "now": "Қазір",
+  "pickDate": "Күні…",
+  "selectDate": "Күн мен уақытты таңдаңыз",
+  "topUp": "Толтыру",
+  "totalAcrossNetwork": "Желі бойынша барлығы",
+  "byClubs": "Клубтар бойынша",
+  "noFavoritesYet": "Таңдаулы клубтар жоқ — клуб экранында ♡ басыңыз",
+  "noFreeNow": "Қазір бос ПК бар клубтар жоқ",
+  "freeCount": "{n} бос",
+  "@freeCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "freeOf": "{total} ішінен {free} бос",
+  "@freeOf": {
+    "placeholders": {
+      "free": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "zoneBusy": "{zone} бос емес",
+  "@zoneBusy": {
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffNow": "қазіргі тариф «{name}» {price}",
+  "@tariffNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "chargedFromClubBalance": "{club} балансынан шегеріледі: {sum}",
+  "@chargedFromClubBalance": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "reserveFor": "Брондау · {price}",
+  "@reserveFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "pcInZone": "ПК №{pc} · {zone}",
+  "@pcInZone": {
+    "placeholders": {
+      "pc": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "computersCount": "{n} ПК",
+  "@computersCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "searchClubs": "Клубтарды іздеу",
+  "nothingFound": "Ештеңе табылмады"
 }
