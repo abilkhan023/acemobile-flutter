@@ -555,7 +555,14 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                               height: 34,
                               color: _when == w ? AceColors.accent : AceColors.cardAlt,
                               onTap: () => _setWhen(w),
-                              child: Text(_whenLabel(w, l), style: AceText.style(size: 13, weight: FontWeight.w600, color: _when == w ? AceColors.white : AceColors.text)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 6,
+                                children: [
+                                  if (w == _When.custom) AceIcon('calendar-alt', size: 15, color: _when == w ? AceColors.white : AceColors.muted),
+                                  Text(_whenLabel(w, l), style: AceText.style(size: 13, weight: FontWeight.w600, color: _when == w ? AceColors.white : AceColors.text)),
+                                ],
+                              ),
                             ),
                         ],
                       ),

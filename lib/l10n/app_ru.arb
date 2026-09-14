@@ -433,7 +433,7 @@
   "freeNow": "Свободно сейчас",
   "favorites": "Избранные",
   "now": "Сейчас",
-  "pickDate": "Дата…",
+  "pickDate": "Другой день",
   "selectDate": "Выберите дату и время",
   "topUp": "Пополнить",
   "totalAcrossNetwork": "Всего по сети",
@@ -441,21 +441,81 @@
   "noFavoritesYet": "Нет избранных клубов — нажмите ♡ на экране клуба",
   "noFreeNow": "Сейчас нет клубов со свободными ПК",
   "freeCount": "{n} свободно",
-  "@freeCount": {"placeholders": {"n": {"type": "String"}}},
+  "@freeCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "freeOf": "{free} из {total} свободно",
-  "@freeOf": {"placeholders": {"free": {"type": "String"}, "total": {"type": "String"}}},
+  "@freeOf": {
+    "placeholders": {
+      "free": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "zoneBusy": "{zone} занят",
-  "@zoneBusy": {"placeholders": {"zone": {"type": "String"}}},
+  "@zoneBusy": {
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
   "tariffNow": "сейчас тариф «{name}» {price}",
-  "@tariffNow": {"placeholders": {"name": {"type": "String"}, "price": {"type": "String"}}},
+  "@tariffNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "chargedFromClubBalance": "Спишется с баланса {club}: {sum}",
-  "@chargedFromClubBalance": {"placeholders": {"club": {"type": "String"}, "sum": {"type": "String"}}},
+  "@chargedFromClubBalance": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
   "reserveFor": "Забронировать · {price}",
-  "@reserveFor": {"placeholders": {"price": {"type": "String"}}},
+  "@reserveFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "pcInZone": "ПК №{pc} · {zone}",
-  "@pcInZone": {"placeholders": {"pc": {"type": "String"}, "zone": {"type": "String"}}},
+  "@pcInZone": {
+    "placeholders": {
+      "pc": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
   "computersCount": "{n} ПК",
-  "@computersCount": {"placeholders": {"n": {"type": "String"}}},
+  "@computersCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "searchClubs": "Поиск по клубам",
   "nothingFound": "Ничего не найдено"
 }

@@ -1921,7 +1921,7 @@ abstract class AppLocalizations {
   /// No description provided for @pickDate.
   ///
   /// In ru, this message translates to:
-  /// **'Дата…'**
+  /// **'Другой день'**
   String get pickDate;
 
   /// No description provided for @selectDate.

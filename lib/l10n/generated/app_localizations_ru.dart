@@ -978,7 +978,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get now => 'Сейчас';
 
   @override
-  String get pickDate => 'Дата…';
+  String get pickDate => 'Другой день';
 
   @override
   String get selectDate => 'Выберите дату и время';

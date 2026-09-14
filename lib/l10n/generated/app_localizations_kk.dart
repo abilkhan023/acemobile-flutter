@@ -966,7 +966,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get now => 'Қазір';
 
   @override
-  String get pickDate => 'Күні…';
+  String get pickDate => 'Басқа күн';
 
   @override
   String get selectDate => 'Күн мен уақытты таңдаңыз';

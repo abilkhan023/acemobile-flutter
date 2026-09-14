@@ -975,7 +975,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get now => 'Now';
 
   @override
-  String get pickDate => 'Date…';
+  String get pickDate => 'Other day';
 
   @override
   String get selectDate => 'Choose date and time';
