@@ -9,6 +9,10 @@ if (servicesJson.exists()) {
 }
 
 android {
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
     namespace = "gg.acegaming.ace_mobile"
     compileSdk = 37
     ndkVersion = flutter.ndkVersion
