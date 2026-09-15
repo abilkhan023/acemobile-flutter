@@ -13,561 +13,559 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hi => 'Hi';
 
   @override
-  String get welcome => 'Добро пожаловать!';
+  String get welcome => 'Welcome!';
 
   @override
-  String get clubs => 'Клубы';
+  String get clubs => 'Clubs';
 
   @override
-  String get club => 'Клуб';
+  String get club => 'Club';
 
   @override
-  String get locations => 'Локации';
+  String get locations => 'Locations';
 
   @override
-  String get balance => 'Баланс';
+  String get balance => 'Balance';
 
   @override
-  String get profile => 'Профиль';
+  String get profile => 'Profile';
 
   @override
-  String get myProfile => 'Мой профиль';
+  String get myProfile => 'My profile';
 
   @override
-  String get news => 'Новости';
+  String get news => 'News';
 
   @override
-  String get about => 'О нас';
+  String get about => 'About us';
 
   @override
-  String get back => 'Назад';
+  String get back => 'Back';
 
   @override
-  String get registration => 'Регистрация';
+  String get registration => 'Sign up';
 
   @override
-  String get forgotPassword => 'Забыли пароль?';
+  String get forgotPassword => 'Forgot password?';
 
   @override
-  String get login => 'Логин';
+  String get login => 'Login';
 
   @override
-  String get password => 'Пароль';
+  String get password => 'Password';
 
   @override
   String get email => 'Email';
 
   @override
-  String get enterData => 'Введите данные';
+  String get enterData => 'Enter data';
 
   @override
-  String get or => 'или';
+  String get or => 'or';
 
   @override
-  String get continueGuest => 'Продолжить как гость';
+  String get continueGuest => 'Continue as guest';
 
   @override
-  String get continueAction => 'Продолжить';
+  String get continueAction => 'Continue';
 
   @override
-  String get createAccount => 'Создание аккаунта';
+  String get createAccount => 'Create account';
 
   @override
-  String get passwordRecovery => 'Восстановление пароля';
+  String get passwordRecovery => 'Password recovery';
 
   @override
-  String get requiredField => 'Обязательное поле';
+  String get requiredField => 'Required field';
 
   @override
-  String get enterAtLeast8Characters => 'Введите не менее 8 символов';
+  String get enterAtLeast8Characters => 'Enter at least 8 characters';
 
   @override
-  String get maxLength => 'Максимальная длина';
+  String get maxLength => 'Maximum length';
 
   @override
-  String get minLength => 'Минимальная длина';
+  String get minLength => 'Minimum length';
 
   @override
-  String get register => 'Зарегистрироваться';
+  String get register => 'Sign up';
 
   @override
-  String get restore => 'Восстановить';
+  String get restore => 'Restore';
 
   @override
-  String get thisIsEmail => 'Введите почту';
+  String get thisIsEmail => 'Enter an email';
 
   @override
-  String get anErrorOccurred => 'Произошла ошибка';
+  String get anErrorOccurred => 'An error occurred';
 
   @override
-  String get accountCreated => 'Аккаунт создан!';
+  String get accountCreated => 'Account created!';
 
   @override
-  String get save => 'Сохранить';
+  String get save => 'Save';
 
   @override
-  String get changePhoto => 'Изменить фото';
+  String get changePhoto => 'Change photo';
 
   @override
-  String get changePasswordAction => 'Сменить пароля';
+  String get changePasswordAction => 'Change password';
 
   @override
-  String get oldPassword => 'Старый пароль';
+  String get oldPassword => 'Old password';
 
   @override
-  String get newPassword => 'Новый пароль';
+  String get newPassword => 'New password';
 
   @override
-  String get change => 'Изменить';
+  String get change => 'Change';
 
   @override
-  String get name => 'Имя';
+  String get name => 'First name';
 
   @override
-  String get surname => 'Фамилия';
+  String get surname => 'Last name';
 
   @override
-  String get logout => 'Выйти';
+  String get logout => 'Log out';
 
   @override
-  String get deleteAccount => 'Удалить аккаунт';
+  String get deleteAccount => 'Delete account';
 
   @override
-  String get thereArePlaces => 'Есть места';
+  String get thereArePlaces => 'Seats available';
 
   @override
-  String get noSeatsAvailable => 'Нет мест';
+  String get noSeatsAvailable => 'No seats';
 
   @override
-  String get filter => 'Фильтровать';
+  String get filter => 'Filter';
 
   @override
-  String get kitchen => 'Кухня';
+  String get kitchen => 'Kitchen';
 
   @override
-  String get open => 'Открыта';
+  String get open => 'Open';
 
   @override
-  String get seatsAvailable => 'Есть места';
+  String get seatsAvailable => 'Seats available';
 
   @override
-  String get sortBy => 'Сортировать по';
+  String get sortBy => 'Sort by';
 
   @override
-  String get recommended => 'Рекомендованные';
+  String get recommended => 'Recommended';
 
   @override
-  String get rating => 'Рейтинг';
+  String get rating => 'Rating';
 
   @override
-  String get distance => 'Расстояние';
+  String get distance => 'Distance';
 
   @override
-  String get cost => 'Стоимость';
+  String get cost => 'Price';
 
   @override
-  String get apply => 'Применить';
+  String get apply => 'Apply';
 
   @override
-  String get tariffs => 'Тарифы';
+  String get tariffs => 'Tariffs';
 
   @override
-  String get selectComputer => 'Выберите компьютер';
+  String get selectComputer => 'Choose a computer';
 
   @override
-  String get story => 'История';
+  String get story => 'History';
 
   @override
-  String get topUpBalance => 'Пополнить баланс';
+  String get topUpBalance => 'Top up balance';
 
   @override
-  String get excellent => 'Отличный';
+  String get excellent => 'Excellent';
 
   @override
-  String get good => 'Хороший';
+  String get good => 'Good';
 
   @override
-  String get bad => 'Плохой';
+  String get bad => 'Bad';
 
   @override
-  String get selectPeriod => 'Выберите период';
+  String get selectPeriod => 'Select a period';
 
   @override
-  String get backToHome => 'Назад на главную';
+  String get backToHome => 'Back to home';
 
   @override
-  String get home => 'Главная';
+  String get home => 'Home';
 
   @override
-  String get all => 'Все';
+  String get all => 'All';
 
   @override
-  String get catalog => 'Каталог';
+  String get catalog => 'Catalog';
 
   @override
-  String get shop => 'Магазин';
+  String get shop => 'Shop';
 
   @override
-  String get reservation => 'Бронь';
+  String get reservation => 'Booking';
 
   @override
-  String get currentBalance => 'Текущий баланс';
+  String get currentBalance => 'Current balance';
 
   @override
-  String get balanceReplenishment => 'Пополнить баланс';
+  String get balanceReplenishment => 'Top up balance';
 
   @override
-  String get paymentMethods => 'Способы оплаты';
+  String get paymentMethods => 'Payment methods';
 
   @override
-  String get paymentHistory => 'История платажей';
+  String get paymentHistory => 'Payment history';
 
   @override
-  String get clubsDirectory => 'Каталог клубов';
+  String get clubsDirectory => 'Club directory';
 
   @override
-  String get reset => 'Сбросить';
+  String get reset => 'Reset';
 
   @override
-  String get search => 'Поиск';
+  String get search => 'Search';
 
   @override
-  String get enterTheClubName => 'Введите название клуба';
+  String get enterTheClubName => 'Enter the club name';
 
   @override
-  String get computerBackup => 'Резерв компьютера';
+  String get computerBackup => 'Computer booking';
 
   @override
-  String get selectTime => 'Выбрать время';
+  String get selectTime => 'Choose time';
 
   @override
-  String get bookingDate => 'Дата';
+  String get bookingDate => 'Date';
 
   @override
-  String get ready => 'Готово';
+  String get ready => 'Done';
 
   @override
-  String get sorting => 'Сортировка';
+  String get sorting => 'Sorting';
 
   @override
-  String get reviews => 'Отзывы';
+  String get reviews => 'Reviews';
 
   @override
-  String get getDirections => 'Проложить маршрут';
+  String get getDirections => 'Get directions';
 
   @override
-  String get lastActivity => 'Последняя активность';
+  String get lastActivity => 'Recent activity';
 
   @override
-  String get repeatBooking => 'Повторить бронь';
+  String get repeatBooking => 'Book again';
 
   @override
-  String get notifications => 'Уведомления';
+  String get notifications => 'Notifications';
 
   @override
-  String get basket => 'Корзина';
+  String get basket => 'Cart';
 
   @override
-  String get loginToAceGaming => 'Войти в ACE GAMING';
+  String get loginToAceGaming => 'Sign in to ACE GAMING';
 
   @override
   String get toLogIntoTheApplicationChooseAMethodConvenientForYou =>
-      'Для входа в приложение, \nвыберите удобный для вас способ';
+      'To sign in,\nchoose a convenient method';
 
   @override
   String get byLoggingInYouAgreeToThePrivacyPolicy =>
-      'Авторизовавшись, вы соглашаетесь с \nПолитикой конфиденциальности';
+      'By signing in you agree to the\nPrivacy Policy';
 
   @override
-  String get loginViaApple => 'Войти через Apple';
+  String get loginViaApple => 'Sign in with Apple';
 
   @override
-  String get loginViaGoogle => 'Войти через Google';
+  String get loginViaGoogle => 'Sign in with Google';
 
   @override
-  String get loginViaEmail => 'Войти через e-mail';
+  String get loginViaEmail => 'Sign in with e-mail';
 
   @override
-  String get loginViaTelegram => 'Войти через Telegram';
+  String get loginViaTelegram => 'Sign in with Telegram';
 
   @override
-  String get enterYourEmailAndPassword => 'Введите ваш e-mail и пароль';
+  String get enterYourEmailAndPassword => 'Enter your e-mail and password';
 
   @override
-  String get enterEmail => 'Введите e-mail';
+  String get enterEmail => 'Enter e-mail';
 
   @override
-  String get enter => 'Войти';
+  String get enter => 'Sign in';
 
   @override
-  String get enterPassword => 'Введите пароль';
+  String get enterPassword => 'Enter password';
 
   @override
-  String get enterYourEmail => 'Введите ваш e-mail';
+  String get enterYourEmail => 'Enter your e-mail';
 
   @override
   String get weWillSendAConfirmationCodeToYourRegisteredEmailToChangeYour =>
-      'На зарегистрированный e-mail мы отправим код подтверждения для смены пароля';
+      'We will send a confirmation code to your registered e-mail to change the password';
 
   @override
   String get weWillSendYouANewPasswordToYourRegisteredEmail =>
-      'На зарегистрированный e-mail мы отправим вам новый пароль';
+      'We will send a new password to your registered e-mail';
 
   @override
-  String get codeFromTheLetter => 'Код из письма';
+  String get codeFromTheLetter => 'Code from the e-mail';
 
   @override
-  String get enterCode => 'Введите код';
+  String get enterCode => 'Enter code';
 
   @override
-  String get didNotReceiveTheCode => 'Не получили код?';
+  String get didNotReceiveTheCode => 'Didn\'t get the code?';
 
   @override
-  String get resend => 'Отправить снова';
+  String get resend => 'Send again';
 
   @override
-  String get createANewPassword => 'Придумайте новый пароль';
+  String get createANewPassword => 'Create a new password';
 
   @override
   String get createANewPasswordForYourAccount =>
-      'Создайте новый пароль для своего аккаунта';
+      'Create a new password for your account';
 
   @override
-  String get createAPassword => 'Создать пароль';
+  String get createAPassword => 'Create a password';
 
   @override
-  String get repeatPassword => 'Повторите пароль';
+  String get repeatPassword => 'Repeat password';
 
   @override
-  String get listOfComputerClubs => 'Список компьютерных клубов';
+  String get listOfComputerClubs => 'Computer clubs';
 
   @override
   String get eachClubHasItsOwnBalance =>
-      'У вас в каждом клубе есть собственный баланс';
+      'You have a separate balance in each club';
 
   @override
-  String get replenishment => 'Пополнение';
+  String get replenishment => 'Top-up';
 
   @override
-  String get paymentDetails => 'Детали платежа';
+  String get paymentDetails => 'Payment details';
 
   @override
-  String get print => 'Распечатать';
+  String get print => 'Print';
 
   @override
-  String get sendByEmail => 'Отправить на email';
+  String get sendByEmail => 'Send by email';
 
   @override
-  String get selectAComputerClub => 'Выберите компьютерный клуб';
+  String get selectAComputerClub => 'Choose a computer club';
 
   @override
   String currentBalanceSum(String sum) {
-    return 'Текущий остаток: $sum ₸';
+    return 'Current balance: $sum ₸';
   }
 
   @override
-  String get next => 'Далее';
+  String get next => 'Next';
 
   @override
-  String get topUpAmountT => 'Сумма пополнения, ₸';
+  String get topUpAmountT => 'Top-up amount, ₸';
 
   @override
-  String get enterAmount => 'Введите сумму';
+  String get enterAmount => 'Enter amount';
 
   @override
-  String get selectPaymentMethod => 'Выберите способ оплаты';
+  String get selectPaymentMethod => 'Choose a payment method';
 
   @override
-  String get replenishmentMethods => 'Способы пополнения';
+  String get replenishmentMethods => 'Top-up methods';
 
   @override
-  String get myCards => 'Мои карты';
+  String get myCards => 'My cards';
 
   @override
-  String get otherPaymentMethods => 'Другие способы оплаты';
+  String get otherPaymentMethods => 'Other payment methods';
 
   @override
-  String get addANewCard => 'Добавить новую карту';
+  String get addANewCard => 'Add a new card';
 
   @override
-  String get confirmation => 'Подтверждение';
+  String get confirmation => 'Confirmation';
 
   @override
-  String get paymentMethod => 'Способ оплаты';
+  String get paymentMethod => 'Payment method';
 
   @override
-  String get topUpAmount => 'Сумма пополнения';
+  String get topUpAmount => 'Top-up amount';
 
   @override
-  String get pay => 'Оплатить';
+  String get pay => 'Pay';
 
   @override
-  String get card => 'Карта';
+  String get card => 'Card';
 
   @override
-  String get setAsDefault => 'Установить по умолчанию';
+  String get setAsDefault => 'Set as default';
 
   @override
-  String get removeCard => 'Удалить карту';
+  String get removeCard => 'Remove card';
 
   @override
-  String get addNewCard => 'Добавить новую карту';
+  String get addNewCard => 'Add new card';
 
   @override
-  String get validityPeriod => 'Срок действия';
+  String get validityPeriod => 'Expiry date';
 
   @override
-  String get cardNumber => 'Номер карты';
+  String get cardNumber => 'Card number';
 
   @override
-  String get addACard => 'Добавить карту';
+  String get addACard => 'Add a card';
 
   @override
-  String get totalPayable => 'Итого к оплате';
+  String get totalPayable => 'Total to pay';
 
   @override
-  String get confirmPayment => 'Подтвердите оплату';
+  String get confirmPayment => 'Confirm payment';
 
   @override
-  String get oopsSomethingWentWrong => 'Упс, что то пошло не так';
+  String get oopsSomethingWentWrong => 'Oops, something went wrong';
 
   @override
-  String get tryAgain => 'Попробуйте заново';
+  String get tryAgain => 'Try again';
 
   @override
   String get yourOrderWillBeDeliveredToYourTable =>
-      'Ваш заказ будет доставлен к вашему столу ';
+      'Your order will be delivered to your table';
 
   @override
   String get thankYouForChoosingOurServiceWeWishYouBonAppetit =>
-      'Спасибо, что выбрали наш сервис! Желаем приятного аппетита!';
+      'Thank you for choosing our service! Bon appetit!';
 
   @override
-  String get goingTo => 'Собирается';
+  String get goingTo => 'Being prepared';
 
   @override
-  String get goToDetails => 'Перейти к деталям';
+  String get goToDetails => 'Go to details';
 
   @override
-  String get paymentAccepted => 'Оплата принята';
+  String get paymentAccepted => 'Payment accepted';
 
   @override
-  String get orderDetails => 'Детали заказа';
+  String get orderDetails => 'Order details';
 
   @override
-  String get orderContents => 'Состав заказа:';
+  String get orderContents => 'Order contents:';
 
   @override
-  String get personalInformation => 'Личные данные';
+  String get personalInformation => 'Personal information';
 
   @override
-  String get changePassword => 'Изменить пароль';
+  String get changePassword => 'Change password';
 
   @override
-  String get selectLanguage => 'Выбрать язык';
+  String get selectLanguage => 'Choose language';
 
   @override
-  String get promocode => 'Промокод';
+  String get promocode => 'Promo code';
 
   @override
-  String get whatIsYourName => 'Как вас зовут?';
+  String get whatIsYourName => 'What is your name?';
 
   @override
-  String get enterName => 'Введите имя';
+  String get enterName => 'Enter name';
 
   @override
-  String get activate => 'Активировать';
+  String get activate => 'Activate';
 
   @override
-  String get enterPromocode => 'Введите промокод';
+  String get enterPromocode => 'Enter promo code';
 
   @override
-  String get writeAReview => 'Написать отзыв';
+  String get writeAReview => 'Write a review';
 
   @override
-  String get review => 'Отзыв';
+  String get review => 'Review';
 
   @override
-  String get startWritingOptional => 'Начните писать...(по желанию)';
+  String get startWritingOptional => 'Start writing... (optional)';
 
   @override
-  String get send => 'Отправить';
+  String get send => 'Send';
 
   @override
-  String get cancel => 'Отмена';
+  String get cancel => 'Cancel';
 
   @override
-  String get enterYourName => 'Введите ваше имя';
+  String get enterYourName => 'Enter your name';
 
   @override
-  String get createAPasswordRegist => 'Создайте пароль';
+  String get createAPasswordRegist => 'Create a password';
 
   @override
-  String get alreadyHaveAnAccount => 'Уже есть аккаунт?';
+  String get alreadyHaveAnAccount => 'Already have an account?';
 
   @override
-  String get enterLogin => 'Введите логин';
+  String get enterLogin => 'Enter login';
 
   @override
   String get enterYourEmailAndCreateAPassword =>
-      'Введите ваш e-mail и создайте пароль';
+      'Enter your e-mail and create a password';
 
   @override
-  String get differentPasswords => 'Разные пароли';
+  String get differentPasswords => 'Passwords don\'t match';
 
   @override
-  String get symbols => 'символов';
+  String get symbols => 'characters';
 
   @override
   String get thereAreNoComputersInTheCurrentZone =>
-      'В текущей зоне нет компьютеров';
+      'There are no computers in this zone';
 
   @override
-  String get soonDots => 'Скоро...';
+  String get soonDots => 'Coming soon...';
 
   @override
-  String get noBalancesAvailable => 'Нет доступных балансов';
+  String get noBalancesAvailable => 'No balances available';
 
   @override
-  String get loginViaLogin => 'Войти через логин';
+  String get loginViaLogin => 'Sign in with login';
 
   @override
-  String get enterYourLoginAndPassword => 'Введите свой логин пароль';
+  String get enterYourLoginAndPassword => 'Enter your login and password';
 
   @override
-  String get yesDelete => 'Да, удалить';
+  String get yesDelete => 'Yes, delete';
 
   @override
   String get deleteAccountWarning =>
-      'При удалении аккаунта все ваши данные будут безвозвратно удалены, включая баланс, игровой прогресс, статистику, историю бронирований и другие связанные данные. Восстановить удаленный аккаунт будет невозможно. Вы уверены, что хотите продолжить?';
+      'Deleting your account permanently removes all your data, including balance, game progress, statistics, booking history and other related data. A deleted account cannot be restored. Are you sure you want to continue?';
 
   @override
-  String get areYouSureYouWantToExit => 'Вы уверены, что хотите выйти?';
+  String get areYouSureYouWantToExit => 'Are you sure you want to log out?';
 
   @override
-  String get attention => 'Внимание';
+  String get attention => 'Attention';
 
   @override
-  String get yesLogout => 'Да, выйти';
+  String get yesLogout => 'Yes, log out';
 
   @override
-  String get minimum => 'Минимально';
+  String get minimum => 'Minimum';
 
   @override
-  String get maximum => 'Максимально';
+  String get maximum => 'Maximum';
 
   @override
-  String get selectAction => 'Выберите действие';
+  String get selectAction => 'Choose an action';
 
   @override
   String minutes(num n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n минут',
-      many: '$n минут',
-      few: '$n минуты',
-      one: '$n минута',
+      other: '$n minutes',
+      one: '$n minute',
     );
     return '$_temp0';
   }
@@ -597,343 +595,342 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stopSessionConfirm =>
-      'Your session at the computer will be ended and the computer will be released. Continue?';
+      'The session on this computer will be ended and the computer will be released. Continue?';
 
   @override
-  String get somethingWentWrong => 'Что-то пошло не так';
+  String get somethingWentWrong => 'Something went wrong';
 
   @override
-  String get newPasswordSent => 'Новый пароль отправлен на вашу почту.';
+  String get newPasswordSent => 'A new password has been sent to your e-mail.';
 
   @override
-  String get resetPasswordFailed => 'Не удалось сбросить пароль.';
+  String get resetPasswordFailed => 'Could not reset the password.';
 
   @override
-  String get accountDeleted => 'Аккаунт успешно удален';
+  String get accountDeleted => 'Account deleted';
 
   @override
-  String get accountDeleteFailed => 'Не удалось удалить аккаунт';
+  String get accountDeleteFailed => 'Could not delete the account';
 
   @override
-  String get passwordChanged => 'Пароль успешно изменен';
+  String get passwordChanged => 'Password changed';
 
   @override
-  String get passwordChangeFailed => 'Не удалось изменить пароль';
+  String get passwordChangeFailed => 'Could not change the password';
 
   @override
-  String get notificationsDenied => 'Доступ к уведомлениям запрещен!';
+  String get notificationsDenied => 'Notifications are not allowed!';
 
   @override
   String get aceQr => 'Ace QR';
 
   @override
-  String get langRussian => 'Русский';
+  String get langRussian => 'Russian';
 
   @override
-  String get langEnglish => 'Английский';
+  String get langEnglish => 'English';
 
   @override
-  String get langKazakh => 'Казахский';
+  String get langKazakh => 'Kazakh';
 
   @override
-  String get privacyPolicyLink => 'Политика конфиденциальности >';
+  String get privacyPolicyLink => 'Privacy Policy >';
 
   @override
-  String get sessionEnded => 'Сессия завершена';
+  String get sessionEnded => 'Session ended';
 
   @override
-  String get noActiveSession => 'Активной сессии нет';
+  String get noActiveSession => 'No active session';
 
   @override
-  String get sessionExpired => 'Сессия истекла, войдите заново';
+  String get sessionExpired => 'Session expired, please sign in again';
 
   @override
-  String get shopOrderPlaced => 'Заказ в магазине оформлен';
+  String get shopOrderPlaced => 'Shop order placed';
 
   @override
-  String get balanceUpdated => 'Баланс обновлён';
+  String get balanceUpdated => 'Balance updated';
 
   @override
-  String get walletBalance => 'Баланс';
+  String get walletBalance => 'Balance';
 
   @override
-  String get walletBonuses => 'Бонусы';
+  String get walletBonuses => 'Bonuses';
 
   @override
   String topUpBy(String wallet, String sum) {
-    return '$wallet: пополнение на $sum';
+    return '$wallet: topped up by $sum';
   }
 
   @override
   String withdrawBy(String wallet, String sum) {
-    return '$wallet: списание $sum';
+    return '$wallet: charged $sum';
   }
 
   @override
-  String get tariffPerMinute => 'Поминутно';
+  String get tariffPerMinute => 'Per minute';
 
   @override
-  String get tariffFree => 'Бесплатно';
+  String get tariffFree => 'Free';
 
   @override
-  String get tariffDefault => 'Тариф';
+  String get tariffDefault => 'Tariff';
 
   @override
-  String get clubsNearby => 'Клубы неподалеку';
+  String get clubsNearby => 'Clubs nearby';
 
   @override
-  String get exclusiveInAce => 'Эксклюзивно в ACE';
+  String get exclusiveInAce => 'Exclusive in ACE';
 
   @override
-  String get cancelBooking => 'Отменить бронь';
+  String get cancelBooking => 'Cancel booking';
 
   @override
-  String get viewDetails => 'Посмотреть детали';
+  String get viewDetails => 'View details';
 
   @override
   String pcActiveBooking(String n) {
-    return 'ПК №$n, активная бронь';
+    return 'PC #$n, active booking';
   }
 
   @override
   String pcBookingAt(String n, String day, String time) {
-    return 'Бронь ПК №$n, $day в $time';
+    return 'PC #$n booked for $day at $time';
   }
 
   @override
-  String get bookingCancelled => 'Бронь успешно отменена';
+  String get bookingCancelled => 'Booking cancelled';
 
   @override
-  String get bookingCancelFailed => 'Не удалось отменить бронь';
+  String get bookingCancelFailed => 'Could not cancel the booking';
 
   @override
-  String get branchesLoadFailed => 'Не удалось загрузить филиалы';
+  String get branchesLoadFailed => 'Could not load branches';
 
   @override
-  String get authFailed => 'Не удалось авторизоваться';
+  String get authFailed => 'Could not sign in';
 
   @override
-  String get soonBadge => 'Скоро';
+  String get soonBadge => 'Soon';
 
   @override
-  String get tariffsLoadFailed => 'Не удалось загрузить тарифы';
+  String get tariffsLoadFailed => 'Could not load tariffs';
 
   @override
-  String get selectTariff => 'Выберите тариф';
+  String get selectTariff => 'Choose a tariff';
 
   @override
   String bookingPcAt(String n, String date) {
-    return 'Бронирование ПК №$n, $date';
+    return 'Booking PC #$n, $date';
   }
 
   @override
-  String get reserve => 'Забронировать';
+  String get reserve => 'Book';
 
   @override
-  String get bookingSuccess => 'Успешное бронирование!';
+  String get bookingSuccess => 'Booking confirmed!';
 
   @override
   String pcReserved(String n) {
-    return 'ПК №$n забронирован. Ждем вас!';
+    return 'PC #$n is booked. See you!';
   }
 
   @override
   String bookingDetails(String date) {
-    return 'Детали бронирования: $date';
+    return 'Booking details: $date';
   }
 
   @override
   String get thanksForChoosing =>
-      'Спасибо, что выбрали наш сервис!\nЖелаем вам отличной игры!';
+      'Thank you for choosing our service!\nHave a great game!';
 
   @override
   String couldNotReserve(String n) {
-    return 'Мы не смогли забронировать для вас ПК №$n. Пожалуйста попробуйте заново';
+    return 'We could not book PC #$n for you. Please try again';
   }
 
   @override
-  String get startOver => 'Начать заново';
+  String get startOver => 'Start over';
 
   @override
-  String get noTariffsAvailable => 'Упс, нет доступных тарифов';
+  String get noTariffsAvailable => 'Oops, no tariffs available';
 
   @override
-  String get useMinuteBilling =>
-      'Вы можете воспользоваться по минутной оплатой';
+  String get useMinuteBilling => 'You can use per-minute billing';
 
   @override
-  String get openOnMap => 'Открыть на карте';
+  String get openOnMap => 'Open on map';
 
   @override
-  String get fromPerHour => 'от 500 ₸/час';
+  String get fromPerHour => 'from 500 ₸/hour';
 
   @override
-  String get seeMore => 'Смотреть подробнее';
+  String get seeMore => 'See more';
 
   @override
-  String get excellentRating => 'Отлично, 8.8';
+  String get excellentRating => 'Excellent, 8.8';
 
   @override
-  String get reviewsCount1000 => '1000 отзывов';
+  String get reviewsCount1000 => '1000 reviews';
 
   @override
-  String get changeDateTime => 'Изменить дату и время';
+  String get changeDateTime => 'Change date and time';
 
   @override
   String selectedPc(String n) {
-    return 'Выбран ПК №$n';
+    return 'PC #$n selected';
   }
 
   @override
-  String get legendFree => 'Свободен';
+  String get legendFree => 'Free';
 
   @override
-  String get legendBusySoon => 'Бронь · сервис';
+  String get legendBusySoon => 'Booked · service';
 
   @override
-  String get legendBusy => 'Занят';
+  String get legendBusy => 'Busy';
 
   @override
-  String get legendOff => 'Выключен';
+  String get legendOff => 'Off';
 
   @override
-  String get noComputers => 'Нет компьютеров';
+  String get noComputers => 'No computers';
 
   @override
-  String get today => 'Сегодня';
+  String get today => 'Today';
 
   @override
-  String get tomorrow => 'Завтра';
+  String get tomorrow => 'Tomorrow';
 
   @override
-  String get hoursLabel => 'Часы';
+  String get hoursLabel => 'Hours';
 
   @override
-  String get minutesLabel => 'Минуты';
+  String get minutesLabel => 'Minutes';
 
   @override
-  String get shareTitle => 'Интересный раздел';
+  String get shareTitle => 'Interesting section';
 
   @override
   String get shareClubsText =>
-      'Сейчас я нахожусь в разделе \"Клубы\". Посмотри здесь!';
+      'I\'m in the \"Clubs\" section right now. Take a look!';
 
   @override
-  String get shareNewsText => 'Сейчас я читаю новость. Посмотри здесь!';
+  String get shareNewsText =>
+      'I\'m reading a news item right now. Take a look!';
 
   @override
-  String get outOf10 => 'из 10';
+  String get outOf10 => 'out of 10';
 
   @override
-  String get reviews15 => '15 отзывов';
+  String get reviews15 => '15 reviews';
 
   @override
-  String get reviewTimeAgo => '5 часов назад';
+  String get reviewTimeAgo => '5 hours ago';
 
   @override
   String get reviewAuthor => 'Deadpool 2016';
 
   @override
-  String get reviewText => 'Все отлично работает, удобное приложение';
+  String get reviewText => 'Everything works great, handy app';
 
   @override
-  String get morningTariff => 'Утро (08:00 - 12:00)';
+  String get morningTariff => 'Morning (08:00 - 12:00)';
 
   @override
-  String get dayTariff => 'День (12:00 - 18:00)';
+  String get dayTariff => 'Day (12:00 - 18:00)';
 
   @override
-  String get nightTariff => 'Ночь (22:00 - 08:00)';
+  String get nightTariff => 'Night (22:00 - 08:00)';
 
   @override
-  String get twoGis => '2ГИС';
+  String get twoGis => '2GIS';
 
   @override
-  String get yandexMaps => 'Yandex Карты';
+  String get yandexMaps => 'Yandex Maps';
 
   @override
-  String get googleMaps => 'Google Карты';
+  String get googleMaps => 'Google Maps';
 
   @override
-  String get appleMaps => 'Apple Карты';
+  String get appleMaps => 'Apple Maps';
 
   @override
-  String get tryAgainLater => 'Повторите попытку позднее';
+  String get tryAgainLater => 'Please try again later';
 
   @override
-  String get topUp100Kaspi => 'Пополнить на 100тг через Kaspi QR';
+  String get topUp100Kaspi => 'Top up 100 ₸ via Kaspi QR';
 
   @override
-  String get aroundTheClock => 'Круглосуточно';
+  String get aroundTheClock => 'Open 24/7';
 
   @override
-  String get cameraPermissionDenied =>
-      'Разрешите доступ к камере в настройках.';
+  String get cameraPermissionDenied => 'Allow camera access in settings.';
 
   @override
-  String get authError => 'Ошибка авторизации';
+  String get authError => 'Authorization error';
 
   @override
-  String get scannerOnlyInApp => 'Сканер доступен только в приложении';
+  String get scannerOnlyInApp => 'The scanner is available only in the app';
 
   @override
   String priceByTariff(String name) {
-    return 'Цена по тарифу \"$name”';
+    return 'Price by tariff \"$name\"';
   }
 
   @override
-  String get tariffDuration => 'Продолжительность тарифа';
+  String get tariffDuration => 'Tariff duration';
 
   @override
   String get activityStub => 'activity';
 
   @override
   String goToBasket(String n) {
-    return 'Перейти в корзину ($n)';
+    return 'Go to cart ($n)';
   }
 
   @override
   String goToPayment(String sum) {
-    return 'Перейти к оплате ($sum)';
+    return 'Go to payment ($sum)';
   }
 
   @override
-  String get orderStatus => 'Статус заказа';
+  String get orderStatus => 'Order status';
 
   @override
-  String get paidViaKaspi => 'Оплачено через Kaspi.kz';
+  String get paidViaKaspi => 'Paid via Kaspi.kz';
 
   @override
-  String get orderDeliveredToTable => 'Заказ будет доставлен к вашему столу';
+  String get orderDeliveredToTable =>
+      'The order will be delivered to your table';
 
   @override
-  String get completedAtSample => 'Завершен, 18.12.2024 в 3:00';
+  String get completedAtSample => 'Completed, 18.12.2024 at 3:00';
 
   @override
-  String get chargedByTariffNight => 'Списано с баланса, по тарифу “Ночь”';
+  String get chargedByTariffNight => 'Charged from balance, tariff \"Night\"';
 
   @override
-  String get sessionDuration => 'Продолжительность сессии';
+  String get sessionDuration => 'Session duration';
 
   @override
-  String get minutes120 => '120 минут';
+  String get minutes120 => '120 minutes';
 
   @override
   String get notifTopUpTitle =>
-      'Баланс в Adamar Solutions пополнен на сумму 5 000 ₸';
+      'Balance at Adamar Solutions topped up by 5 000 ₸';
 
   @override
-  String get notifTopUpMeta => 'Пополнение • 21.12.2024, 23:43';
+  String get notifTopUpMeta => 'Top-up • 21.12.2024, 23:43';
 
   @override
-  String get notifBookingTitle => '✅ Новая бронь подтверждена';
+  String get notifBookingTitle => '✅ New booking confirmed';
 
   @override
-  String get notifChargeTitle => '💸 Списаны 2 500 ₸ по тарифу “ночь”';
+  String get notifChargeTitle => '💸 2 500 ₸ charged, tariff \"night\"';
 
   @override
-  String get notifOrderTitle =>
-      '🛒 Оформлен новый заказ в магазине на сумму 2 500 ₸';
+  String get notifOrderTitle => '🛒 New shop order for 2 500 ₸';
 
   @override
   String get notifMeta => 'Adamar Solutions • 21.12.2024, 23:43';
@@ -942,23 +939,105 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sampleClubName => 'Adamar Solutions';
 
   @override
-  String get sampleClubAddress => 'пр. Аль-Фараби 101';
+  String get sampleClubAddress => '101 Al-Farabi Ave.';
 
   @override
-  String get qrLogin => 'QR-вход';
+  String get qrLogin => 'QR login';
 
   @override
   String dateAtTime(String date, String time) {
-    return '$date в $time';
+    return '$date at $time';
   }
 
   @override
-  String get loadFailed => 'Не удалось загрузить данные';
+  String get loadFailed => 'Could not load data';
 
   @override
   String get noActivityYet =>
-      'Пока нет активности — забронируйте компьютер или войдите по QR';
+      'No activity yet — book a computer or sign in with QR';
 
   @override
-  String get commonHall => 'Общий зал';
+  String get commonHall => 'Main hall';
+
+  @override
+  String get wallet => 'Wallet';
+
+  @override
+  String get activity => 'Activity';
+
+  @override
+  String get freeNow => 'Free now';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get now => 'Now';
+
+  @override
+  String get pickDate => 'Other day';
+
+  @override
+  String get selectDate => 'Choose date and time';
+
+  @override
+  String get topUp => 'Top up';
+
+  @override
+  String get totalAcrossNetwork => 'Total across the network';
+
+  @override
+  String get byClubs => 'By club';
+
+  @override
+  String get noFavoritesYet => 'No favorite clubs yet — tap ♡ on a club screen';
+
+  @override
+  String get noFreeNow => 'No clubs with free PCs right now';
+
+  @override
+  String freeCount(String n) {
+    return '$n free';
+  }
+
+  @override
+  String freeOf(String free, String total) {
+    return '$free of $total free';
+  }
+
+  @override
+  String zoneBusy(String zone) {
+    return '$zone full';
+  }
+
+  @override
+  String tariffNow(String name, String price) {
+    return 'current tariff «$name» $price';
+  }
+
+  @override
+  String chargedFromClubBalance(String club, String sum) {
+    return 'Charged from your $club balance: $sum';
+  }
+
+  @override
+  String reserveFor(String price) {
+    return 'Book · $price';
+  }
+
+  @override
+  String pcInZone(String pc, String zone) {
+    return 'PC #$pc · $zone';
+  }
+
+  @override
+  String computersCount(String n) {
+    return '$n PCs';
+  }
+
+  @override
+  String get searchClubs => 'Search clubs';
+
+  @override
+  String get nothingFound => 'Nothing found';
 }

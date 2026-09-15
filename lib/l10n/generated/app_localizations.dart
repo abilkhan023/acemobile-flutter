@@ -1887,6 +1887,138 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Общий зал'**
   String get commonHall;
+
+  /// No description provided for @wallet.
+  ///
+  /// In ru, this message translates to:
+  /// **'Кошелёк'**
+  String get wallet;
+
+  /// No description provided for @activity.
+  ///
+  /// In ru, this message translates to:
+  /// **'Активность'**
+  String get activity;
+
+  /// No description provided for @freeNow.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свободно сейчас'**
+  String get freeNow;
+
+  /// No description provided for @favorites.
+  ///
+  /// In ru, this message translates to:
+  /// **'Избранные'**
+  String get favorites;
+
+  /// No description provided for @now.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сейчас'**
+  String get now;
+
+  /// No description provided for @pickDate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Другой день'**
+  String get pickDate;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите дату и время'**
+  String get selectDate;
+
+  /// No description provided for @topUp.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пополнить'**
+  String get topUp;
+
+  /// No description provided for @totalAcrossNetwork.
+  ///
+  /// In ru, this message translates to:
+  /// **'Всего по сети'**
+  String get totalAcrossNetwork;
+
+  /// No description provided for @byClubs.
+  ///
+  /// In ru, this message translates to:
+  /// **'По клубам'**
+  String get byClubs;
+
+  /// No description provided for @noFavoritesYet.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет избранных клубов — нажмите ♡ на экране клуба'**
+  String get noFavoritesYet;
+
+  /// No description provided for @noFreeNow.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сейчас нет клубов со свободными ПК'**
+  String get noFreeNow;
+
+  /// No description provided for @freeCount.
+  ///
+  /// In ru, this message translates to:
+  /// **'{n} свободно'**
+  String freeCount(String n);
+
+  /// No description provided for @freeOf.
+  ///
+  /// In ru, this message translates to:
+  /// **'{free} из {total} свободно'**
+  String freeOf(String free, String total);
+
+  /// No description provided for @zoneBusy.
+  ///
+  /// In ru, this message translates to:
+  /// **'{zone} занят'**
+  String zoneBusy(String zone);
+
+  /// No description provided for @tariffNow.
+  ///
+  /// In ru, this message translates to:
+  /// **'сейчас тариф «{name}» {price}'**
+  String tariffNow(String name, String price);
+
+  /// No description provided for @chargedFromClubBalance.
+  ///
+  /// In ru, this message translates to:
+  /// **'Спишется с баланса {club}: {sum}'**
+  String chargedFromClubBalance(String club, String sum);
+
+  /// No description provided for @reserveFor.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забронировать · {price}'**
+  String reserveFor(String price);
+
+  /// No description provided for @pcInZone.
+  ///
+  /// In ru, this message translates to:
+  /// **'ПК №{pc} · {zone}'**
+  String pcInZone(String pc, String zone);
+
+  /// No description provided for @computersCount.
+  ///
+  /// In ru, this message translates to:
+  /// **'{n} ПК'**
+  String computersCount(String n);
+
+  /// No description provided for @searchClubs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поиск по клубам'**
+  String get searchClubs;
+
+  /// No description provided for @nothingFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ничего не найдено'**
+  String get nothingFound;
 }
 
 class _AppLocalizationsDelegate

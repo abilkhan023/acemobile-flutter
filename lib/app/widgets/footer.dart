@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/utils/l10n.dart';
 import '../../shared/theme/ace_colors.dart';
 import '../../shared/widgets/ace_icon.dart';
 
@@ -13,11 +14,12 @@ class AceFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const items = [
-      (icon: 'vuesax', to: '/'),
-      (icon: 'qr-code', to: '/qr-code'),
-      (icon: 'ace', to: '/clubs'),
-      (icon: 'user-square', to: '/profile'),
+    final l = context.l10n;
+    final items = [
+      (icon: 'ace', to: '/', label: l.clubs),
+      (icon: 'refresh-ccw-clock', to: '/activity', label: l.activity),
+      (icon: 'coin-vertical', to: '/balance', label: l.wallet),
+      (icon: 'user-square', to: '/profile', label: l.profile),
     ];
     final bottom = MediaQuery.paddingOf(context).bottom;
     return Padding(
@@ -37,15 +39,30 @@ class AceFooter extends StatelessWidget {
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => context.go(item.to),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 52,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    color: path == item.to ? AceColors.accent : Colors.transparent,
-                    shape: BoxShape.circle,
+                child: SizedBox(
+                  width: 72,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 3,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: path == item.to ? AceColors.accent : Colors.transparent,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(child: AceIcon(item.icon, size: 20, color: path == item.to ? AceColors.white : AceColors.dim)),
+                      ),
+                      Text(
+                        item.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: path == item.to ? AceColors.accent : AceColors.dim, height: 1),
+                      ),
+                    ],
                   ),
-                  child: Center(child: AceIcon(item.icon, size: 24, color: path == item.to ? AceColors.white : AceColors.dim)),
                 ),
               ),
           ],

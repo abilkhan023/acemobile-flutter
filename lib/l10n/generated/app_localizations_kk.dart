@@ -10,19 +10,19 @@ class AppLocalizationsKk extends AppLocalizations {
   AppLocalizationsKk([String locale = 'kk']) : super(locale);
 
   @override
-  String get hi => 'Салем';
+  String get hi => 'Сәлем';
 
   @override
-  String get welcome => 'Добро пожаловать!';
+  String get welcome => 'Қош келдіңіз!';
 
   @override
-  String get clubs => 'Клубы';
+  String get clubs => 'Клубтар';
 
   @override
   String get club => 'Клуб';
 
   @override
-  String get locations => 'Локации';
+  String get locations => 'Мекенжайлар';
 
   @override
   String get balance => 'Баланс';
@@ -31,545 +31,535 @@ class AppLocalizationsKk extends AppLocalizations {
   String get profile => 'Профиль';
 
   @override
-  String get myProfile => 'Мой профиль';
+  String get myProfile => 'Менің профилім';
 
   @override
-  String get news => 'Новости';
+  String get news => 'Жаңалықтар';
 
   @override
-  String get about => 'О нас';
+  String get about => 'Біз туралы';
 
   @override
-  String get back => 'Назад';
+  String get back => 'Артқа';
 
   @override
-  String get registration => 'Регистрация';
+  String get registration => 'Тіркелу';
 
   @override
-  String get forgotPassword => 'Забыли пароль?';
+  String get forgotPassword => 'Құпиясөзді ұмыттыңыз ба?';
 
   @override
   String get login => 'Логин';
 
   @override
-  String get password => 'Пароль';
+  String get password => 'Құпиясөз';
 
   @override
   String get email => 'Email';
 
   @override
-  String get enterData => 'Введите данные';
+  String get enterData => 'Деректерді енгізіңіз';
 
   @override
-  String get or => 'или';
+  String get or => 'немесе';
 
   @override
-  String get continueGuest => 'Продолжить как гость';
+  String get continueGuest => 'Қонақ ретінде жалғастыру';
 
   @override
-  String get continueAction => 'Продолжить';
+  String get continueAction => 'Жалғастыру';
 
   @override
-  String get createAccount => 'Создание аккаунта';
+  String get createAccount => 'Аккаунт құру';
 
   @override
-  String get passwordRecovery => 'Восстановление пароля';
+  String get passwordRecovery => 'Құпиясөзді қалпына келтіру';
 
   @override
-  String get requiredField => 'Обязательное поле';
+  String get requiredField => 'Міндетті өріс';
 
   @override
-  String get enterAtLeast8Characters => 'Введите не менее 8 символов';
+  String get enterAtLeast8Characters => 'Кемінде 8 таңба енгізіңіз';
 
   @override
-  String get maxLength => 'Максимальная длина';
+  String get maxLength => 'Ең үлкен ұзындық';
 
   @override
-  String get minLength => 'Минимальная длина';
+  String get minLength => 'Ең кіші ұзындық';
 
   @override
-  String get register => 'Зарегистрироваться';
+  String get register => 'Тіркелу';
 
   @override
-  String get restore => 'Восстановить';
+  String get restore => 'Қалпына келтіру';
 
   @override
-  String get thisIsEmail => 'Введите почту';
+  String get thisIsEmail => 'Поштаны енгізіңіз';
 
   @override
-  String get anErrorOccurred => 'Произошла ошибка';
+  String get anErrorOccurred => 'Қате орын алды';
 
   @override
-  String get accountCreated => 'Аккаунт создан!';
+  String get accountCreated => 'Аккаунт құрылды!';
 
   @override
-  String get save => 'Сохранить';
+  String get save => 'Сақтау';
 
   @override
-  String get changePhoto => 'Изменить фото';
+  String get changePhoto => 'Фотоны өзгерту';
 
   @override
-  String get changePasswordAction => 'Сменить пароля';
+  String get changePasswordAction => 'Құпиясөзді өзгерту';
 
   @override
-  String get oldPassword => 'Старый пароль';
+  String get oldPassword => 'Ескі құпиясөз';
 
   @override
-  String get newPassword => 'Новый пароль';
+  String get newPassword => 'Жаңа құпиясөз';
 
   @override
-  String get change => 'Изменить';
+  String get change => 'Өзгерту';
 
   @override
-  String get name => 'Имя';
+  String get name => 'Аты';
 
   @override
-  String get surname => 'Фамилия';
+  String get surname => 'Тегі';
 
   @override
-  String get logout => 'Выйти';
+  String get logout => 'Шығу';
 
   @override
-  String get deleteAccount => 'Удалить аккаунт';
+  String get deleteAccount => 'Аккаунтты жою';
 
   @override
-  String get thereArePlaces => 'Есть места';
+  String get thereArePlaces => 'Орын бар';
 
   @override
-  String get noSeatsAvailable => 'Нет мест';
+  String get noSeatsAvailable => 'Орын жоқ';
 
   @override
-  String get filter => 'Фильтровать';
+  String get filter => 'Сүзгі';
 
   @override
-  String get kitchen => 'Кухня';
+  String get kitchen => 'Асхана';
 
   @override
-  String get open => 'Открыта';
+  String get open => 'Ашық';
 
   @override
-  String get seatsAvailable => 'Есть места';
+  String get seatsAvailable => 'Орын бар';
 
   @override
-  String get sortBy => 'Сортировать по';
+  String get sortBy => 'Сұрыптау';
 
   @override
-  String get recommended => 'Рекомендованные';
+  String get recommended => 'Ұсынылған';
 
   @override
   String get rating => 'Рейтинг';
 
   @override
-  String get distance => 'Расстояние';
+  String get distance => 'Қашықтық';
 
   @override
-  String get cost => 'Стоимость';
+  String get cost => 'Бағасы';
 
   @override
-  String get apply => 'Применить';
+  String get apply => 'Қолдану';
 
   @override
-  String get tariffs => 'Тарифы';
+  String get tariffs => 'Тарифтер';
 
   @override
-  String get selectComputer => 'Выберите компьютер';
+  String get selectComputer => 'Компьютерді таңдаңыз';
 
   @override
-  String get story => 'История';
+  String get story => 'Тарих';
 
   @override
-  String get topUpBalance => 'Пополнить баланс';
+  String get topUpBalance => 'Балансты толтыру';
 
   @override
-  String get excellent => 'Отличный';
+  String get excellent => 'Керемет';
 
   @override
-  String get good => 'Хороший';
+  String get good => 'Жақсы';
 
   @override
-  String get bad => 'Плохой';
+  String get bad => 'Нашар';
 
   @override
-  String get selectPeriod => 'Выберите период';
+  String get selectPeriod => 'Кезеңді таңдаңыз';
 
   @override
-  String get backToHome => 'Назад на главную';
+  String get backToHome => 'Басты бетке';
 
   @override
-  String get home => 'Главная';
+  String get home => 'Басты бет';
 
   @override
-  String get all => 'Все';
+  String get all => 'Барлығы';
 
   @override
   String get catalog => 'Каталог';
 
   @override
-  String get shop => 'Магазин';
+  String get shop => 'Дүкен';
 
   @override
-  String get reservation => 'Бронь';
+  String get reservation => 'Брондау';
 
   @override
-  String get currentBalance => 'Текущий баланс';
+  String get currentBalance => 'Ағымдағы баланс';
 
   @override
-  String get balanceReplenishment => 'Пополнить баланс';
+  String get balanceReplenishment => 'Балансты толтыру';
 
   @override
-  String get paymentMethods => 'Способы оплаты';
+  String get paymentMethods => 'Төлем тәсілдері';
 
   @override
-  String get paymentHistory => 'История платажей';
+  String get paymentHistory => 'Төлем тарихы';
 
   @override
-  String get clubsDirectory => 'Каталог клубов';
+  String get clubsDirectory => 'Клубтар каталогы';
 
   @override
-  String get reset => 'Сбросить';
+  String get reset => 'Тазалау';
 
   @override
-  String get search => 'Поиск';
+  String get search => 'Іздеу';
 
   @override
-  String get enterTheClubName => 'Введите название клуба';
+  String get enterTheClubName => 'Клуб атауын енгізіңіз';
 
   @override
-  String get computerBackup => 'Резерв компьютера';
+  String get computerBackup => 'Компьютерді брондау';
 
   @override
-  String get selectTime => 'Выбрать время';
+  String get selectTime => 'Уақытты таңдау';
 
   @override
-  String get bookingDate => 'Дата';
+  String get bookingDate => 'Күні';
 
   @override
-  String get ready => 'Готово';
+  String get ready => 'Дайын';
 
   @override
-  String get sorting => 'Сортировка';
+  String get sorting => 'Сұрыптау';
 
   @override
-  String get reviews => 'Отзывы';
+  String get reviews => 'Пікірлер';
 
   @override
-  String get getDirections => 'Проложить маршрут';
+  String get getDirections => 'Бағыт салу';
 
   @override
-  String get lastActivity => 'Последняя активность';
+  String get lastActivity => 'Соңғы белсенділік';
 
   @override
-  String get repeatBooking => 'Повторить бронь';
+  String get repeatBooking => 'Қайта брондау';
 
   @override
-  String get notifications => 'Уведомления';
+  String get notifications => 'Хабарламалар';
 
   @override
-  String get basket => 'Корзина';
+  String get basket => 'Себет';
 
   @override
-  String get loginToAceGaming => 'Войти в ACE GAMING';
+  String get loginToAceGaming => 'ACE GAMING-ке кіру';
 
   @override
   String get toLogIntoTheApplicationChooseAMethodConvenientForYou =>
-      'Для входа в приложение, \nвыберите удобный для вас способ';
+      'Қолданбаға кіру үшін\nыңғайлы тәсілді таңдаңыз';
 
   @override
   String get byLoggingInYouAgreeToThePrivacyPolicy =>
-      'Авторизовавшись, вы соглашаетесь с \nПолитикой конфиденциальности';
+      'Кіре отырып, сіз\nҚұпиялылық саясатымен келісесіз';
 
   @override
-  String get loginViaApple => 'Войти через Apple';
+  String get loginViaApple => 'Apple арқылы кіру';
 
   @override
-  String get loginViaGoogle => 'Войти через Google';
+  String get loginViaGoogle => 'Google арқылы кіру';
 
   @override
-  String get loginViaEmail => 'Войти через e-mail';
+  String get loginViaEmail => 'E-mail арқылы кіру';
 
   @override
-  String get loginViaTelegram => 'Войти через Telegram';
+  String get loginViaTelegram => 'Telegram арқылы кіру';
 
   @override
-  String get enterYourEmailAndPassword => 'Введите ваш e-mail и пароль';
+  String get enterYourEmailAndPassword => 'E-mail мен құпиясөзді енгізіңіз';
 
   @override
-  String get enterEmail => 'Введите e-mail';
+  String get enterEmail => 'E-mail енгізіңіз';
 
   @override
-  String get enter => 'Войти';
+  String get enter => 'Кіру';
 
   @override
-  String get enterPassword => 'Введите пароль';
+  String get enterPassword => 'Құпиясөзді енгізіңіз';
 
   @override
-  String get enterYourEmail => 'Введите ваш e-mail';
+  String get enterYourEmail => 'E-mail енгізіңіз';
 
   @override
   String get weWillSendAConfirmationCodeToYourRegisteredEmailToChangeYour =>
-      'На зарегистрированный e-mail мы отправим код подтверждения для смены пароля';
+      'Құпиясөзді өзгерту үшін тіркелген e-mail-ге растау кодын жібереміз';
 
   @override
   String get weWillSendYouANewPasswordToYourRegisteredEmail =>
-      'На зарегистрированный e-mail мы отправим вам новый пароль';
+      'Тіркелген e-mail-ге жаңа құпиясөз жібереміз';
 
   @override
-  String get codeFromTheLetter => 'Код из письма';
+  String get codeFromTheLetter => 'Хаттағы код';
 
   @override
-  String get enterCode => 'Введите код';
+  String get enterCode => 'Кодты енгізіңіз';
 
   @override
-  String get didNotReceiveTheCode => 'Не получили код?';
+  String get didNotReceiveTheCode => 'Код келмеді ме?';
 
   @override
-  String get resend => 'Отправить снова';
+  String get resend => 'Қайта жіберу';
 
   @override
-  String get createANewPassword => 'Придумайте новый пароль';
+  String get createANewPassword => 'Жаңа құпиясөз ойлап табыңыз';
 
   @override
   String get createANewPasswordForYourAccount =>
-      'Создайте новый пароль для своего аккаунта';
+      'Аккаунтыңыз үшін жаңа құпиясөз құрыңыз';
 
   @override
-  String get createAPassword => 'Создать пароль';
+  String get createAPassword => 'Құпиясөз құру';
 
   @override
-  String get repeatPassword => 'Повторите пароль';
+  String get repeatPassword => 'Құпиясөзді қайталаңыз';
 
   @override
-  String get listOfComputerClubs => 'Список компьютерных клубов';
+  String get listOfComputerClubs => 'Компьютерлік клубтар тізімі';
 
   @override
-  String get eachClubHasItsOwnBalance =>
-      'У вас в каждом клубе есть собственный баланс';
+  String get eachClubHasItsOwnBalance => 'Әр клубта сіздің жеке балансыңыз бар';
 
   @override
-  String get replenishment => 'Пополнение';
+  String get replenishment => 'Толтыру';
 
   @override
-  String get paymentDetails => 'Детали платежа';
+  String get paymentDetails => 'Төлем мәліметтері';
 
   @override
-  String get print => 'Распечатать';
+  String get print => 'Басып шығару';
 
   @override
-  String get sendByEmail => 'Отправить на email';
+  String get sendByEmail => 'Email-ге жіберу';
 
   @override
-  String get selectAComputerClub => 'Выберите компьютерный клуб';
+  String get selectAComputerClub => 'Компьютерлік клубты таңдаңыз';
 
   @override
   String currentBalanceSum(String sum) {
-    return 'Текущий остаток: $sum ₸';
+    return 'Ағымдағы қалдық: $sum ₸';
   }
 
   @override
-  String get next => 'Далее';
+  String get next => 'Әрі қарай';
 
   @override
-  String get topUpAmountT => 'Сумма пополнения, ₸';
+  String get topUpAmountT => 'Толтыру сомасы, ₸';
 
   @override
-  String get enterAmount => 'Введите сумму';
+  String get enterAmount => 'Соманы енгізіңіз';
 
   @override
-  String get selectPaymentMethod => 'Выберите способ оплаты';
+  String get selectPaymentMethod => 'Төлем тәсілін таңдаңыз';
 
   @override
-  String get replenishmentMethods => 'Способы пополнения';
+  String get replenishmentMethods => 'Толтыру тәсілдері';
 
   @override
-  String get myCards => 'Мои карты';
+  String get myCards => 'Менің карталарым';
 
   @override
-  String get otherPaymentMethods => 'Другие способы оплаты';
+  String get otherPaymentMethods => 'Басқа төлем тәсілдері';
 
   @override
-  String get addANewCard => 'Добавить новую карту';
+  String get addANewCard => 'Жаңа карта қосу';
 
   @override
-  String get confirmation => 'Подтверждение';
+  String get confirmation => 'Растау';
 
   @override
-  String get paymentMethod => 'Способ оплаты';
+  String get paymentMethod => 'Төлем тәсілі';
 
   @override
-  String get topUpAmount => 'Сумма пополнения';
+  String get topUpAmount => 'Толтыру сомасы';
 
   @override
-  String get pay => 'Оплатить';
+  String get pay => 'Төлеу';
 
   @override
   String get card => 'Карта';
 
   @override
-  String get setAsDefault => 'Установить по умолчанию';
+  String get setAsDefault => 'Әдепкі етіп орнату';
 
   @override
-  String get removeCard => 'Удалить карту';
+  String get removeCard => 'Картаны жою';
 
   @override
-  String get addNewCard => 'Добавить новую карту';
+  String get addNewCard => 'Жаңа карта қосу';
 
   @override
-  String get validityPeriod => 'Срок действия';
+  String get validityPeriod => 'Жарамдылық мерзімі';
 
   @override
-  String get cardNumber => 'Номер карты';
+  String get cardNumber => 'Карта нөмірі';
 
   @override
-  String get addACard => 'Добавить карту';
+  String get addACard => 'Карта қосу';
 
   @override
-  String get totalPayable => 'Итого к оплате';
+  String get totalPayable => 'Төлеуге барлығы';
 
   @override
-  String get confirmPayment => 'Подтвердите оплату';
+  String get confirmPayment => 'Төлемді растаңыз';
 
   @override
-  String get oopsSomethingWentWrong => 'Упс, что то пошло не так';
+  String get oopsSomethingWentWrong => 'Упс, бірдеңе дұрыс болмады';
 
   @override
-  String get tryAgain => 'Попробуйте заново';
+  String get tryAgain => 'Қайталап көріңіз';
 
   @override
   String get yourOrderWillBeDeliveredToYourTable =>
-      'Ваш заказ будет доставлен к вашему столу ';
+      'Тапсырысыңыз үстеліңізге жеткізіледі';
 
   @override
   String get thankYouForChoosingOurServiceWeWishYouBonAppetit =>
-      'Спасибо, что выбрали наш сервис! Желаем приятного аппетита!';
+      'Қызметімізді таңдағаныңызға рахмет! Ас болсын!';
 
   @override
-  String get goingTo => 'Собирается';
+  String get goingTo => 'Дайындалуда';
 
   @override
-  String get goToDetails => 'Перейти к деталям';
+  String get goToDetails => 'Мәліметтерге өту';
 
   @override
-  String get paymentAccepted => 'Оплата принята';
+  String get paymentAccepted => 'Төлем қабылданды';
 
   @override
-  String get orderDetails => 'Детали заказа';
+  String get orderDetails => 'Тапсырыс мәліметтері';
 
   @override
-  String get orderContents => 'Состав заказа:';
+  String get orderContents => 'Тапсырыс құрамы:';
 
   @override
-  String get personalInformation => 'Личные данные';
+  String get personalInformation => 'Жеке деректер';
 
   @override
-  String get changePassword => 'Изменить пароль';
+  String get changePassword => 'Құпиясөзді өзгерту';
 
   @override
-  String get selectLanguage => 'Выбрать язык';
+  String get selectLanguage => 'Тілді таңдау';
 
   @override
   String get promocode => 'Промокод';
 
   @override
-  String get whatIsYourName => 'Как вас зовут?';
+  String get whatIsYourName => 'Атыңыз кім?';
 
   @override
-  String get enterName => 'Введите имя';
+  String get enterName => 'Атыңызды енгізіңіз';
 
   @override
-  String get activate => 'Активировать';
+  String get activate => 'Белсендіру';
 
   @override
-  String get enterPromocode => 'Введите промокод';
+  String get enterPromocode => 'Промокодты енгізіңіз';
 
   @override
-  String get writeAReview => 'Написать отзыв';
+  String get writeAReview => 'Пікір жазу';
 
   @override
-  String get review => 'Отзыв';
+  String get review => 'Пікір';
 
   @override
-  String get startWritingOptional => 'Начните писать...(по желанию)';
+  String get startWritingOptional => 'Жаза бастаңыз... (міндетті емес)';
 
   @override
-  String get send => 'Отправить';
+  String get send => 'Жіберу';
 
   @override
-  String get cancel => 'Отмена';
+  String get cancel => 'Бас тарту';
 
   @override
-  String get enterYourName => 'Введите ваше имя';
+  String get enterYourName => 'Атыңызды енгізіңіз';
 
   @override
-  String get createAPasswordRegist => 'Создайте пароль';
+  String get createAPasswordRegist => 'Құпиясөз құрыңыз';
 
   @override
-  String get alreadyHaveAnAccount => 'Уже есть аккаунт?';
+  String get alreadyHaveAnAccount => 'Аккаунтыңыз бар ма?';
 
   @override
-  String get enterLogin => 'Введите логин';
+  String get enterLogin => 'Логинді енгізіңіз';
 
   @override
   String get enterYourEmailAndCreateAPassword =>
-      'Введите ваш e-mail и создайте пароль';
+      'E-mail енгізіп, құпиясөз құрыңыз';
 
   @override
-  String get differentPasswords => 'Разные пароли';
+  String get differentPasswords => 'Құпиясөздер сәйкес емес';
 
   @override
-  String get symbols => 'символов';
+  String get symbols => 'таңба';
 
   @override
-  String get thereAreNoComputersInTheCurrentZone =>
-      'В текущей зоне нет компьютеров';
+  String get thereAreNoComputersInTheCurrentZone => 'Бұл аймақта компьютер жоқ';
 
   @override
-  String get soonDots => 'Скоро...';
+  String get soonDots => 'Жақында...';
 
   @override
-  String get noBalancesAvailable => 'Нет доступных балансов';
+  String get noBalancesAvailable => 'Қолжетімді баланс жоқ';
 
   @override
-  String get loginViaLogin => 'Войти через логин';
+  String get loginViaLogin => 'Логин арқылы кіру';
 
   @override
-  String get enterYourLoginAndPassword => 'Введите свой логин пароль';
+  String get enterYourLoginAndPassword => 'Логин мен құпиясөзді енгізіңіз';
 
   @override
-  String get yesDelete => 'Да, удалить';
+  String get yesDelete => 'Иә, жою';
 
   @override
   String get deleteAccountWarning =>
-      'При удалении аккаунта все ваши данные будут безвозвратно удалены, включая баланс, игровой прогресс, статистику, историю бронирований и другие связанные данные. Восстановить удаленный аккаунт будет невозможно. Вы уверены, что хотите продолжить?';
+      'Аккаунтты жойғанда барлық деректеріңіз, соның ішінде баланс, ойын прогресі, статистика, брондау тарихы және басқа да байланысты деректер қайтарымсыз жойылады. Жойылған аккаунтты қалпына келтіру мүмкін емес. Жалғастырғыңыз келетініне сенімдісіз бе?';
 
   @override
-  String get areYouSureYouWantToExit => 'Вы уверены, что хотите выйти?';
+  String get areYouSureYouWantToExit => 'Шыққыңыз келетініне сенімдісіз бе?';
 
   @override
-  String get attention => 'Внимание';
+  String get attention => 'Назар аударыңыз';
 
   @override
-  String get yesLogout => 'Да, выйти';
+  String get yesLogout => 'Иә, шығу';
 
   @override
-  String get minimum => 'Минимально';
+  String get minimum => 'Ең азы';
 
   @override
-  String get maximum => 'Максимально';
+  String get maximum => 'Ең көбі';
 
   @override
-  String get selectAction => 'Выберите действие';
+  String get selectAction => 'Әрекетті таңдаңыз';
 
   @override
   String minutes(num n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n минут',
-      many: '$n минут',
-      few: '$n минуты',
-      one: '$n минута',
-    );
-    return '$_temp0';
+    return '$n минут';
   }
 
   @override
@@ -600,340 +590,338 @@ class AppLocalizationsKk extends AppLocalizations {
       'Компьютердегі сессия аяқталып, компьютер босатылады. Жалғастыру керек пе?';
 
   @override
-  String get somethingWentWrong => 'Что-то пошло не так';
+  String get somethingWentWrong => 'Бірдеңе дұрыс болмады';
 
   @override
-  String get newPasswordSent => 'Новый пароль отправлен на вашу почту.';
+  String get newPasswordSent => 'Жаңа құпиясөз поштаңызға жіберілді.';
 
   @override
-  String get resetPasswordFailed => 'Не удалось сбросить пароль.';
+  String get resetPasswordFailed =>
+      'Құпиясөзді қалпына келтіру мүмкін болмады.';
 
   @override
-  String get accountDeleted => 'Аккаунт успешно удален';
+  String get accountDeleted => 'Аккаунт сәтті жойылды';
 
   @override
-  String get accountDeleteFailed => 'Не удалось удалить аккаунт';
+  String get accountDeleteFailed => 'Аккаунтты жою мүмкін болмады';
 
   @override
-  String get passwordChanged => 'Пароль успешно изменен';
+  String get passwordChanged => 'Құпиясөз сәтті өзгертілді';
 
   @override
-  String get passwordChangeFailed => 'Не удалось изменить пароль';
+  String get passwordChangeFailed => 'Құпиясөзді өзгерту мүмкін болмады';
 
   @override
-  String get notificationsDenied => 'Доступ к уведомлениям запрещен!';
+  String get notificationsDenied => 'Хабарламаларға рұқсат жоқ!';
 
   @override
   String get aceQr => 'Ace QR';
 
   @override
-  String get langRussian => 'Русский';
+  String get langRussian => 'Орысша';
 
   @override
-  String get langEnglish => 'Английский';
+  String get langEnglish => 'Ағылшынша';
 
   @override
-  String get langKazakh => 'Казахский';
+  String get langKazakh => 'Қазақша';
 
   @override
-  String get privacyPolicyLink => 'Политика конфиденциальности >';
+  String get privacyPolicyLink => 'Құпиялылық саясаты >';
 
   @override
-  String get sessionEnded => 'Сессия завершена';
+  String get sessionEnded => 'Сессия аяқталды';
 
   @override
-  String get noActiveSession => 'Активной сессии нет';
+  String get noActiveSession => 'Белсенді сессия жоқ';
 
   @override
-  String get sessionExpired => 'Сессия истекла, войдите заново';
+  String get sessionExpired => 'Сессия мерзімі өтті, қайта кіріңіз';
 
   @override
-  String get shopOrderPlaced => 'Заказ в магазине оформлен';
+  String get shopOrderPlaced => 'Дүкендегі тапсырыс рәсімделді';
 
   @override
-  String get balanceUpdated => 'Баланс обновлён';
+  String get balanceUpdated => 'Баланс жаңартылды';
 
   @override
   String get walletBalance => 'Баланс';
 
   @override
-  String get walletBonuses => 'Бонусы';
+  String get walletBonuses => 'Бонустар';
 
   @override
   String topUpBy(String wallet, String sum) {
-    return '$wallet: пополнение на $sum';
+    return '$wallet: $sum толтырылды';
   }
 
   @override
   String withdrawBy(String wallet, String sum) {
-    return '$wallet: списание $sum';
+    return '$wallet: $sum шегерілді';
   }
 
   @override
-  String get tariffPerMinute => 'Поминутно';
+  String get tariffPerMinute => 'Минуттап';
 
   @override
-  String get tariffFree => 'Бесплатно';
+  String get tariffFree => 'Тегін';
 
   @override
   String get tariffDefault => 'Тариф';
 
   @override
-  String get clubsNearby => 'Клубы неподалеку';
+  String get clubsNearby => 'Жақын клубтар';
 
   @override
-  String get exclusiveInAce => 'Эксклюзивно в ACE';
+  String get exclusiveInAce => 'Тек ACE-те';
 
   @override
-  String get cancelBooking => 'Отменить бронь';
+  String get cancelBooking => 'Бронды жою';
 
   @override
-  String get viewDetails => 'Посмотреть детали';
+  String get viewDetails => 'Мәліметтерді қарау';
 
   @override
   String pcActiveBooking(String n) {
-    return 'ПК №$n, активная бронь';
+    return 'ПК №$n, белсенді брон';
   }
 
   @override
   String pcBookingAt(String n, String day, String time) {
-    return 'Бронь ПК №$n, $day в $time';
+    return 'ПК №$n броны, $day $time';
   }
 
   @override
-  String get bookingCancelled => 'Бронь успешно отменена';
+  String get bookingCancelled => 'Брон сәтті жойылды';
 
   @override
-  String get bookingCancelFailed => 'Не удалось отменить бронь';
+  String get bookingCancelFailed => 'Бронды жою мүмкін болмады';
 
   @override
-  String get branchesLoadFailed => 'Не удалось загрузить филиалы';
+  String get branchesLoadFailed => 'Филиалдарды жүктеу мүмкін болмады';
 
   @override
-  String get authFailed => 'Не удалось авторизоваться';
+  String get authFailed => 'Кіру мүмкін болмады';
 
   @override
-  String get soonBadge => 'Скоро';
+  String get soonBadge => 'Жақында';
 
   @override
-  String get tariffsLoadFailed => 'Не удалось загрузить тарифы';
+  String get tariffsLoadFailed => 'Тарифтерді жүктеу мүмкін болмады';
 
   @override
-  String get selectTariff => 'Выберите тариф';
+  String get selectTariff => 'Тарифті таңдаңыз';
 
   @override
   String bookingPcAt(String n, String date) {
-    return 'Бронирование ПК №$n, $date';
+    return 'ПК №$n брондау, $date';
   }
 
   @override
-  String get reserve => 'Забронировать';
+  String get reserve => 'Брондау';
 
   @override
-  String get bookingSuccess => 'Успешное бронирование!';
+  String get bookingSuccess => 'Брон сәтті жасалды!';
 
   @override
   String pcReserved(String n) {
-    return 'ПК №$n забронирован. Ждем вас!';
+    return 'ПК №$n бронталды. Күтеміз!';
   }
 
   @override
   String bookingDetails(String date) {
-    return 'Детали бронирования: $date';
+    return 'Брон мәліметтері: $date';
   }
 
   @override
   String get thanksForChoosing =>
-      'Спасибо, что выбрали наш сервис!\nЖелаем вам отличной игры!';
+      'Қызметімізді таңдағаныңызға рахмет!\nЖақсы ойын тілейміз!';
 
   @override
   String couldNotReserve(String n) {
-    return 'Мы не смогли забронировать для вас ПК №$n. Пожалуйста попробуйте заново';
+    return 'ПК №$n брондау мүмкін болмады. Қайталап көріңіз';
   }
 
   @override
-  String get startOver => 'Начать заново';
+  String get startOver => 'Қайта бастау';
 
   @override
-  String get noTariffsAvailable => 'Упс, нет доступных тарифов';
+  String get noTariffsAvailable => 'Упс, қолжетімді тариф жоқ';
 
   @override
-  String get useMinuteBilling =>
-      'Вы можете воспользоваться по минутной оплатой';
+  String get useMinuteBilling => 'Минуттап төлемді пайдалана аласыз';
 
   @override
-  String get openOnMap => 'Открыть на карте';
+  String get openOnMap => 'Картада ашу';
 
   @override
-  String get fromPerHour => 'от 500 ₸/час';
+  String get fromPerHour => '500 ₸/сағаттан';
 
   @override
-  String get seeMore => 'Смотреть подробнее';
+  String get seeMore => 'Толығырақ';
 
   @override
-  String get excellentRating => 'Отлично, 8.8';
+  String get excellentRating => 'Керемет, 8.8';
 
   @override
-  String get reviewsCount1000 => '1000 отзывов';
+  String get reviewsCount1000 => '1000 пікір';
 
   @override
-  String get changeDateTime => 'Изменить дату и время';
+  String get changeDateTime => 'Күн мен уақытты өзгерту';
 
   @override
   String selectedPc(String n) {
-    return 'Выбран ПК №$n';
+    return 'ПК №$n таңдалды';
   }
 
   @override
-  String get legendFree => 'Свободен';
+  String get legendFree => 'Бос';
 
   @override
-  String get legendBusySoon => 'Бронь · сервис';
+  String get legendBusySoon => 'Брон · қызмет';
 
   @override
-  String get legendBusy => 'Занят';
+  String get legendBusy => 'Бос емес';
 
   @override
-  String get legendOff => 'Выключен';
+  String get legendOff => 'Өшірулі';
 
   @override
-  String get noComputers => 'Нет компьютеров';
+  String get noComputers => 'Компьютер жоқ';
 
   @override
-  String get today => 'Сегодня';
+  String get today => 'Бүгін';
 
   @override
-  String get tomorrow => 'Завтра';
+  String get tomorrow => 'Ертең';
 
   @override
-  String get hoursLabel => 'Часы';
+  String get hoursLabel => 'Сағат';
 
   @override
-  String get minutesLabel => 'Минуты';
+  String get minutesLabel => 'Минут';
 
   @override
-  String get shareTitle => 'Интересный раздел';
+  String get shareTitle => 'Қызықты бөлім';
 
   @override
-  String get shareClubsText =>
-      'Сейчас я нахожусь в разделе \"Клубы\". Посмотри здесь!';
+  String get shareClubsText => 'Қазір мен «Клубтар» бөліміндемін. Мұнда қара!';
 
   @override
-  String get shareNewsText => 'Сейчас я читаю новость. Посмотри здесь!';
+  String get shareNewsText => 'Қазір мен жаңалық оқып отырмын. Мұнда қара!';
 
   @override
-  String get outOf10 => 'из 10';
+  String get outOf10 => '10-нан';
 
   @override
-  String get reviews15 => '15 отзывов';
+  String get reviews15 => '15 пікір';
 
   @override
-  String get reviewTimeAgo => '5 часов назад';
+  String get reviewTimeAgo => '5 сағат бұрын';
 
   @override
   String get reviewAuthor => 'Deadpool 2016';
 
   @override
-  String get reviewText => 'Все отлично работает, удобное приложение';
+  String get reviewText => 'Бәрі керемет жұмыс істейді, ыңғайлы қолданба';
 
   @override
-  String get morningTariff => 'Утро (08:00 - 12:00)';
+  String get morningTariff => 'Таң (08:00 - 12:00)';
 
   @override
-  String get dayTariff => 'День (12:00 - 18:00)';
+  String get dayTariff => 'Күн (12:00 - 18:00)';
 
   @override
-  String get nightTariff => 'Ночь (22:00 - 08:00)';
+  String get nightTariff => 'Түн (22:00 - 08:00)';
 
   @override
   String get twoGis => '2ГИС';
 
   @override
-  String get yandexMaps => 'Yandex Карты';
+  String get yandexMaps => 'Yandex Карталар';
 
   @override
-  String get googleMaps => 'Google Карты';
+  String get googleMaps => 'Google Карталар';
 
   @override
-  String get appleMaps => 'Apple Карты';
+  String get appleMaps => 'Apple Карталар';
 
   @override
-  String get tryAgainLater => 'Повторите попытку позднее';
+  String get tryAgainLater => 'Кейінірек қайталап көріңіз';
 
   @override
-  String get topUp100Kaspi => 'Пополнить на 100тг через Kaspi QR';
+  String get topUp100Kaspi => 'Kaspi QR арқылы 100 тг толтыру';
 
   @override
-  String get aroundTheClock => 'Круглосуточно';
+  String get aroundTheClock => 'Тәулік бойы';
 
   @override
-  String get cameraPermissionDenied =>
-      'Разрешите доступ к камере в настройках.';
+  String get cameraPermissionDenied => 'Баптауларда камераға рұқсат беріңіз.';
 
   @override
-  String get authError => 'Ошибка авторизации';
+  String get authError => 'Авторизация қатесі';
 
   @override
-  String get scannerOnlyInApp => 'Сканер доступен только в приложении';
+  String get scannerOnlyInApp => 'Сканер тек қолданбада қолжетімді';
 
   @override
   String priceByTariff(String name) {
-    return 'Цена по тарифу \"$name”';
+    return '«$name» тарифі бойынша баға';
   }
 
   @override
-  String get tariffDuration => 'Продолжительность тарифа';
+  String get tariffDuration => 'Тариф ұзақтығы';
 
   @override
   String get activityStub => 'activity';
 
   @override
   String goToBasket(String n) {
-    return 'Перейти в корзину ($n)';
+    return 'Себетке өту ($n)';
   }
 
   @override
   String goToPayment(String sum) {
-    return 'Перейти к оплате ($sum)';
+    return 'Төлемге өту ($sum)';
   }
 
   @override
-  String get orderStatus => 'Статус заказа';
+  String get orderStatus => 'Тапсырыс күйі';
 
   @override
-  String get paidViaKaspi => 'Оплачено через Kaspi.kz';
+  String get paidViaKaspi => 'Kaspi.kz арқылы төленді';
 
   @override
-  String get orderDeliveredToTable => 'Заказ будет доставлен к вашему столу';
+  String get orderDeliveredToTable => 'Тапсырыс үстеліңізге жеткізіледі';
 
   @override
-  String get completedAtSample => 'Завершен, 18.12.2024 в 3:00';
+  String get completedAtSample => 'Аяқталды, 18.12.2024, 3:00';
 
   @override
-  String get chargedByTariffNight => 'Списано с баланса, по тарифу “Ночь”';
+  String get chargedByTariffNight => '«Түн» тарифі бойынша баланстан шегерілді';
 
   @override
-  String get sessionDuration => 'Продолжительность сессии';
+  String get sessionDuration => 'Сессия ұзақтығы';
 
   @override
   String get minutes120 => '120 минут';
 
   @override
   String get notifTopUpTitle =>
-      'Баланс в Adamar Solutions пополнен на сумму 5 000 ₸';
+      'Adamar Solutions балансы 5 000 ₸ сомасына толтырылды';
 
   @override
-  String get notifTopUpMeta => 'Пополнение • 21.12.2024, 23:43';
+  String get notifTopUpMeta => 'Толтыру • 21.12.2024, 23:43';
 
   @override
-  String get notifBookingTitle => '✅ Новая бронь подтверждена';
+  String get notifBookingTitle => '✅ Жаңа брон расталды';
 
   @override
-  String get notifChargeTitle => '💸 Списаны 2 500 ₸ по тарифу “ночь”';
+  String get notifChargeTitle => '💸 «түн» тарифі бойынша 2 500 ₸ шегерілді';
 
   @override
   String get notifOrderTitle =>
-      '🛒 Оформлен новый заказ в магазине на сумму 2 500 ₸';
+      '🛒 Дүкенде 2 500 ₸ сомасына жаңа тапсырыс рәсімделді';
 
   @override
   String get notifMeta => 'Adamar Solutions • 21.12.2024, 23:43';
@@ -942,23 +930,106 @@ class AppLocalizationsKk extends AppLocalizations {
   String get sampleClubName => 'Adamar Solutions';
 
   @override
-  String get sampleClubAddress => 'пр. Аль-Фараби 101';
+  String get sampleClubAddress => 'Әл-Фараби даңғ. 101';
 
   @override
-  String get qrLogin => 'QR-вход';
+  String get qrLogin => 'QR-кіру';
 
   @override
   String dateAtTime(String date, String time) {
-    return '$date в $time';
+    return '$date, $time';
   }
 
   @override
-  String get loadFailed => 'Не удалось загрузить данные';
+  String get loadFailed => 'Деректерді жүктеу мүмкін болмады';
 
   @override
   String get noActivityYet =>
-      'Пока нет активности — забронируйте компьютер или войдите по QR';
+      'Әзірге белсенділік жоқ — компьютер брондаңыз немесе QR арқылы кіріңіз';
 
   @override
-  String get commonHall => 'Общий зал';
+  String get commonHall => 'Жалпы зал';
+
+  @override
+  String get wallet => 'Әмиян';
+
+  @override
+  String get activity => 'Белсенділік';
+
+  @override
+  String get freeNow => 'Қазір бос';
+
+  @override
+  String get favorites => 'Таңдаулылар';
+
+  @override
+  String get now => 'Қазір';
+
+  @override
+  String get pickDate => 'Басқа күн';
+
+  @override
+  String get selectDate => 'Күн мен уақытты таңдаңыз';
+
+  @override
+  String get topUp => 'Толтыру';
+
+  @override
+  String get totalAcrossNetwork => 'Желі бойынша барлығы';
+
+  @override
+  String get byClubs => 'Клубтар бойынша';
+
+  @override
+  String get noFavoritesYet =>
+      'Таңдаулы клубтар жоқ — клуб экранында ♡ басыңыз';
+
+  @override
+  String get noFreeNow => 'Қазір бос ПК бар клубтар жоқ';
+
+  @override
+  String freeCount(String n) {
+    return '$n бос';
+  }
+
+  @override
+  String freeOf(String free, String total) {
+    return '$total ішінен $free бос';
+  }
+
+  @override
+  String zoneBusy(String zone) {
+    return '$zone бос емес';
+  }
+
+  @override
+  String tariffNow(String name, String price) {
+    return 'қазіргі тариф «$name» $price';
+  }
+
+  @override
+  String chargedFromClubBalance(String club, String sum) {
+    return '$club балансынан шегеріледі: $sum';
+  }
+
+  @override
+  String reserveFor(String price) {
+    return 'Брондау · $price';
+  }
+
+  @override
+  String pcInZone(String pc, String zone) {
+    return 'ПК №$pc · $zone';
+  }
+
+  @override
+  String computersCount(String n) {
+    return '$n ПК';
+  }
+
+  @override
+  String get searchClubs => 'Клубтарды іздеу';
+
+  @override
+  String get nothingFound => 'Ештеңе табылмады';
 }

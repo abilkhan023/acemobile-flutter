@@ -1,12 +1,521 @@
 {
   "@@locale": "en",
   "hi": "Hi",
+  "welcome": "Welcome!",
+  "clubs": "Clubs",
+  "club": "Club",
+  "locations": "Locations",
+  "balance": "Balance",
+  "profile": "Profile",
+  "myProfile": "My profile",
+  "news": "News",
+  "about": "About us",
+  "back": "Back",
+  "registration": "Sign up",
+  "forgotPassword": "Forgot password?",
+  "login": "Login",
+  "password": "Password",
+  "email": "Email",
+  "enterData": "Enter data",
+  "or": "or",
+  "continueGuest": "Continue as guest",
+  "continueAction": "Continue",
+  "createAccount": "Create account",
+  "passwordRecovery": "Password recovery",
+  "requiredField": "Required field",
+  "enterAtLeast8Characters": "Enter at least 8 characters",
+  "maxLength": "Maximum length",
+  "minLength": "Minimum length",
+  "register": "Sign up",
+  "restore": "Restore",
+  "thisIsEmail": "Enter an email",
+  "anErrorOccurred": "An error occurred",
+  "accountCreated": "Account created!",
+  "save": "Save",
+  "changePhoto": "Change photo",
+  "changePasswordAction": "Change password",
+  "oldPassword": "Old password",
+  "newPassword": "New password",
+  "change": "Change",
+  "name": "First name",
+  "surname": "Last name",
+  "logout": "Log out",
+  "deleteAccount": "Delete account",
+  "thereArePlaces": "Seats available",
+  "noSeatsAvailable": "No seats",
+  "filter": "Filter",
+  "kitchen": "Kitchen",
+  "open": "Open",
+  "seatsAvailable": "Seats available",
+  "sortBy": "Sort by",
+  "recommended": "Recommended",
+  "rating": "Rating",
+  "distance": "Distance",
+  "cost": "Price",
+  "apply": "Apply",
+  "tariffs": "Tariffs",
+  "selectComputer": "Choose a computer",
+  "story": "History",
+  "topUpBalance": "Top up balance",
+  "excellent": "Excellent",
+  "good": "Good",
+  "bad": "Bad",
+  "selectPeriod": "Select a period",
+  "backToHome": "Back to home",
+  "home": "Home",
+  "all": "All",
+  "catalog": "Catalog",
+  "shop": "Shop",
+  "reservation": "Booking",
+  "currentBalance": "Current balance",
+  "balanceReplenishment": "Top up balance",
+  "paymentMethods": "Payment methods",
+  "paymentHistory": "Payment history",
+  "clubsDirectory": "Club directory",
+  "reset": "Reset",
+  "search": "Search",
+  "enterTheClubName": "Enter the club name",
+  "computerBackup": "Computer booking",
+  "selectTime": "Choose time",
+  "bookingDate": "Date",
+  "ready": "Done",
+  "sorting": "Sorting",
+  "reviews": "Reviews",
+  "getDirections": "Get directions",
+  "lastActivity": "Recent activity",
+  "repeatBooking": "Book again",
+  "notifications": "Notifications",
+  "basket": "Cart",
+  "loginToAceGaming": "Sign in to ACE GAMING",
+  "toLogIntoTheApplicationChooseAMethodConvenientForYou": "To sign in,\nchoose a convenient method",
+  "byLoggingInYouAgreeToThePrivacyPolicy": "By signing in you agree to the\nPrivacy Policy",
+  "loginViaApple": "Sign in with Apple",
+  "loginViaGoogle": "Sign in with Google",
+  "loginViaEmail": "Sign in with e-mail",
+  "loginViaTelegram": "Sign in with Telegram",
+  "enterYourEmailAndPassword": "Enter your e-mail and password",
+  "enterEmail": "Enter e-mail",
+  "enter": "Sign in",
+  "enterPassword": "Enter password",
+  "enterYourEmail": "Enter your e-mail",
+  "weWillSendAConfirmationCodeToYourRegisteredEmailToChangeYour": "We will send a confirmation code to your registered e-mail to change the password",
+  "weWillSendYouANewPasswordToYourRegisteredEmail": "We will send a new password to your registered e-mail",
+  "codeFromTheLetter": "Code from the e-mail",
+  "enterCode": "Enter code",
+  "didNotReceiveTheCode": "Didn't get the code?",
+  "resend": "Send again",
+  "createANewPassword": "Create a new password",
+  "createANewPasswordForYourAccount": "Create a new password for your account",
+  "createAPassword": "Create a password",
+  "repeatPassword": "Repeat password",
+  "listOfComputerClubs": "Computer clubs",
+  "eachClubHasItsOwnBalance": "You have a separate balance in each club",
+  "replenishment": "Top-up",
+  "paymentDetails": "Payment details",
+  "print": "Print",
+  "sendByEmail": "Send by email",
+  "selectAComputerClub": "Choose a computer club",
+  "currentBalanceSum": "Current balance: {sum} ₸",
+  "@currentBalanceSum": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "next": "Next",
+  "topUpAmountT": "Top-up amount, ₸",
+  "enterAmount": "Enter amount",
+  "selectPaymentMethod": "Choose a payment method",
+  "replenishmentMethods": "Top-up methods",
+  "myCards": "My cards",
+  "otherPaymentMethods": "Other payment methods",
+  "addANewCard": "Add a new card",
+  "confirmation": "Confirmation",
+  "paymentMethod": "Payment method",
+  "topUpAmount": "Top-up amount",
+  "pay": "Pay",
+  "card": "Card",
+  "setAsDefault": "Set as default",
+  "removeCard": "Remove card",
+  "addNewCard": "Add new card",
+  "validityPeriod": "Expiry date",
+  "cardNumber": "Card number",
+  "addACard": "Add a card",
+  "totalPayable": "Total to pay",
+  "confirmPayment": "Confirm payment",
+  "oopsSomethingWentWrong": "Oops, something went wrong",
+  "tryAgain": "Try again",
+  "yourOrderWillBeDeliveredToYourTable": "Your order will be delivered to your table",
+  "thankYouForChoosingOurServiceWeWishYouBonAppetit": "Thank you for choosing our service! Bon appetit!",
+  "goingTo": "Being prepared",
+  "goToDetails": "Go to details",
+  "paymentAccepted": "Payment accepted",
+  "orderDetails": "Order details",
+  "orderContents": "Order contents:",
+  "personalInformation": "Personal information",
+  "changePassword": "Change password",
+  "selectLanguage": "Choose language",
+  "promocode": "Promo code",
+  "whatIsYourName": "What is your name?",
+  "enterName": "Enter name",
+  "activate": "Activate",
+  "enterPromocode": "Enter promo code",
+  "writeAReview": "Write a review",
+  "review": "Review",
+  "startWritingOptional": "Start writing... (optional)",
+  "send": "Send",
+  "cancel": "Cancel",
+  "enterYourName": "Enter your name",
+  "createAPasswordRegist": "Create a password",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "enterLogin": "Enter login",
+  "enterYourEmailAndCreateAPassword": "Enter your e-mail and create a password",
+  "differentPasswords": "Passwords don't match",
+  "symbols": "characters",
+  "thereAreNoComputersInTheCurrentZone": "There are no computers in this zone",
+  "soonDots": "Coming soon...",
+  "noBalancesAvailable": "No balances available",
+  "loginViaLogin": "Sign in with login",
+  "enterYourLoginAndPassword": "Enter your login and password",
+  "yesDelete": "Yes, delete",
+  "deleteAccountWarning": "Deleting your account permanently removes all your data, including balance, game progress, statistics, booking history and other related data. A deleted account cannot be restored. Are you sure you want to continue?",
+  "areYouSureYouWantToExit": "Are you sure you want to log out?",
+  "attention": "Attention",
+  "yesLogout": "Yes, log out",
+  "minimum": "Minimum",
+  "maximum": "Maximum",
+  "selectAction": "Choose an action",
+  "minutes": "{n, plural, one{{n} minute} other{{n} minutes}}",
+  "@minutes": {
+    "placeholders": {
+      "n": {
+        "type": "num"
+      }
+    }
+  },
   "activeSession": "Active session",
   "pcNumber": "PC #{n}",
+  "@pcNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "timeLeft": "Time left",
   "tariff": "Tariff",
   "bonuses": "Bonuses",
   "stopSession": "End session",
   "yesStop": "End",
-  "stopSessionConfirm": "Your session at the computer will be ended and the computer will be released. Continue?"
+  "stopSessionConfirm": "The session on this computer will be ended and the computer will be released. Continue?",
+  "somethingWentWrong": "Something went wrong",
+  "newPasswordSent": "A new password has been sent to your e-mail.",
+  "resetPasswordFailed": "Could not reset the password.",
+  "accountDeleted": "Account deleted",
+  "accountDeleteFailed": "Could not delete the account",
+  "passwordChanged": "Password changed",
+  "passwordChangeFailed": "Could not change the password",
+  "notificationsDenied": "Notifications are not allowed!",
+  "aceQr": "Ace QR",
+  "langRussian": "Russian",
+  "langEnglish": "English",
+  "langKazakh": "Kazakh",
+  "privacyPolicyLink": "Privacy Policy >",
+  "sessionEnded": "Session ended",
+  "noActiveSession": "No active session",
+  "sessionExpired": "Session expired, please sign in again",
+  "shopOrderPlaced": "Shop order placed",
+  "balanceUpdated": "Balance updated",
+  "walletBalance": "Balance",
+  "walletBonuses": "Bonuses",
+  "topUpBy": "{wallet}: topped up by {sum}",
+  "@topUpBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "withdrawBy": "{wallet}: charged {sum}",
+  "@withdrawBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffPerMinute": "Per minute",
+  "tariffFree": "Free",
+  "tariffDefault": "Tariff",
+  "clubsNearby": "Clubs nearby",
+  "exclusiveInAce": "Exclusive in ACE",
+  "cancelBooking": "Cancel booking",
+  "viewDetails": "View details",
+  "pcActiveBooking": "PC #{n}, active booking",
+  "@pcActiveBooking": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pcBookingAt": "PC #{n} booked for {day} at {time}",
+  "@pcBookingAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCancelled": "Booking cancelled",
+  "bookingCancelFailed": "Could not cancel the booking",
+  "branchesLoadFailed": "Could not load branches",
+  "authFailed": "Could not sign in",
+  "soonBadge": "Soon",
+  "tariffsLoadFailed": "Could not load tariffs",
+  "selectTariff": "Choose a tariff",
+  "bookingPcAt": "Booking PC #{n}, {date}",
+  "@bookingPcAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reserve": "Book",
+  "bookingSuccess": "Booking confirmed!",
+  "pcReserved": "PC #{n} is booked. See you!",
+  "@pcReserved": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingDetails": "Booking details: {date}",
+  "@bookingDetails": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "thanksForChoosing": "Thank you for choosing our service!\nHave a great game!",
+  "couldNotReserve": "We could not book PC #{n} for you. Please try again",
+  "@couldNotReserve": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "startOver": "Start over",
+  "noTariffsAvailable": "Oops, no tariffs available",
+  "useMinuteBilling": "You can use per-minute billing",
+  "openOnMap": "Open on map",
+  "fromPerHour": "from 500 ₸/hour",
+  "seeMore": "See more",
+  "excellentRating": "Excellent, 8.8",
+  "reviewsCount1000": "1000 reviews",
+  "changeDateTime": "Change date and time",
+  "selectedPc": "PC #{n} selected",
+  "@selectedPc": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "legendFree": "Free",
+  "legendBusySoon": "Booked · service",
+  "legendBusy": "Busy",
+  "legendOff": "Off",
+  "noComputers": "No computers",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "hoursLabel": "Hours",
+  "minutesLabel": "Minutes",
+  "shareTitle": "Interesting section",
+  "shareClubsText": "I'm in the \"Clubs\" section right now. Take a look!",
+  "shareNewsText": "I'm reading a news item right now. Take a look!",
+  "outOf10": "out of 10",
+  "reviews15": "15 reviews",
+  "reviewTimeAgo": "5 hours ago",
+  "reviewAuthor": "Deadpool 2016",
+  "reviewText": "Everything works great, handy app",
+  "morningTariff": "Morning (08:00 - 12:00)",
+  "dayTariff": "Day (12:00 - 18:00)",
+  "nightTariff": "Night (22:00 - 08:00)",
+  "twoGis": "2GIS",
+  "yandexMaps": "Yandex Maps",
+  "googleMaps": "Google Maps",
+  "appleMaps": "Apple Maps",
+  "tryAgainLater": "Please try again later",
+  "topUp100Kaspi": "Top up 100 ₸ via Kaspi QR",
+  "aroundTheClock": "Open 24/7",
+  "cameraPermissionDenied": "Allow camera access in settings.",
+  "authError": "Authorization error",
+  "scannerOnlyInApp": "The scanner is available only in the app",
+  "priceByTariff": "Price by tariff \"{name}\"",
+  "@priceByTariff": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffDuration": "Tariff duration",
+  "activityStub": "activity",
+  "goToBasket": "Go to cart ({n})",
+  "@goToBasket": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "goToPayment": "Go to payment ({sum})",
+  "@goToPayment": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatus": "Order status",
+  "paidViaKaspi": "Paid via Kaspi.kz",
+  "orderDeliveredToTable": "The order will be delivered to your table",
+  "completedAtSample": "Completed, 18.12.2024 at 3:00",
+  "chargedByTariffNight": "Charged from balance, tariff \"Night\"",
+  "sessionDuration": "Session duration",
+  "minutes120": "120 minutes",
+  "notifTopUpTitle": "Balance at Adamar Solutions topped up by 5 000 ₸",
+  "notifTopUpMeta": "Top-up • 21.12.2024, 23:43",
+  "notifBookingTitle": "✅ New booking confirmed",
+  "notifChargeTitle": "💸 2 500 ₸ charged, tariff \"night\"",
+  "notifOrderTitle": "🛒 New shop order for 2 500 ₸",
+  "notifMeta": "Adamar Solutions • 21.12.2024, 23:43",
+  "sampleClubName": "Adamar Solutions",
+  "sampleClubAddress": "101 Al-Farabi Ave.",
+  "qrLogin": "QR login",
+  "dateAtTime": "{date} at {time}",
+  "@dateAtTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "loadFailed": "Could not load data",
+  "noActivityYet": "No activity yet — book a computer or sign in with QR",
+  "commonHall": "Main hall",
+  "wallet": "Wallet",
+  "activity": "Activity",
+  "freeNow": "Free now",
+  "favorites": "Favorites",
+  "now": "Now",
+  "pickDate": "Other day",
+  "selectDate": "Choose date and time",
+  "topUp": "Top up",
+  "totalAcrossNetwork": "Total across the network",
+  "byClubs": "By club",
+  "noFavoritesYet": "No favorite clubs yet — tap ♡ on a club screen",
+  "noFreeNow": "No clubs with free PCs right now",
+  "freeCount": "{n} free",
+  "@freeCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "freeOf": "{free} of {total} free",
+  "@freeOf": {
+    "placeholders": {
+      "free": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "zoneBusy": "{zone} full",
+  "@zoneBusy": {
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "tariffNow": "current tariff «{name}» {price}",
+  "@tariffNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "chargedFromClubBalance": "Charged from your {club} balance: {sum}",
+  "@chargedFromClubBalance": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "reserveFor": "Book · {price}",
+  "@reserveFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "pcInZone": "PC #{pc} · {zone}",
+  "@pcInZone": {
+    "placeholders": {
+      "pc": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "computersCount": "{n} PCs",
+  "@computersCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "searchClubs": "Search clubs",
+  "nothingFound": "Nothing found"
 }

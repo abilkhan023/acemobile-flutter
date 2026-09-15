@@ -25,8 +25,7 @@ import '../features/balance/ui/balance_screen.dart';
 import '../features/balance/ui/balance_story_screen.dart';
 import '../features/balance/ui/current_balance_screen.dart';
 import '../features/clubs/ui/club_screen.dart';
-import '../features/clubs/ui/clubs_screen.dart';
-import '../features/home/ui/home_screen.dart';
+import '../features/clubs/ui/clubs_feed_screen.dart';
 import '../features/locations/ui/locations_screen.dart';
 import '../features/news/ui/news_detail_screen.dart';
 import '../features/news/ui/news_screen.dart';
@@ -70,7 +69,7 @@ RouteMeta metaForState(GoRouterState state) {
   return meta;
 }
 
-const _instantPaths = {'/', '/:uuid', '/clubs', '/activity', '/profile', '/login'};
+const _instantPaths = {'/', '/:uuid', '/clubs', '/activity', '/balance', '/profile', '/login'};
 
 class _DeepPage<T> extends CupertinoPage<T> {
   const _DeepPage({required super.child, super.key});
@@ -113,18 +112,18 @@ GoRoute _route(String path, RouteMeta meta, Widget Function(GoRouterState state)
 }
 
 List<RouteBase> _routes() => [
-      _route('/', const RouteMeta(isGuest: true, hideBack: true, headerActions: homeHeaderActions), (s) => RefreshOnEnter(providers: [homeBranchesProvider, activityProvider, walletsProvider], child: const HomeScreen())),
+      _route('/', const RouteMeta(isGuest: true, hideBack: true, hideHeader: true), (s) => RefreshOnEnter(providers: [homeBranchesProvider, walletsProvider], child: const ClubsFeedScreen())),
       _route('/qr-code', const RouteMeta(layout: AceLayout.qr), (s) => const QrScreen()),
-      _route('/clubs', RouteMeta(title: (l) => l.clubsDirectory, hideBack: true, headerActions: clubsHeaderActions), (s) => RefreshOnEnter(providers: [homeBranchesProvider], child: const ClubsScreen())),
-      _route('/clubs/:id', const RouteMeta(hideFooter: true, isDeep: true, titleWidget: clubHeaderTitle), (s) => ClubScreen(key: ValueKey(s.pathParameters['id']), branchId: s.pathParameters['id']!)),
+      _route('/clubs', const RouteMeta(isGuest: true, hideBack: true, hideHeader: true), (s) => RefreshOnEnter(providers: [homeBranchesProvider, walletsProvider], child: const ClubsFeedScreen())),
+      _route('/clubs/:id', const RouteMeta(hideFooter: true, hideHeader: true, isDeep: true), (s) => ClubScreen(key: ValueKey(s.pathParameters['id']), branchId: s.pathParameters['id']!)),
       _route('/notifications', RouteMeta(title: (l) => l.notifications, hideFooter: true, layout: AceLayout.soon), (s) => const NotificationsScreen()),
       _route('/shop', RouteMeta(title: (l) => l.shop, hideFooter: true, layout: AceLayout.soon), (s) => const ShopScreen()),
       _route('/shop/order_details/:id', RouteMeta(title: (l) => l.orderDetails, hideFooter: true), (s) => const OrderDetailsScreen()),
-      _route('/activity', RouteMeta(title: (l) => l.lastActivity, hideBack: true), (s) => const ActivityScreen()),
+      _route('/activity', RouteMeta(title: (l) => l.activity, hideBack: true), (s) => RefreshOnEnter(providers: [activityProvider], child: const ActivityScreen())),
       _route('/activity/:id', RouteMeta(title: (l) => l.lastActivity, hideFooter: true), (s) => ActivityDetailScreen(key: ValueKey(s.pathParameters['id']), id: s.pathParameters['id']!)),
       _route('/locations', RouteMeta(title: (l) => l.locations, layout: AceLayout.empty, isDeep: true), (s) => RefreshOnEnter(providers: [availableGameCentersProvider], child: const LocationsScreen())),
-      _route('/balance', RouteMeta(title: (l) => l.balance, headerActions: balanceHeaderActions), (s) => RefreshOnEnter(providers: [walletsProvider, gameCentersProvider], child: const BalanceScreen())),
-      _route('/balance/story', RouteMeta(title: (l) => l.story), (s) => const BalanceStoryScreen()),
+      _route('/balance', RouteMeta(title: (l) => l.wallet, hideBack: true), (s) => RefreshOnEnter(providers: [walletsProvider, gameCentersProvider], child: const BalanceScreen())),
+      _route('/balance/story', RouteMeta(title: (l) => l.story, layout: AceLayout.soon), (s) => const BalanceStoryScreen()),
       _route('/balance/form', RouteMeta(title: (l) => l.balance, hideFooter: true, isDeep: true), (s) => const BalanceFormScreen()),
       _route('/balance/:id', RouteMeta(title: (l) => l.topUpBalance), (s) => RefreshOnEnter(providers: [walletsProvider], child: BalanceIdScreen(key: ValueKey(s.pathParameters['id']), walletId: s.pathParameters['id']!))),
       _route('/profile', RouteMeta(title: (l) => l.profile, hideBack: true), (s) => RefreshOnEnter(providers: [walletsProvider], child: const ProfileScreen())),
@@ -149,7 +148,7 @@ List<RouteBase> _routes() => [
       _route('/login/:option', const RouteMeta(isGuest: true, hideBack: true), (s) => s.pathParameters['option'] == 'email' ? const EmailLoginScreen() : const SizedBox()),
       _route('/register', const RouteMeta(isGuest: true, hideFooter: true), (s) => const RegisterScreen()),
       _route('/add-new-card', RouteMeta(title: (l) => l.addNewCard, layout: AceLayout.soon), (s) => const AddNewCardScreen()),
-      _route('/:uuid', const RouteMeta(isGuest: true, hideBack: true, headerActions: homeHeaderActions), (s) => RefreshOnEnter(providers: [homeBranchesProvider, activityProvider, walletsProvider], child: HomeScreen(key: ValueKey(s.pathParameters['uuid']), deepLinkUuid: s.pathParameters['uuid']))),
+      _route('/:uuid', const RouteMeta(isGuest: true, hideBack: true, hideHeader: true), (s) => RefreshOnEnter(providers: [homeBranchesProvider, walletsProvider], child: ClubsFeedScreen(key: ValueKey(s.pathParameters['uuid']), deepLinkUuid: s.pathParameters['uuid']))),
     ];
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -175,6 +174,19 @@ final routerProvider = Provider<GoRouter>((ref) {
   return router;
 });
 
+bool routerCanPop(GoRouter router) {
+  var matches = router.routerDelegate.currentConfiguration.matches;
+  while (true) {
+    if (matches.length > 1) return true;
+    final last = matches.lastOrNull;
+    if (last is ShellRouteMatch) {
+      matches = last.matches;
+      continue;
+    }
+    return false;
+  }
+}
+
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.state, required this.child});
 
@@ -185,7 +197,7 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final meta = metaForState(state);
     final path = state.uri.path;
-    final canPop = ref.read(routerProvider).canPop();
+    final canPop = routerCanPop(ref.read(routerProvider));
     return switch (meta.layout) {
       AceLayout.normal => DefaultLayout(meta: meta, path: path, canPop: canPop, child: child),
       AceLayout.empty => EmptyLayout(path: path, canPop: canPop, child: child),
