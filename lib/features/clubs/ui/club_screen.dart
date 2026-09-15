@@ -95,14 +95,18 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       }
       if (mounted) setState(() => _loading = false);
       _zones = await booking.zones(widget.branchId);
-      final datetime = await booking.serverDatetime();
-      final parsed = datetime == null ? null : DateTime.tryParse(datetime);
-      final now = parsed ?? DateTime.now();
+      DateTime now = DateTime.now();
+      try {
+        final datetime = await booking.serverDatetime();
+        now = (datetime == null ? null : DateTime.tryParse(datetime)) ?? now;
+      } catch (_) {}
       _serverTime = now;
       _bookTime = DateFormat('HH:mm').format(now);
       _bookDay = dateKey(now);
       await Future.wait(_zones.map((z) async => _computersByZone[z.id] = await booking.computersByZone(z.id)));
-      if (_book.isNotEmpty) await _applyDatetimeStates();
+      try {
+        if (_book.isNotEmpty) await _applyDatetimeStates();
+      } catch (_) {}
     } catch (_) {} finally {
       if (mounted) {
         setState(() {

@@ -27,16 +27,26 @@ class ClubLive {
 final clubLiveProvider = FutureProvider.family<ClubLive, String>((ref, branchId) async {
   final booking = ref.watch(bookingApiProvider);
   final zones = await booking.zones(branchId);
-  final raw = await booking.serverDatetime();
-  final now = (raw == null ? null : DateTime.tryParse(raw)) ?? DateTime.now();
+  DateTime now = DateTime.now();
+  try {
+    final raw = await booking.serverDatetime();
+    now = (raw == null ? null : DateTime.tryParse(raw)) ?? now;
+  } catch (_) {}
   final stamp = DateFormat("yyyy-MM-dd'T'HH:mm:00").format(now);
-  final computers = await booking.computersMap(branchId: branchId, datetime: stamp);
+  final byZone = <String, List<Computer>>{};
+  await Future.wait(zones.map((z) async => byZone[z.id] = await booking.computersByZone(z.id)));
+  try {
+    final states = {for (final c in await booking.computersMap(branchId: branchId, datetime: stamp)) c.id: c};
+    for (final entry in byZone.entries) {
+      byZone[entry.key] = [for (final c in entry.value) states[c.id] ?? c];
+    }
+  } catch (_) {}
   final live = [
     for (final z in zones)
       ZoneLive(
         zone: z,
-        total: computers.where((c) => c.zoneId == z.id).length,
-        free: computers.where((c) => c.zoneId == z.id && ComputerMap.stateOf(c) == 'FREE').length,
+        total: (byZone[z.id] ?? const []).length,
+        free: (byZone[z.id] ?? const []).where((c) => ComputerMap.stateOf(c) == 'FREE').length,
       ),
   ];
   Tariff? tariffNow;
