@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/auth/providers/auth_provider.dart';
 import '../env.dart';
 import 'api_exception.dart';
+import 'hidden_clubs.dart';
 
 Dio _createDio(String baseUrl, Ref ref) {
   final dio = Dio(BaseOptions(
@@ -14,6 +15,7 @@ Dio _createDio(String baseUrl, Ref ref) {
     responseType: ResponseType.json,
   ));
   dio.interceptors.add(AuthInterceptor(ref, dio));
+  dio.interceptors.add(HiddenClubsInterceptor());
   return dio;
 }
 

@@ -13,4 +13,7 @@ abstract final class Env {
   static const timezone = 'Asia/Almaty';
   static const shopGameCenterId = 'a75d6f90-32de-402f-8fc8-8227114fb7b5';
   static const defaultMapSize = 20;
+  static const hiddenGameCenterIds = {'a6b5fb81-a2a6-4de9-ae31-479e20140d98'};
+  static const hiddenBranchIds = {'347b02fd-baad-4d64-b239-5e000bfcadb5'};
+  static const hiddenSlugs = {'test'};
 }

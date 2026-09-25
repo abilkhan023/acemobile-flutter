@@ -6,6 +6,7 @@ import '../features/balance/providers/balance_providers.dart';
 import '../features/home/providers/home_providers.dart';
 import '../features/news/data/news_api.dart';
 import '../shared/widgets/refresh_on_enter.dart';
+import '../core/api/hidden_clubs.dart';
 import '../shared/theme/ace_colors.dart';
 import '../features/about/ui/about_screen.dart';
 import '../features/about/ui/privacy_policy_screen.dart';
@@ -161,6 +162,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isAuth = ref.read(isAuthProvider);
       final meta = metaForState(state);
       if (!isAuth && !meta.isGuest && state.matchedLocation != '/login') return '/login';
+      if (isHiddenClubPath(state.uri.path)) return '/';
       return null;
     },
     routes: [
