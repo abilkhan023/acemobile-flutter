@@ -458,7 +458,11 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final branch = _branch;
     final center = _center;
     final fav = ref.watch(favoritesProvider).contains(widget.branchId);
-    final free = _allComputers.where((c) => ComputerMap.stateOf(c) == 'FREE').length;
+    final future = _when != _When.now;
+    final free = _allComputers.where((c) {
+      final s = ComputerMap.stateOf(c);
+      return s == 'FREE' || (future && s == 'POWER_OFF' && ComputerMap.isSelectable(c));
+    }).length;
     return Column(
       children: [
         Padding(

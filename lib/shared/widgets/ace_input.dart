@@ -96,6 +96,7 @@ class _AceInputState extends State<AceInput> {
                 TextField(
                   controller: _controller,
                   focusNode: _focus,
+                  onTapOutside: (_) => _focus.unfocus(),
                   enabled: widget.enabled,
                   autofocus: widget.autofocus,
                   obscureText: _isPassword && !_visiblePassword,

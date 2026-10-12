@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/api/api_client.dart';
+import '../../../core/utils/dates.dart';
 import '../../../core/utils/l10n.dart';
 import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
@@ -52,12 +53,8 @@ class ActivityDetailScreen extends ConsumerWidget {
 
   String _date(BuildContext context, String? raw) {
     if (raw == null) return '';
-    var dt = DateTime.tryParse(raw);
-    if (dt == null) return raw;
-    if (!raw.endsWith('Z') && !RegExp(r'[+-]\d\d:?\d\d$').hasMatch(raw)) {
-      dt = DateTime.utc(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second);
-    }
-    final local = dt.toLocal();
+    final local = parseUtc(raw)?.toLocal();
+    if (local == null) return raw;
     return context.l10n.dateAtTime(DateFormat('dd.MM.yyyy').format(local), DateFormat('HH:mm').format(local));
   }
 

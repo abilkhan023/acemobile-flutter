@@ -2373,6 +2373,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Все места брони должны быть в одной зоне'**
   String get selectZoneOnly;
+
+  /// No description provided for @pcOffline.
+  ///
+  /// In ru, this message translates to:
+  /// **'ПК выключен — включите его в клубе и попробуйте снова'**
+  String get pcOffline;
+
+  /// No description provided for @pcInUse.
+  ///
+  /// In ru, this message translates to:
+  /// **'На этом ПК уже играют'**
+  String get pcInUse;
+
+  /// No description provided for @membersSaved.
+  ///
+  /// In ru, this message translates to:
+  /// **'Участники сохранены'**
+  String get membersSaved;
 }
 
 class _AppLocalizationsDelegate

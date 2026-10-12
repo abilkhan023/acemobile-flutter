@@ -673,5 +673,8 @@
   "codeCopied": "Code copied",
   "bookingLive": "in progress",
   "noFreePcsSelected": "Pick at least one free PC",
-  "selectZoneOnly": "All seats must be in one zone"
+  "selectZoneOnly": "All seats must be in one zone",
+  "pcOffline": "The PC is off — turn it on in the club and try again",
+  "pcInUse": "Someone is already playing on this PC",
+  "membersSaved": "Members saved"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/api_exception.dart';
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
 import '../../../shared/theme/ace_colors.dart';
@@ -71,7 +72,7 @@ class _BookingCardState extends ConsumerState<_BookingCard> {
 
   Booking get b => widget.booking;
 
-  Future<void> _run(Future<void> Function() action, {String? success}) async {
+  Future<void> _run(Future<void> Function() action, {String? success, String Function(Object e)? errorText}) async {
     final l = context.l10n;
     final toast = ref.read(toastProvider.notifier);
     setState(() => _busy = true);
@@ -80,7 +81,7 @@ class _BookingCardState extends ConsumerState<_BookingCard> {
       if (success != null) toast.success(success);
       ref.invalidate(myBookingsProvider);
     } catch (e) {
-      toast.danger(bookingErrorText(e, l, room: b.isRoom));
+      toast.danger(errorText?.call(e) ?? bookingErrorText(e, l, room: b.isRoom));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -155,7 +156,7 @@ class _BookingCardState extends ConsumerState<_BookingCard> {
             onPressed: () async {
               Navigator.of(ctx).pop();
               var name = '';
-              await _run(() async => name = await api.startOnFriendPc(p.id));
+              await _run(() async => name = await api.startOnFriendPc(p.id), errorText: (e) => _startErrorText(e, l));
               if (name.isNotEmpty) ref.read(toastProvider.notifier).success(l.sessionStartedFor(name));
             },
           ),
@@ -198,7 +199,7 @@ class _BookingCardState extends ConsumerState<_BookingCard> {
               style: AceButtonStyle.red,
               onPressed: () {
                 Navigator.of(ctx).pop();
-                _run(() => ref.read(bookingsApiProvider).setMembers(b.id, selected.toList()));
+                _run(() => ref.read(bookingsApiProvider).setMembers(b.id, selected.toList()), success: l.membersSaved);
               },
             ),
           ],
@@ -207,11 +208,18 @@ class _BookingCardState extends ConsumerState<_BookingCard> {
     );
   }
 
-  String _placeStatus(BookingPlace p, AppLocalizations l) {
+  String _startErrorText(Object e, AppLocalizations l) {
+    if (e is ApiException && e.status == 400) return l.pcOffline;
+    if (e is ApiException && e.status == 409) return l.pcInUse;
+    return bookingErrorText(e, l);
+  }
+
+  String _placeStatus(Booking b, BookingPlace p, AppLocalizations l) {
     if (p.claimedBy != null) return l.placeClaimed(p.claimedBy!.username);
     if (p.status == 'burned') return l.placeBurned;
     if (p.status == 'cancelled' || p.status == 'released') return l.placeCancelled;
     if (p.assigned != null) return p.assigned!.username;
+    if (b.isOwner && !b.isRoom && p.status == 'waiting') return l.youOrByCode;
     return p.mine ? l.you : l.unassignedSeat;
   }
 
@@ -261,7 +269,7 @@ class _BookingCardState extends ConsumerState<_BookingCard> {
                         child: Row(
                           children: [
                             Expanded(child: Text(l.pcNumber(p.computer ?? ''), style: AceText.style(size: 14, weight: FontWeight.w500))),
-                            Text(_placeStatus(p, l), style: AceText.style(size: 13, color: p.mine || p.assigned != null ? AceColors.text : AceColors.muted)),
+                            Text(_placeStatus(b, p, l), style: AceText.style(size: 13, color: p.mine || p.assigned != null ? AceColors.text : AceColors.muted)),
                             if (b.isOwner && p.waiting) const Padding(padding: EdgeInsets.only(left: 6), child: AceIcon('chevron-right', size: 16, color: AceColors.dim)),
                           ],
                         ),

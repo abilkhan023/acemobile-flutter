@@ -1254,4 +1254,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectZoneOnly => 'All seats must be in one zone';
+
+  @override
+  String get pcOffline =>
+      'The PC is off — turn it on in the club and try again';
+
+  @override
+  String get pcInUse => 'Someone is already playing on this PC';
+
+  @override
+  String get membersSaved => 'Members saved';
 }

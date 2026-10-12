@@ -1245,4 +1245,13 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get selectZoneOnly => 'Барлық орын бір аймақта болуы керек';
+
+  @override
+  String get pcOffline => 'ДК өшірулі — клубта қосып, қайталап көріңіз';
+
+  @override
+  String get pcInUse => 'Бұл ДК-да біреу ойнап отыр';
+
+  @override
+  String get membersSaved => 'Қатысушылар сақталды';
 }

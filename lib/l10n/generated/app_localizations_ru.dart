@@ -1257,4 +1257,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get selectZoneOnly => 'Все места брони должны быть в одной зоне';
+
+  @override
+  String get pcOffline =>
+      'ПК выключен — включите его в клубе и попробуйте снова';
+
+  @override
+  String get pcInUse => 'На этом ПК уже играют';
+
+  @override
+  String get membersSaved => 'Участники сохранены';
 }

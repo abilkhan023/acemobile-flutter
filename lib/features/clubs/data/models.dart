@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/utils/dates.dart';
+
 part 'models.freezed.dart';
 part 'models.g.dart';
 
@@ -79,5 +81,5 @@ extension ReservationX on Reservation {
     return c?.toString() ?? '';
   }
 
-  DateTime? get dateTimeParsed => dateTime == null ? null : DateTime.tryParse(dateTime!);
+  DateTime? get dateTimeParsed => parseUtc(dateTime)?.toLocal();
 }

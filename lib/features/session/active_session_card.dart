@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/utils/dates.dart';
 import '../../core/utils/l10n.dart';
 import '../../core/utils/money.dart';
 import '../../shared/theme/ace_colors.dart';
@@ -92,10 +93,8 @@ class _ActiveSessionCardState extends ConsumerState<ActiveSessionCard> {
     ];
     if (members.isEmpty || !mounted) return false;
     final prepaid = info['tariff_kind'] == 'prepaid';
-    final ends = DateTime.tryParse('${info['ends_at'] ?? ''}');
-    final endsLabel = ends == null
-        ? ''
-        : DateFormat('HH:mm').format((ends.isUtc ? ends : DateTime.utc(ends.year, ends.month, ends.day, ends.hour, ends.minute)).toLocal());
+    final ends = parseUtc(info['ends_at']);
+    final endsLabel = ends == null ? '' : DateFormat('HH:mm').format(ends.toLocal());
     final choice = await showAceSheet<(String, String?)>(
       context,
       title: l.leaveRoomTitle,

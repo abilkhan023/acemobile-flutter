@@ -3,16 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/api_client.dart';
 import '../../../core/env.dart';
+import '../../../core/utils/dates.dart';
 import '../../auth/providers/auth_provider.dart';
-
-DateTime? parseUtc(Object? raw) {
-  final s = raw?.toString();
-  if (s == null || s.isEmpty) return null;
-  final p = DateTime.tryParse(s);
-  if (p == null) return null;
-  if (s.endsWith('Z') || RegExp(r'[+-]\d\d:?\d\d$').hasMatch(s)) return p.toUtc();
-  return DateTime.utc(p.year, p.month, p.day, p.hour, p.minute, p.second);
-}
 
 class UserRef {
   const UserRef({required this.id, required this.username});

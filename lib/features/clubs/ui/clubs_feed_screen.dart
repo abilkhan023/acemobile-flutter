@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,9 +41,11 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
   _Filter _filter = _Filter.all;
   final _search = TextEditingController();
   String _query = '';
+  Timer? _liveTimer;
 
   @override
   void dispose() {
+    _liveTimer?.cancel();
     _search.dispose();
     super.dispose();
   }
@@ -49,6 +53,12 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() {
+      if (mounted) ref.invalidate(clubLiveProvider);
+    });
+    _liveTimer = Timer.periodic(const Duration(seconds: 60), (_) {
+      if (mounted && TickerMode.valuesOf(context).enabled) ref.invalidate(clubLiveProvider);
+    });
     final uuid = widget.deepLinkUuid;
     if (uuid != null && uuid.isNotEmpty && !ref.read(authProvider).isAuth) {
       Future.microtask(() => _loginByDeepLink(uuid));
@@ -64,6 +74,15 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
     } catch (_) {
       toast.danger(l.authFailed);
     }
+  }
+
+  Future<void> _refresh() async {
+    ref.invalidate(clubLiveProvider);
+    ref.invalidate(homeBranchesProvider);
+    if (ref.read(authProvider).isAuth) ref.invalidate(walletsProvider);
+    try {
+      await ref.read(homeBranchesProvider.future);
+    } catch (_) {}
   }
 
   void _openSession() {
@@ -101,6 +120,7 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
         AcePage(
           gap: 14,
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+          onRefresh: _refresh,
           children: [
             Row(
               children: [

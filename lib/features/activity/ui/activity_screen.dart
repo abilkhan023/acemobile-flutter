@@ -117,14 +117,16 @@ class ActivityScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final activity = ref.watch(activityProvider);
-    final items = activity.value ?? const <Reservation>[];
+    final bookings = ref.watch(myBookingsProvider).value ?? const <Booking>[];
+    final inBookings = {for (final b in bookings) for (final p in b.places) p.id};
+    final items = [for (final r in activity.value ?? const <Reservation>[]) if (!(r.isActive == true && inBookings.contains(r.id))) r];
     return AcePage(
       gap: 12,
       children: [
         const ActiveSessionCard(),
         Builder(
           builder: (context) {
-            final count = ref.watch(myBookingsProvider).value?.length ?? 0;
+            final count = bookings.length;
             return LinkMenu(
               title: l.myBookings,
               subtitle: count == 0 ? l.noBookings : null,
