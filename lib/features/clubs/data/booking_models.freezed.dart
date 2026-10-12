@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Zone {
 
- String get id; String? get name;@JsonKey(name: 'branch_id') String? get branchId;@JsonKey(fromJson: numFromJson) num? get x;@JsonKey(fromJson: numFromJson) num? get y;@JsonKey(name: 'x_len', fromJson: numFromJson) num? get xLen;@JsonKey(name: 'y_len', fromJson: numFromJson) num? get yLen;
+ String get id; String? get name;@JsonKey(name: 'branch_id') String? get branchId;@JsonKey(fromJson: numFromJson) num? get x;@JsonKey(fromJson: numFromJson) num? get y;@JsonKey(name: 'x_len', fromJson: numFromJson) num? get xLen;@JsonKey(name: 'y_len', fromJson: numFromJson) num? get yLen; String? get mode;@JsonKey(name: 'door_type') String? get doorType;
 /// Create a copy of Zone
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $ZoneCopyWith<Zone> get copyWith => _$ZoneCopyWithImpl<Zone>(this as Zone, _$ide
 @override
 bool operator ==(Object other) {
   final _this = this as Zone;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Zone&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.branchId, _this.branchId) || other.branchId == _this.branchId)&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.xLen, _this.xLen) || other.xLen == _this.xLen)&&(identical(other.yLen, _this.yLen) || other.yLen == _this.yLen));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Zone&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.branchId, _this.branchId) || other.branchId == _this.branchId)&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.xLen, _this.xLen) || other.xLen == _this.xLen)&&(identical(other.yLen, _this.yLen) || other.yLen == _this.yLen)&&(identical(other.mode, _this.mode) || other.mode == _this.mode)&&(identical(other.doorType, _this.doorType) || other.doorType == _this.doorType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Zone;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.branchId,_this.x,_this.y,_this.xLen,_this.yLen);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.branchId,_this.x,_this.y,_this.xLen,_this.yLen,_this.mode,_this.doorType);
 }
 
 @override
 String toString() {
   final _this = this as Zone;
-  return 'Zone(id: ${_this.id}, name: ${_this.name}, branchId: ${_this.branchId}, x: ${_this.x}, y: ${_this.y}, xLen: ${_this.xLen}, yLen: ${_this.yLen})';
+  return 'Zone(id: ${_this.id}, name: ${_this.name}, branchId: ${_this.branchId}, x: ${_this.x}, y: ${_this.y}, xLen: ${_this.xLen}, yLen: ${_this.yLen}, mode: ${_this.mode}, doorType: ${_this.doorType})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $ZoneCopyWith<$Res>  {
   factory $ZoneCopyWith(Zone value, $Res Function(Zone) _then) = _$ZoneCopyWithImpl;
 @useResult
 $Res call({
- String id, String? name,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'x_len', fromJson: numFromJson) num? xLen,@JsonKey(name: 'y_len', fromJson: numFromJson) num? yLen
+ String id, String? name,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'x_len', fromJson: numFromJson) num? xLen,@JsonKey(name: 'y_len', fromJson: numFromJson) num? yLen, String? mode,@JsonKey(name: 'door_type') String? doorType
 });
 
 
@@ -71,7 +71,7 @@ class _$ZoneCopyWithImpl<$Res>
 
 /// Create a copy of Zone
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? branchId = freezed,Object? x = freezed,Object? y = freezed,Object? xLen = freezed,Object? yLen = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? branchId = freezed,Object? x = freezed,Object? y = freezed,Object? xLen = freezed,Object? yLen = freezed,Object? mode = freezed,Object? doorType = freezed,}) {
   return _then(Zone(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,9 @@ as String?,x: freezed == x ? _self.x : x // ignore: cast_nullable_to_non_nullabl
 as num?,y: freezed == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
 as num?,xLen: freezed == xLen ? _self.xLen : xLen // ignore: cast_nullable_to_non_nullable
 as num?,yLen: freezed == yLen ? _self.yLen : yLen // ignore: cast_nullable_to_non_nullable
-as num?,
+as num?,mode: freezed == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
+as String?,doorType: freezed == doorType ? _self.doorType : doorType // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -165,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'x_len', fromJson: numFromJson)  num? xLen, @JsonKey(name: 'y_len', fromJson: numFromJson)  num? yLen)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'x_len', fromJson: numFromJson)  num? xLen, @JsonKey(name: 'y_len', fromJson: numFromJson)  num? yLen,  String? mode, @JsonKey(name: 'door_type')  String? doorType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Zone() when $default != null:
-return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_that.yLen);case _:
+return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_that.yLen,_that.mode,_that.doorType);case _:
   return orElse();
 
 }
@@ -186,10 +188,10 @@ return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'x_len', fromJson: numFromJson)  num? xLen, @JsonKey(name: 'y_len', fromJson: numFromJson)  num? yLen)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'x_len', fromJson: numFromJson)  num? xLen, @JsonKey(name: 'y_len', fromJson: numFromJson)  num? yLen,  String? mode, @JsonKey(name: 'door_type')  String? doorType)  $default,) {final _that = this;
 switch (_that) {
 case _Zone():
-return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_that.yLen);case _:
+return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_that.yLen,_that.mode,_that.doorType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -206,10 +208,10 @@ return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'x_len', fromJson: numFromJson)  num? xLen, @JsonKey(name: 'y_len', fromJson: numFromJson)  num? yLen)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'x_len', fromJson: numFromJson)  num? xLen, @JsonKey(name: 'y_len', fromJson: numFromJson)  num? yLen,  String? mode, @JsonKey(name: 'door_type')  String? doorType)?  $default,) {final _that = this;
 switch (_that) {
 case _Zone() when $default != null:
-return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_that.yLen);case _:
+return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_that.yLen,_that.mode,_that.doorType);case _:
   return null;
 
 }
@@ -221,7 +223,7 @@ return $default(_that.id,_that.name,_that.branchId,_that.x,_that.y,_that.xLen,_t
 @JsonSerializable()
 
 class _Zone implements Zone {
-  const _Zone({required this.id, this.name, @JsonKey(name: 'branch_id') this.branchId, @JsonKey(fromJson: numFromJson) this.x, @JsonKey(fromJson: numFromJson) this.y, @JsonKey(name: 'x_len', fromJson: numFromJson) this.xLen, @JsonKey(name: 'y_len', fromJson: numFromJson) this.yLen});
+  const _Zone({required this.id, this.name, @JsonKey(name: 'branch_id') this.branchId, @JsonKey(fromJson: numFromJson) this.x, @JsonKey(fromJson: numFromJson) this.y, @JsonKey(name: 'x_len', fromJson: numFromJson) this.xLen, @JsonKey(name: 'y_len', fromJson: numFromJson) this.yLen, this.mode, @JsonKey(name: 'door_type') this.doorType});
   factory _Zone.fromJson(Map<String, dynamic> json) => _$ZoneFromJson(json);
 
 @override final  String id;
@@ -231,6 +233,8 @@ class _Zone implements Zone {
 @override@JsonKey(fromJson: numFromJson) final  num? y;
 @override@JsonKey(name: 'x_len', fromJson: numFromJson) final  num? xLen;
 @override@JsonKey(name: 'y_len', fromJson: numFromJson) final  num? yLen;
+@override final  String? mode;
+@override@JsonKey(name: 'door_type') final  String? doorType;
 
 /// Create a copy of Zone
 /// with the given fields replaced by the non-null parameter values.
@@ -245,18 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Zone&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.branchId, branchId) || other.branchId == branchId)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.xLen, xLen) || other.xLen == xLen)&&(identical(other.yLen, yLen) || other.yLen == yLen));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Zone&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.branchId, branchId) || other.branchId == branchId)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.xLen, xLen) || other.xLen == xLen)&&(identical(other.yLen, yLen) || other.yLen == yLen)&&(identical(other.mode, mode) || other.mode == mode)&&(identical(other.doorType, doorType) || other.doorType == doorType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,branchId,x,y,xLen,yLen);
+    return Object.hash(runtimeType,id,name,branchId,x,y,xLen,yLen,mode,doorType);
 }
 
 @override
 String toString() {
-    return 'Zone(id: $id, name: $name, branchId: $branchId, x: $x, y: $y, xLen: $xLen, yLen: $yLen)';
+    return 'Zone(id: $id, name: $name, branchId: $branchId, x: $x, y: $y, xLen: $xLen, yLen: $yLen, mode: $mode, doorType: $doorType)';
 }
 
 
@@ -267,7 +271,7 @@ abstract mixin class _$ZoneCopyWith<$Res> implements $ZoneCopyWith<$Res> {
   factory _$ZoneCopyWith(_Zone value, $Res Function(_Zone) _then) = __$ZoneCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? name,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'x_len', fromJson: numFromJson) num? xLen,@JsonKey(name: 'y_len', fromJson: numFromJson) num? yLen
+ String id, String? name,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'x_len', fromJson: numFromJson) num? xLen,@JsonKey(name: 'y_len', fromJson: numFromJson) num? yLen, String? mode,@JsonKey(name: 'door_type') String? doorType
 });
 
 
@@ -284,7 +288,7 @@ class __$ZoneCopyWithImpl<$Res>
 
 /// Create a copy of Zone
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? branchId = freezed,Object? x = freezed,Object? y = freezed,Object? xLen = freezed,Object? yLen = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? branchId = freezed,Object? x = freezed,Object? y = freezed,Object? xLen = freezed,Object? yLen = freezed,Object? mode = freezed,Object? doorType = freezed,}) {
   return _then(_Zone(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -293,7 +297,9 @@ as String?,x: freezed == x ? _self.x : x // ignore: cast_nullable_to_non_nullabl
 as num?,y: freezed == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
 as num?,xLen: freezed == xLen ? _self.xLen : xLen // ignore: cast_nullable_to_non_nullable
 as num?,yLen: freezed == yLen ? _self.yLen : yLen // ignore: cast_nullable_to_non_nullable
-as num?,
+as num?,mode: freezed == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
+as String?,doorType: freezed == doorType ? _self.doorType : doorType // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -304,7 +310,7 @@ as num?,
 /// @nodoc
 mixin _$Computer {
 
- String get id; String? get name; String? get state;@JsonKey(fromJson: numFromJson) num? get x;@JsonKey(fromJson: numFromJson) num? get y;@JsonKey(name: 'zone_id') String? get zoneId;@JsonKey(name: 'branch_id') String? get branchId;@JsonKey(name: 'mac_address') String? get macAddress;
+ String get id; String? get name; String? get state;@JsonKey(fromJson: numFromJson) num? get x;@JsonKey(fromJson: numFromJson) num? get y;@JsonKey(name: 'zone_id') String? get zoneId;@JsonKey(name: 'branch_id') String? get branchId;@JsonKey(name: 'mac_address') String? get macAddress;@JsonKey(name: 'staff_hold') bool? get staffHold;
 /// Create a copy of Computer
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -318,20 +324,20 @@ $ComputerCopyWith<Computer> get copyWith => _$ComputerCopyWithImpl<Computer>(thi
 @override
 bool operator ==(Object other) {
   final _this = this as Computer;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Computer&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.state, _this.state) || other.state == _this.state)&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.zoneId, _this.zoneId) || other.zoneId == _this.zoneId)&&(identical(other.branchId, _this.branchId) || other.branchId == _this.branchId)&&(identical(other.macAddress, _this.macAddress) || other.macAddress == _this.macAddress));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Computer&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.state, _this.state) || other.state == _this.state)&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.zoneId, _this.zoneId) || other.zoneId == _this.zoneId)&&(identical(other.branchId, _this.branchId) || other.branchId == _this.branchId)&&(identical(other.macAddress, _this.macAddress) || other.macAddress == _this.macAddress)&&(identical(other.staffHold, _this.staffHold) || other.staffHold == _this.staffHold));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Computer;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.state,_this.x,_this.y,_this.zoneId,_this.branchId,_this.macAddress);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.state,_this.x,_this.y,_this.zoneId,_this.branchId,_this.macAddress,_this.staffHold);
 }
 
 @override
 String toString() {
   final _this = this as Computer;
-  return 'Computer(id: ${_this.id}, name: ${_this.name}, state: ${_this.state}, x: ${_this.x}, y: ${_this.y}, zoneId: ${_this.zoneId}, branchId: ${_this.branchId}, macAddress: ${_this.macAddress})';
+  return 'Computer(id: ${_this.id}, name: ${_this.name}, state: ${_this.state}, x: ${_this.x}, y: ${_this.y}, zoneId: ${_this.zoneId}, branchId: ${_this.branchId}, macAddress: ${_this.macAddress}, staffHold: ${_this.staffHold})';
 }
 
 
@@ -342,7 +348,7 @@ abstract mixin class $ComputerCopyWith<$Res>  {
   factory $ComputerCopyWith(Computer value, $Res Function(Computer) _then) = _$ComputerCopyWithImpl;
 @useResult
 $Res call({
- String id, String? name, String? state,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'zone_id') String? zoneId,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(name: 'mac_address') String? macAddress
+ String id, String? name, String? state,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'zone_id') String? zoneId,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(name: 'mac_address') String? macAddress,@JsonKey(name: 'staff_hold') bool? staffHold
 });
 
 
@@ -359,7 +365,7 @@ class _$ComputerCopyWithImpl<$Res>
 
 /// Create a copy of Computer
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? state = freezed,Object? x = freezed,Object? y = freezed,Object? zoneId = freezed,Object? branchId = freezed,Object? macAddress = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? state = freezed,Object? x = freezed,Object? y = freezed,Object? zoneId = freezed,Object? branchId = freezed,Object? macAddress = freezed,Object? staffHold = freezed,}) {
   return _then(Computer(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -369,7 +375,8 @@ as num?,y: freezed == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
 as num?,zoneId: freezed == zoneId ? _self.zoneId : zoneId // ignore: cast_nullable_to_non_nullable
 as String?,branchId: freezed == branchId ? _self.branchId : branchId // ignore: cast_nullable_to_non_nullable
 as String?,macAddress: freezed == macAddress ? _self.macAddress : macAddress // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,staffHold: freezed == staffHold ? _self.staffHold : staffHold // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -454,10 +461,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name,  String? state, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'zone_id')  String? zoneId, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(name: 'mac_address')  String? macAddress)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name,  String? state, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'zone_id')  String? zoneId, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(name: 'mac_address')  String? macAddress, @JsonKey(name: 'staff_hold')  bool? staffHold)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Computer() when $default != null:
-return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_that.branchId,_that.macAddress);case _:
+return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_that.branchId,_that.macAddress,_that.staffHold);case _:
   return orElse();
 
 }
@@ -475,10 +482,10 @@ return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name,  String? state, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'zone_id')  String? zoneId, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(name: 'mac_address')  String? macAddress)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name,  String? state, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'zone_id')  String? zoneId, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(name: 'mac_address')  String? macAddress, @JsonKey(name: 'staff_hold')  bool? staffHold)  $default,) {final _that = this;
 switch (_that) {
 case _Computer():
-return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_that.branchId,_that.macAddress);case _:
+return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_that.branchId,_that.macAddress,_that.staffHold);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -495,10 +502,10 @@ return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name,  String? state, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'zone_id')  String? zoneId, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(name: 'mac_address')  String? macAddress)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name,  String? state, @JsonKey(fromJson: numFromJson)  num? x, @JsonKey(fromJson: numFromJson)  num? y, @JsonKey(name: 'zone_id')  String? zoneId, @JsonKey(name: 'branch_id')  String? branchId, @JsonKey(name: 'mac_address')  String? macAddress, @JsonKey(name: 'staff_hold')  bool? staffHold)?  $default,) {final _that = this;
 switch (_that) {
 case _Computer() when $default != null:
-return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_that.branchId,_that.macAddress);case _:
+return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_that.branchId,_that.macAddress,_that.staffHold);case _:
   return null;
 
 }
@@ -510,7 +517,7 @@ return $default(_that.id,_that.name,_that.state,_that.x,_that.y,_that.zoneId,_th
 @JsonSerializable()
 
 class _Computer implements Computer {
-  const _Computer({required this.id, this.name, this.state, @JsonKey(fromJson: numFromJson) this.x, @JsonKey(fromJson: numFromJson) this.y, @JsonKey(name: 'zone_id') this.zoneId, @JsonKey(name: 'branch_id') this.branchId, @JsonKey(name: 'mac_address') this.macAddress});
+  const _Computer({required this.id, this.name, this.state, @JsonKey(fromJson: numFromJson) this.x, @JsonKey(fromJson: numFromJson) this.y, @JsonKey(name: 'zone_id') this.zoneId, @JsonKey(name: 'branch_id') this.branchId, @JsonKey(name: 'mac_address') this.macAddress, @JsonKey(name: 'staff_hold') this.staffHold});
   factory _Computer.fromJson(Map<String, dynamic> json) => _$ComputerFromJson(json);
 
 @override final  String id;
@@ -521,6 +528,7 @@ class _Computer implements Computer {
 @override@JsonKey(name: 'zone_id') final  String? zoneId;
 @override@JsonKey(name: 'branch_id') final  String? branchId;
 @override@JsonKey(name: 'mac_address') final  String? macAddress;
+@override@JsonKey(name: 'staff_hold') final  bool? staffHold;
 
 /// Create a copy of Computer
 /// with the given fields replaced by the non-null parameter values.
@@ -535,18 +543,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Computer&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.state, state) || other.state == state)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.zoneId, zoneId) || other.zoneId == zoneId)&&(identical(other.branchId, branchId) || other.branchId == branchId)&&(identical(other.macAddress, macAddress) || other.macAddress == macAddress));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Computer&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.state, state) || other.state == state)&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.zoneId, zoneId) || other.zoneId == zoneId)&&(identical(other.branchId, branchId) || other.branchId == branchId)&&(identical(other.macAddress, macAddress) || other.macAddress == macAddress)&&(identical(other.staffHold, staffHold) || other.staffHold == staffHold));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,state,x,y,zoneId,branchId,macAddress);
+    return Object.hash(runtimeType,id,name,state,x,y,zoneId,branchId,macAddress,staffHold);
 }
 
 @override
 String toString() {
-    return 'Computer(id: $id, name: $name, state: $state, x: $x, y: $y, zoneId: $zoneId, branchId: $branchId, macAddress: $macAddress)';
+    return 'Computer(id: $id, name: $name, state: $state, x: $x, y: $y, zoneId: $zoneId, branchId: $branchId, macAddress: $macAddress, staffHold: $staffHold)';
 }
 
 
@@ -557,7 +565,7 @@ abstract mixin class _$ComputerCopyWith<$Res> implements $ComputerCopyWith<$Res>
   factory _$ComputerCopyWith(_Computer value, $Res Function(_Computer) _then) = __$ComputerCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? name, String? state,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'zone_id') String? zoneId,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(name: 'mac_address') String? macAddress
+ String id, String? name, String? state,@JsonKey(fromJson: numFromJson) num? x,@JsonKey(fromJson: numFromJson) num? y,@JsonKey(name: 'zone_id') String? zoneId,@JsonKey(name: 'branch_id') String? branchId,@JsonKey(name: 'mac_address') String? macAddress,@JsonKey(name: 'staff_hold') bool? staffHold
 });
 
 
@@ -574,7 +582,7 @@ class __$ComputerCopyWithImpl<$Res>
 
 /// Create a copy of Computer
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? state = freezed,Object? x = freezed,Object? y = freezed,Object? zoneId = freezed,Object? branchId = freezed,Object? macAddress = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? state = freezed,Object? x = freezed,Object? y = freezed,Object? zoneId = freezed,Object? branchId = freezed,Object? macAddress = freezed,Object? staffHold = freezed,}) {
   return _then(_Computer(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -584,7 +592,8 @@ as num?,y: freezed == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
 as num?,zoneId: freezed == zoneId ? _self.zoneId : zoneId // ignore: cast_nullable_to_non_nullable
 as String?,branchId: freezed == branchId ? _self.branchId : branchId // ignore: cast_nullable_to_non_nullable
 as String?,macAddress: freezed == macAddress ? _self.macAddress : macAddress // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,staffHold: freezed == staffHold ? _self.staffHold : staffHold // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -1456,7 +1465,7 @@ $TariffAvailabilitiesCopyWith<$Res>? get availabilities {
 /// @nodoc
 mixin _$Tariff {
 
- String get id; String? get name;@JsonKey(name: 'base_price') Object? get basePrice;@JsonKey(fromJson: numFromJson) num? get duration; String? get type;@JsonKey(name: 'zone_id') String? get zoneId; TariffProperty? get property;
+ String get id; String? get name;@JsonKey(name: 'base_price') Object? get basePrice;@JsonKey(fromJson: numFromJson) num? get duration; String? get type;@JsonKey(name: 'zone_id') String? get zoneId; TariffProperty? get property;@JsonKey(name: 'dynamic_price') Map<String, dynamic>? get dynamicPrice;
 /// Create a copy of Tariff
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1470,20 +1479,20 @@ $TariffCopyWith<Tariff> get copyWith => _$TariffCopyWithImpl<Tariff>(this as Tar
 @override
 bool operator ==(Object other) {
   final _this = this as Tariff;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Tariff&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&const DeepCollectionEquality().equals(other.basePrice, _this.basePrice)&&(identical(other.duration, _this.duration) || other.duration == _this.duration)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.zoneId, _this.zoneId) || other.zoneId == _this.zoneId)&&(identical(other.property, _this.property) || other.property == _this.property));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Tariff&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&const DeepCollectionEquality().equals(other.basePrice, _this.basePrice)&&(identical(other.duration, _this.duration) || other.duration == _this.duration)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.zoneId, _this.zoneId) || other.zoneId == _this.zoneId)&&(identical(other.property, _this.property) || other.property == _this.property)&&const DeepCollectionEquality().equals(other.dynamicPrice, _this.dynamicPrice));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Tariff;
-  return Object.hash(runtimeType,_this.id,_this.name,const DeepCollectionEquality().hash(_this.basePrice),_this.duration,_this.type,_this.zoneId,_this.property);
+  return Object.hash(runtimeType,_this.id,_this.name,const DeepCollectionEquality().hash(_this.basePrice),_this.duration,_this.type,_this.zoneId,_this.property,const DeepCollectionEquality().hash(_this.dynamicPrice));
 }
 
 @override
 String toString() {
   final _this = this as Tariff;
-  return 'Tariff(id: ${_this.id}, name: ${_this.name}, basePrice: ${_this.basePrice}, duration: ${_this.duration}, type: ${_this.type}, zoneId: ${_this.zoneId}, property: ${_this.property})';
+  return 'Tariff(id: ${_this.id}, name: ${_this.name}, basePrice: ${_this.basePrice}, duration: ${_this.duration}, type: ${_this.type}, zoneId: ${_this.zoneId}, property: ${_this.property}, dynamicPrice: ${_this.dynamicPrice})';
 }
 
 
@@ -1494,7 +1503,7 @@ abstract mixin class $TariffCopyWith<$Res>  {
   factory $TariffCopyWith(Tariff value, $Res Function(Tariff) _then) = _$TariffCopyWithImpl;
 @useResult
 $Res call({
- String id, String? name,@JsonKey(name: 'base_price') Object? basePrice,@JsonKey(fromJson: numFromJson) num? duration, String? type,@JsonKey(name: 'zone_id') String? zoneId, TariffProperty? property
+ String id, String? name,@JsonKey(name: 'base_price') Object? basePrice,@JsonKey(fromJson: numFromJson) num? duration, String? type,@JsonKey(name: 'zone_id') String? zoneId, TariffProperty? property,@JsonKey(name: 'dynamic_price') Map<String, dynamic>? dynamicPrice
 });
 
 
@@ -1511,7 +1520,7 @@ class _$TariffCopyWithImpl<$Res>
 
 /// Create a copy of Tariff
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? basePrice = freezed,Object? duration = freezed,Object? type = freezed,Object? zoneId = freezed,Object? property = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? basePrice = freezed,Object? duration = freezed,Object? type = freezed,Object? zoneId = freezed,Object? property = freezed,Object? dynamicPrice = freezed,}) {
   return _then(Tariff(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -1519,7 +1528,8 @@ as String?,basePrice: freezed == basePrice ? _self.basePrice : basePrice ,durati
 as num?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String?,zoneId: freezed == zoneId ? _self.zoneId : zoneId // ignore: cast_nullable_to_non_nullable
 as String?,property: freezed == property ? _self.property : property // ignore: cast_nullable_to_non_nullable
-as TariffProperty?,
+as TariffProperty?,dynamicPrice: freezed == dynamicPrice ? _self.dynamicPrice : dynamicPrice // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,
   ));
 }
 /// Create a copy of Tariff
@@ -1616,10 +1626,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'base_price')  Object? basePrice, @JsonKey(fromJson: numFromJson)  num? duration,  String? type, @JsonKey(name: 'zone_id')  String? zoneId,  TariffProperty? property)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'base_price')  Object? basePrice, @JsonKey(fromJson: numFromJson)  num? duration,  String? type, @JsonKey(name: 'zone_id')  String? zoneId,  TariffProperty? property, @JsonKey(name: 'dynamic_price')  Map<String, dynamic>? dynamicPrice)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Tariff() when $default != null:
-return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_that.zoneId,_that.property);case _:
+return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_that.zoneId,_that.property,_that.dynamicPrice);case _:
   return orElse();
 
 }
@@ -1637,10 +1647,10 @@ return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'base_price')  Object? basePrice, @JsonKey(fromJson: numFromJson)  num? duration,  String? type, @JsonKey(name: 'zone_id')  String? zoneId,  TariffProperty? property)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name, @JsonKey(name: 'base_price')  Object? basePrice, @JsonKey(fromJson: numFromJson)  num? duration,  String? type, @JsonKey(name: 'zone_id')  String? zoneId,  TariffProperty? property, @JsonKey(name: 'dynamic_price')  Map<String, dynamic>? dynamicPrice)  $default,) {final _that = this;
 switch (_that) {
 case _Tariff():
-return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_that.zoneId,_that.property);case _:
+return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_that.zoneId,_that.property,_that.dynamicPrice);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1657,10 +1667,10 @@ return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name, @JsonKey(name: 'base_price')  Object? basePrice, @JsonKey(fromJson: numFromJson)  num? duration,  String? type, @JsonKey(name: 'zone_id')  String? zoneId,  TariffProperty? property)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name, @JsonKey(name: 'base_price')  Object? basePrice, @JsonKey(fromJson: numFromJson)  num? duration,  String? type, @JsonKey(name: 'zone_id')  String? zoneId,  TariffProperty? property, @JsonKey(name: 'dynamic_price')  Map<String, dynamic>? dynamicPrice)?  $default,) {final _that = this;
 switch (_that) {
 case _Tariff() when $default != null:
-return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_that.zoneId,_that.property);case _:
+return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_that.zoneId,_that.property,_that.dynamicPrice);case _:
   return null;
 
 }
@@ -1672,7 +1682,7 @@ return $default(_that.id,_that.name,_that.basePrice,_that.duration,_that.type,_t
 @JsonSerializable()
 
 class _Tariff implements Tariff {
-  const _Tariff({required this.id, this.name, @JsonKey(name: 'base_price') this.basePrice, @JsonKey(fromJson: numFromJson) this.duration, this.type, @JsonKey(name: 'zone_id') this.zoneId, this.property});
+  const _Tariff({required this.id, this.name, @JsonKey(name: 'base_price') this.basePrice, @JsonKey(fromJson: numFromJson) this.duration, this.type, @JsonKey(name: 'zone_id') this.zoneId, this.property, @JsonKey(name: 'dynamic_price')  Map<String, dynamic>? dynamicPrice}): _dynamicPrice = dynamicPrice;
   factory _Tariff.fromJson(Map<String, dynamic> json) => _$TariffFromJson(json);
 
 @override final  String id;
@@ -1682,6 +1692,15 @@ class _Tariff implements Tariff {
 @override final  String? type;
 @override@JsonKey(name: 'zone_id') final  String? zoneId;
 @override final  TariffProperty? property;
+ final  Map<String, dynamic>? _dynamicPrice;
+@override@JsonKey(name: 'dynamic_price') Map<String, dynamic>? get dynamicPrice {
+  final value = _dynamicPrice;
+  if (value == null) return null;
+  if (_dynamicPrice is EqualUnmodifiableMapView) return _dynamicPrice;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 
 /// Create a copy of Tariff
 /// with the given fields replaced by the non-null parameter values.
@@ -1696,18 +1715,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Tariff&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.basePrice, basePrice)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.type, type) || other.type == type)&&(identical(other.zoneId, zoneId) || other.zoneId == zoneId)&&(identical(other.property, property) || other.property == property));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Tariff&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.basePrice, basePrice)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.type, type) || other.type == type)&&(identical(other.zoneId, zoneId) || other.zoneId == zoneId)&&(identical(other.property, property) || other.property == property)&&const DeepCollectionEquality().equals(other.dynamicPrice, _dynamicPrice));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(basePrice),duration,type,zoneId,property);
+    return Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(basePrice),duration,type,zoneId,property,const DeepCollectionEquality().hash(_dynamicPrice));
 }
 
 @override
 String toString() {
-    return 'Tariff(id: $id, name: $name, basePrice: $basePrice, duration: $duration, type: $type, zoneId: $zoneId, property: $property)';
+    return 'Tariff(id: $id, name: $name, basePrice: $basePrice, duration: $duration, type: $type, zoneId: $zoneId, property: $property, dynamicPrice: $dynamicPrice)';
 }
 
 
@@ -1718,7 +1737,7 @@ abstract mixin class _$TariffCopyWith<$Res> implements $TariffCopyWith<$Res> {
   factory _$TariffCopyWith(_Tariff value, $Res Function(_Tariff) _then) = __$TariffCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? name,@JsonKey(name: 'base_price') Object? basePrice,@JsonKey(fromJson: numFromJson) num? duration, String? type,@JsonKey(name: 'zone_id') String? zoneId, TariffProperty? property
+ String id, String? name,@JsonKey(name: 'base_price') Object? basePrice,@JsonKey(fromJson: numFromJson) num? duration, String? type,@JsonKey(name: 'zone_id') String? zoneId, TariffProperty? property,@JsonKey(name: 'dynamic_price') Map<String, dynamic>? dynamicPrice
 });
 
 
@@ -1735,7 +1754,7 @@ class __$TariffCopyWithImpl<$Res>
 
 /// Create a copy of Tariff
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? basePrice = freezed,Object? duration = freezed,Object? type = freezed,Object? zoneId = freezed,Object? property = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? basePrice = freezed,Object? duration = freezed,Object? type = freezed,Object? zoneId = freezed,Object? property = freezed,Object? dynamicPrice = freezed,}) {
   return _then(_Tariff(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -1743,7 +1762,8 @@ as String?,basePrice: freezed == basePrice ? _self.basePrice : basePrice ,durati
 as num?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String?,zoneId: freezed == zoneId ? _self.zoneId : zoneId // ignore: cast_nullable_to_non_nullable
 as String?,property: freezed == property ? _self.property : property // ignore: cast_nullable_to_non_nullable
-as TariffProperty?,
+as TariffProperty?,dynamicPrice: freezed == dynamicPrice ? _self._dynamicPrice : dynamicPrice // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,
   ));
 }
 

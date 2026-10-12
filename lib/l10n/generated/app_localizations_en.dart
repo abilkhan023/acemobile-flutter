@@ -1040,4 +1040,218 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nothingFound => 'Nothing found';
+
+  @override
+  String get choosePcs => 'Choose computers';
+
+  @override
+  String get choosePcsHint =>
+      'You can pick several PCs in one zone — for you and your friends. A room is booked as a whole.';
+
+  @override
+  String selectedPcs(String n) {
+    return 'PCs selected: $n';
+  }
+
+  @override
+  String roomSelected(String name, String n) {
+    return 'Room $name · $n PCs';
+  }
+
+  @override
+  String get staffHold => 'Held by the cashier';
+
+  @override
+  String get pcReservedShort => 'Booked';
+
+  @override
+  String get dynamicPriceHint =>
+      'Dynamic price · forecast for the booking time';
+
+  @override
+  String get friendsInBooking => 'Friends in the booking';
+
+  @override
+  String get friendsInBookingHint =>
+      'A friend takes their seat without a code. Other seats use the booking code.';
+
+  @override
+  String get roomMembers => 'Room members';
+
+  @override
+  String get roomMembersHint =>
+      'Members enter the room without a code. You stay the host of the rental.';
+
+  @override
+  String get noFriends =>
+      'No friends yet. Anyone who enters with your booking code at the club becomes your friend.';
+
+  @override
+  String get friendOwnPlace => 'own seat, no code';
+
+  @override
+  String get you => 'You';
+
+  @override
+  String get oneSeat => 'one seat';
+
+  @override
+  String get byCode => 'With booking code';
+
+  @override
+  String moreN(String n) {
+    return '$n more';
+  }
+
+  @override
+  String get seatSwapHint =>
+      'Who sits where is shown in “My bookings”, where you can also move a friend.';
+
+  @override
+  String totalLine(String price, String n) {
+    return '$price × $n PCs, one payment';
+  }
+
+  @override
+  String totalRoom(String price) {
+    return '$price for the room, one payment';
+  }
+
+  @override
+  String tooManyFriends(String n) {
+    return 'No more friends than seats: $n';
+  }
+
+  @override
+  String pcsBooked(String names) {
+    return 'PCs $names are booked. See you!';
+  }
+
+  @override
+  String roomBooked(String name) {
+    return 'Room $name is booked. See you!';
+  }
+
+  @override
+  String get youOrByCode => 'you or by code';
+
+  @override
+  String get accessCode => 'Booking code';
+
+  @override
+  String get accessCodeHint =>
+      'Friends enter the code on a PC at the club. Assigned friends and room members don\'t need it.';
+
+  @override
+  String get burnHint =>
+      'If nobody comes, the booking expires at the end of the window — money is not refunded.';
+
+  @override
+  String get myBookings => 'My bookings';
+
+  @override
+  String get noBookings => 'No active bookings';
+
+  @override
+  String friendsBooking(String owner) {
+    return '$owner\'s booking';
+  }
+
+  @override
+  String get assignFriend => 'Assign a friend';
+
+  @override
+  String get removeFriend => 'Remove friend';
+
+  @override
+  String get editMembers => 'Edit members';
+
+  @override
+  String get cancelBookingConfirm =>
+      'The whole booking with all its PCs will be cancelled. Money is not refunded; the tariffs stay in your queue.';
+
+  @override
+  String get openDoor => 'Open the door';
+
+  @override
+  String get doorOpened => 'Open command sent';
+
+  @override
+  String get doorNoLock => 'This zone has no lock';
+
+  @override
+  String get doorCooldown => 'The door is already opening';
+
+  @override
+  String get doorUnauthorized =>
+      'You can open the door during your session or within an hour of your booking';
+
+  @override
+  String get roomNotRenter => 'Only the room host manages the rental';
+
+  @override
+  String get roomMemberGone => 'This player has already left the room';
+
+  @override
+  String get roomLeaveNotAllowed =>
+      'You can leave with the rental continuing only on a prepaid tariff';
+
+  @override
+  String get roomBookedByOthers => 'The room is booked';
+
+  @override
+  String get pcBusyAt => 'The PC is already taken for this time';
+
+  @override
+  String get notEnoughMoney => 'Not enough money on the club balance';
+
+  @override
+  String get startOnFriendPc => 'Start on friend\'s PC';
+
+  @override
+  String sessionStartedFor(String name) {
+    return 'Session started for $name';
+  }
+
+  @override
+  String placeClaimed(String name) {
+    return 'taken by $name';
+  }
+
+  @override
+  String get placeBurned => 'expired';
+
+  @override
+  String get placeCancelled => 'cancelled';
+
+  @override
+  String get unassignedSeat => 'free seat';
+
+  @override
+  String get leaveRoomTitle => 'Players are still in the room';
+
+  @override
+  String transferTo(String name) {
+    return 'Hand the rental to $name';
+  }
+
+  @override
+  String get stopForAll => 'End the rental for everyone';
+
+  @override
+  String leaveContinue(String time) {
+    return 'Leave — the rental continues until $time';
+  }
+
+  @override
+  String get codeCopied => 'Code copied';
+
+  @override
+  String get bookingLive => 'in progress';
+
+  @override
+  String get noFreePcsSelected => 'Pick at least one free PC';
+
+  @override
+  String get selectZoneOnly => 'All seats must be in one zone';
 }

@@ -11,6 +11,9 @@ import '../../../shared/widgets/ace_icon.dart';
 import '../../../shared/widgets/ace_page.dart';
 import '../../../shared/widgets/ace_sheet.dart';
 import '../../../shared/widgets/link_menu.dart';
+import '../../../shared/widgets/ace_modal.dart';
+import '../../bookings/data/bookings_api.dart';
+import '../../bookings/widgets/booking_sheet.dart';
 import '../../clubs/data/models.dart';
 import '../../home/providers/home_providers.dart';
 import '../../session/active_session_card.dart';
@@ -29,11 +32,20 @@ class ActivityScreen extends ConsumerWidget {
   Future<void> _cancel(BuildContext context, WidgetRef ref, String id) async {
     final l = context.l10n;
     final toast = ref.read(toastProvider.notifier);
+    final ok = await showAceModal(
+      context,
+      title: l.cancelBooking,
+      body: Text(l.cancelBookingConfirm, style: AceText.style(size: 15, color: AceColors.muted, height: 1.4)),
+      actions: [l.cancelBooking, l.back],
+      submit: l.cancelBooking,
+    );
+    if (!ok) return;
     try {
       await ref.read(activityProvider.notifier).cancel(id);
+      ref.invalidate(myBookingsProvider);
       toast.success(l.bookingCancelled);
-    } catch (_) {
-      toast.danger(l.bookingCancelFailed);
+    } catch (e) {
+      toast.danger(bookingErrorText(e, l));
     }
   }
 
@@ -57,7 +69,9 @@ class ActivityScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: Text(item.gameCenterName, style: AceText.style(size: 16, weight: FontWeight.w600))),
+                    Expanded(
+                      child: Text(item.gameCenterName, style: AceText.style(size: 16, weight: FontWeight.w600)),
+                    ),
                     Container(
                       width: 10,
                       height: 10,
@@ -108,8 +122,23 @@ class ActivityScreen extends ConsumerWidget {
       gap: 12,
       children: [
         const ActiveSessionCard(),
+        Builder(
+          builder: (context) {
+            final count = ref.watch(myBookingsProvider).value?.length ?? 0;
+            return LinkMenu(
+              title: l.myBookings,
+              subtitle: count == 0 ? l.noBookings : null,
+              icon: 'calendar-alt',
+              trailing: count > 0 ? '$count' : null,
+              onTap: () => context.push('/bookings'),
+            );
+          },
+        ),
         if (activity.isLoading && items.isEmpty)
-          const Padding(padding: EdgeInsets.symmetric(vertical: 24), child: Center(child: AceSpinner(color: AceColors.accent)))
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 24),
+            child: Center(child: AceSpinner(color: AceColors.accent)),
+          )
         else if (items.isEmpty)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
@@ -118,11 +147,14 @@ class ActivityScreen extends ConsumerWidget {
           )
         else
           for (final item in items)
-            LinkMenu(
-              title: item.gameCenterName,
-              subtitle: _text(item, l),
-              icon: item.isActive == true ? 'comp' : 'arrow-counter-clockwise',
-              onTap: () => _open(context, ref, item),
+            Opacity(
+              opacity: item.isActive == true ? 1 : 0.55,
+              child: LinkMenu(
+                title: item.gameCenterName,
+                subtitle: _text(item, l),
+                icon: item.isActive == true ? 'comp' : 'arrow-counter-clockwise',
+                onTap: () => _open(context, ref, item),
+              ),
             ),
       ],
     );

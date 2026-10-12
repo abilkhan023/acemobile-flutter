@@ -517,5 +517,161 @@
     }
   },
   "searchClubs": "Search clubs",
-  "nothingFound": "Nothing found"
+  "nothingFound": "Nothing found",
+  "choosePcs": "Choose computers",
+  "choosePcsHint": "You can pick several PCs in one zone — for you and your friends. A room is booked as a whole.",
+  "selectedPcs": "PCs selected: {n}",
+  "@selectedPcs": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "roomSelected": "Room {name} · {n} PCs",
+  "@roomSelected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "staffHold": "Held by the cashier",
+  "pcReservedShort": "Booked",
+  "dynamicPriceHint": "Dynamic price · forecast for the booking time",
+  "friendsInBooking": "Friends in the booking",
+  "friendsInBookingHint": "A friend takes their seat without a code. Other seats use the booking code.",
+  "roomMembers": "Room members",
+  "roomMembersHint": "Members enter the room without a code. You stay the host of the rental.",
+  "noFriends": "No friends yet. Anyone who enters with your booking code at the club becomes your friend.",
+  "friendOwnPlace": "own seat, no code",
+  "you": "You",
+  "oneSeat": "one seat",
+  "byCode": "With booking code",
+  "moreN": "{n} more",
+  "@moreN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "seatSwapHint": "Who sits where is shown in “My bookings”, where you can also move a friend.",
+  "totalLine": "{price} × {n} PCs, one payment",
+  "@totalLine": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "totalRoom": "{price} for the room, one payment",
+  "@totalRoom": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "tooManyFriends": "No more friends than seats: {n}",
+  "@tooManyFriends": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pcsBooked": "PCs {names} are booked. See you!",
+  "@pcsBooked": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "roomBooked": "Room {name} is booked. See you!",
+  "@roomBooked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youOrByCode": "you or by code",
+  "accessCode": "Booking code",
+  "accessCodeHint": "Friends enter the code on a PC at the club. Assigned friends and room members don't need it.",
+  "burnHint": "If nobody comes, the booking expires at the end of the window — money is not refunded.",
+  "myBookings": "My bookings",
+  "noBookings": "No active bookings",
+  "friendsBooking": "{owner}'s booking",
+  "@friendsBooking": {
+    "placeholders": {
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "assignFriend": "Assign a friend",
+  "removeFriend": "Remove friend",
+  "editMembers": "Edit members",
+  "cancelBookingConfirm": "The whole booking with all its PCs will be cancelled. Money is not refunded; the tariffs stay in your queue.",
+  "openDoor": "Open the door",
+  "doorOpened": "Open command sent",
+  "doorNoLock": "This zone has no lock",
+  "doorCooldown": "The door is already opening",
+  "doorUnauthorized": "You can open the door during your session or within an hour of your booking",
+  "roomNotRenter": "Only the room host manages the rental",
+  "roomMemberGone": "This player has already left the room",
+  "roomLeaveNotAllowed": "You can leave with the rental continuing only on a prepaid tariff",
+  "roomBookedByOthers": "The room is booked",
+  "pcBusyAt": "The PC is already taken for this time",
+  "notEnoughMoney": "Not enough money on the club balance",
+  "startOnFriendPc": "Start on friend's PC",
+  "sessionStartedFor": "Session started for {name}",
+  "@sessionStartedFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeClaimed": "taken by {name}",
+  "@placeClaimed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeBurned": "expired",
+  "placeCancelled": "cancelled",
+  "unassignedSeat": "free seat",
+  "leaveRoomTitle": "Players are still in the room",
+  "transferTo": "Hand the rental to {name}",
+  "@transferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stopForAll": "End the rental for everyone",
+  "leaveContinue": "Leave — the rental continues until {time}",
+  "@leaveContinue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "codeCopied": "Code copied",
+  "bookingLive": "in progress",
+  "noFreePcsSelected": "Pick at least one free PC",
+  "selectZoneOnly": "All seats must be in one zone"
 }

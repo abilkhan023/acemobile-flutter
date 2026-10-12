@@ -1032,4 +1032,217 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get nothingFound => 'Ештеңе табылмады';
+
+  @override
+  String get choosePcs => 'Компьютерлерді таңдаңыз';
+
+  @override
+  String get choosePcsHint =>
+      'Бір аймақтан бірнеше ПК таңдауға болады — өзіңізге және достарға. Бөлме толығымен брондалады.';
+
+  @override
+  String selectedPcs(String n) {
+    return 'Таңдалған ПК: $n';
+  }
+
+  @override
+  String roomSelected(String name, String n) {
+    return '$name бөлмесі · $n ПК';
+  }
+
+  @override
+  String get staffHold => 'Кассир брондаған';
+
+  @override
+  String get pcReservedShort => 'Брондалған';
+
+  @override
+  String get dynamicPriceHint => 'Динамикалық баға · брон уақытына болжам';
+
+  @override
+  String get friendsInBooking => 'Брондағы достар';
+
+  @override
+  String get friendsInBookingHint =>
+      'Дос өз орнын кодсыз алады. Қалған орындарға брон коды жарайды.';
+
+  @override
+  String get roomMembers => 'Бөлме қатысушылары';
+
+  @override
+  String get roomMembersHint =>
+      'Қатысушылар бөлмеге кодсыз кіреді. Жалдау иесі сіз боласыз.';
+
+  @override
+  String get noFriends =>
+      'Әзірге достар жоқ. Клубта брон кодыңызбен кірген адам досыңызға айналады.';
+
+  @override
+  String get friendOwnPlace => 'өз орны, кодсыз';
+
+  @override
+  String get you => 'Сіз';
+
+  @override
+  String get oneSeat => 'бір орын';
+
+  @override
+  String get byCode => 'Брон коды бойынша';
+
+  @override
+  String moreN(String n) {
+    return 'тағы $n';
+  }
+
+  @override
+  String get seatSwapHint =>
+      'Кім қай ПК-да отыратыны «Менің брондарымда» көрінеді, досты сол жерде ауыстыруға болады.';
+
+  @override
+  String totalLine(String price, String n) {
+    return '$price × $n ПК, бір төлем';
+  }
+
+  @override
+  String totalRoom(String price) {
+    return 'Бөлме үшін $price, бір төлем';
+  }
+
+  @override
+  String tooManyFriends(String n) {
+    return 'Достар орындардан көп болмауы керек: $n';
+  }
+
+  @override
+  String pcsBooked(String names) {
+    return '$names ПК брондалды. Күтеміз!';
+  }
+
+  @override
+  String roomBooked(String name) {
+    return '$name бөлмесі брондалды. Күтеміз!';
+  }
+
+  @override
+  String get youOrByCode => 'сіз немесе код бойынша';
+
+  @override
+  String get accessCode => 'Брон коды';
+
+  @override
+  String get accessCodeHint =>
+      'Достар кодты клубтағы ПК-да енгізеді. Тағайындалған достар мен бөлме қатысушыларына код керек емес.';
+
+  @override
+  String get burnHint =>
+      'Келмесеңіз, брон уақыт соңында күйеді — ақша қайтарылмайды.';
+
+  @override
+  String get myBookings => 'Менің брондарым';
+
+  @override
+  String get noBookings => 'Белсенді брон жоқ';
+
+  @override
+  String friendsBooking(String owner) {
+    return '$owner досыңыздың броны';
+  }
+
+  @override
+  String get assignFriend => 'Досты тағайындау';
+
+  @override
+  String get removeFriend => 'Досты алып тастау';
+
+  @override
+  String get editMembers => 'Қатысушыларды өзгерту';
+
+  @override
+  String get cancelBookingConfirm =>
+      'Брон барлық ПК-мен бірге толық жойылады. Ақша қайтарылмайды, тарифтер кезегіңізде қалады.';
+
+  @override
+  String get openDoor => 'Есікті ашу';
+
+  @override
+  String get doorOpened => 'Ашу командасы жіберілді';
+
+  @override
+  String get doorNoLock => 'Бұл аймақта құлып жоқ';
+
+  @override
+  String get doorCooldown => 'Есік ашылып жатыр';
+
+  @override
+  String get doorUnauthorized =>
+      'Есікті сессия кезінде немесе брон басталарына бір сағат қалғанда ашуға болады';
+
+  @override
+  String get roomNotRenter => 'Жалдауды бөлме иесі басқарады';
+
+  @override
+  String get roomMemberGone => 'Бұл ойыншы бөлмеде жоқ';
+
+  @override
+  String get roomLeaveNotAllowed =>
+      'Жалдау жалғасатындай кету тек төленген тарифте мүмкін';
+
+  @override
+  String get roomBookedByOthers => 'Бөлме брондалған';
+
+  @override
+  String get pcBusyAt => 'ПК бұл уақытқа бос емес';
+
+  @override
+  String get notEnoughMoney => 'Клуб балансында қаражат жеткіліксіз';
+
+  @override
+  String get startOnFriendPc => 'Достың ПК-сында іске қосу';
+
+  @override
+  String sessionStartedFor(String name) {
+    return '$name үшін сессия іске қосылды';
+  }
+
+  @override
+  String placeClaimed(String name) {
+    return '$name алды';
+  }
+
+  @override
+  String get placeBurned => 'күйді';
+
+  @override
+  String get placeCancelled => 'жойылды';
+
+  @override
+  String get unassignedSeat => 'бос орын';
+
+  @override
+  String get leaveRoomTitle => 'Бөлмеде ойыншылар қалды';
+
+  @override
+  String transferTo(String name) {
+    return 'Жалдауды $name адамына беру';
+  }
+
+  @override
+  String get stopForAll => 'Барлығы үшін жалдауды аяқтау';
+
+  @override
+  String leaveContinue(String time) {
+    return 'Кету — жалдау $time дейін жалғасады';
+  }
+
+  @override
+  String get codeCopied => 'Код көшірілді';
+
+  @override
+  String get bookingLive => 'қазір жүріп жатыр';
+
+  @override
+  String get noFreePcsSelected => 'Кемінде бір бос ПК таңдаңыз';
+
+  @override
+  String get selectZoneOnly => 'Барлық орын бір аймақта болуы керек';
 }

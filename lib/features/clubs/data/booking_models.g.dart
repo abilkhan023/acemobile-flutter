@@ -14,6 +14,8 @@ _Zone _$ZoneFromJson(Map<String, dynamic> json) => _Zone(
   y: numFromJson(json['y']),
   xLen: numFromJson(json['x_len']),
   yLen: numFromJson(json['y_len']),
+  mode: json['mode'] as String?,
+  doorType: json['door_type'] as String?,
 );
 
 Map<String, dynamic> _$ZoneToJson(_Zone instance) => <String, dynamic>{
@@ -24,6 +26,8 @@ Map<String, dynamic> _$ZoneToJson(_Zone instance) => <String, dynamic>{
   'y': instance.y,
   'x_len': instance.xLen,
   'y_len': instance.yLen,
+  'mode': instance.mode,
+  'door_type': instance.doorType,
 };
 
 _Computer _$ComputerFromJson(Map<String, dynamic> json) => _Computer(
@@ -35,6 +39,7 @@ _Computer _$ComputerFromJson(Map<String, dynamic> json) => _Computer(
   zoneId: json['zone_id'] as String?,
   branchId: json['branch_id'] as String?,
   macAddress: json['mac_address'] as String?,
+  staffHold: json['staff_hold'] as bool?,
 );
 
 Map<String, dynamic> _$ComputerToJson(_Computer instance) => <String, dynamic>{
@@ -46,6 +51,7 @@ Map<String, dynamic> _$ComputerToJson(_Computer instance) => <String, dynamic>{
   'zone_id': instance.zoneId,
   'branch_id': instance.branchId,
   'mac_address': instance.macAddress,
+  'staff_hold': instance.staffHold,
 };
 
 _TariffAvailability _$TariffAvailabilityFromJson(Map<String, dynamic> json) =>
@@ -109,6 +115,7 @@ _Tariff _$TariffFromJson(Map<String, dynamic> json) => _Tariff(
   property: json['property'] == null
       ? null
       : TariffProperty.fromJson(json['property'] as Map<String, dynamic>),
+  dynamicPrice: json['dynamic_price'] as Map<String, dynamic>?,
 );
 
 Map<String, dynamic> _$TariffToJson(_Tariff instance) => <String, dynamic>{
@@ -119,6 +126,7 @@ Map<String, dynamic> _$TariffToJson(_Tariff instance) => <String, dynamic>{
   'type': instance.type,
   'zone_id': instance.zoneId,
   'property': instance.property,
+  'dynamic_price': instance.dynamicPrice,
 };
 
 _Wallet _$WalletFromJson(Map<String, dynamic> json) => _Wallet(

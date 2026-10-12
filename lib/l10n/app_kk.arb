@@ -517,5 +517,161 @@
     }
   },
   "searchClubs": "Клубтарды іздеу",
-  "nothingFound": "Ештеңе табылмады"
+  "nothingFound": "Ештеңе табылмады",
+  "choosePcs": "Компьютерлерді таңдаңыз",
+  "choosePcsHint": "Бір аймақтан бірнеше ПК таңдауға болады — өзіңізге және достарға. Бөлме толығымен брондалады.",
+  "selectedPcs": "Таңдалған ПК: {n}",
+  "@selectedPcs": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "roomSelected": "{name} бөлмесі · {n} ПК",
+  "@roomSelected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "staffHold": "Кассир брондаған",
+  "pcReservedShort": "Брондалған",
+  "dynamicPriceHint": "Динамикалық баға · брон уақытына болжам",
+  "friendsInBooking": "Брондағы достар",
+  "friendsInBookingHint": "Дос өз орнын кодсыз алады. Қалған орындарға брон коды жарайды.",
+  "roomMembers": "Бөлме қатысушылары",
+  "roomMembersHint": "Қатысушылар бөлмеге кодсыз кіреді. Жалдау иесі сіз боласыз.",
+  "noFriends": "Әзірге достар жоқ. Клубта брон кодыңызбен кірген адам досыңызға айналады.",
+  "friendOwnPlace": "өз орны, кодсыз",
+  "you": "Сіз",
+  "oneSeat": "бір орын",
+  "byCode": "Брон коды бойынша",
+  "moreN": "тағы {n}",
+  "@moreN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "seatSwapHint": "Кім қай ПК-да отыратыны «Менің брондарымда» көрінеді, досты сол жерде ауыстыруға болады.",
+  "totalLine": "{price} × {n} ПК, бір төлем",
+  "@totalLine": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "totalRoom": "Бөлме үшін {price}, бір төлем",
+  "@totalRoom": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "tooManyFriends": "Достар орындардан көп болмауы керек: {n}",
+  "@tooManyFriends": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pcsBooked": "{names} ПК брондалды. Күтеміз!",
+  "@pcsBooked": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "roomBooked": "{name} бөлмесі брондалды. Күтеміз!",
+  "@roomBooked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youOrByCode": "сіз немесе код бойынша",
+  "accessCode": "Брон коды",
+  "accessCodeHint": "Достар кодты клубтағы ПК-да енгізеді. Тағайындалған достар мен бөлме қатысушыларына код керек емес.",
+  "burnHint": "Келмесеңіз, брон уақыт соңында күйеді — ақша қайтарылмайды.",
+  "myBookings": "Менің брондарым",
+  "noBookings": "Белсенді брон жоқ",
+  "friendsBooking": "{owner} досыңыздың броны",
+  "@friendsBooking": {
+    "placeholders": {
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "assignFriend": "Досты тағайындау",
+  "removeFriend": "Досты алып тастау",
+  "editMembers": "Қатысушыларды өзгерту",
+  "cancelBookingConfirm": "Брон барлық ПК-мен бірге толық жойылады. Ақша қайтарылмайды, тарифтер кезегіңізде қалады.",
+  "openDoor": "Есікті ашу",
+  "doorOpened": "Ашу командасы жіберілді",
+  "doorNoLock": "Бұл аймақта құлып жоқ",
+  "doorCooldown": "Есік ашылып жатыр",
+  "doorUnauthorized": "Есікті сессия кезінде немесе брон басталарына бір сағат қалғанда ашуға болады",
+  "roomNotRenter": "Жалдауды бөлме иесі басқарады",
+  "roomMemberGone": "Бұл ойыншы бөлмеде жоқ",
+  "roomLeaveNotAllowed": "Жалдау жалғасатындай кету тек төленген тарифте мүмкін",
+  "roomBookedByOthers": "Бөлме брондалған",
+  "pcBusyAt": "ПК бұл уақытқа бос емес",
+  "notEnoughMoney": "Клуб балансында қаражат жеткіліксіз",
+  "startOnFriendPc": "Достың ПК-сында іске қосу",
+  "sessionStartedFor": "{name} үшін сессия іске қосылды",
+  "@sessionStartedFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeClaimed": "{name} алды",
+  "@placeClaimed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeBurned": "күйді",
+  "placeCancelled": "жойылды",
+  "unassignedSeat": "бос орын",
+  "leaveRoomTitle": "Бөлмеде ойыншылар қалды",
+  "transferTo": "Жалдауды {name} адамына беру",
+  "@transferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stopForAll": "Барлығы үшін жалдауды аяқтау",
+  "leaveContinue": "Кету — жалдау {time} дейін жалғасады",
+  "@leaveContinue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "codeCopied": "Код көшірілді",
+  "bookingLive": "қазір жүріп жатыр",
+  "noFreePcsSelected": "Кемінде бір бос ПК таңдаңыз",
+  "selectZoneOnly": "Барлық орын бір аймақта болуы керек"
 }

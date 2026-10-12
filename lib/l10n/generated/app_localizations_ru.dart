@@ -1044,4 +1044,217 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nothingFound => 'Ничего не найдено';
+
+  @override
+  String get choosePcs => 'Выберите компьютеры';
+
+  @override
+  String get choosePcsHint =>
+      'Можно выбрать несколько ПК одной зоны — для себя и друзей. Комната бронируется целиком.';
+
+  @override
+  String selectedPcs(String n) {
+    return 'Выбрано ПК: $n';
+  }
+
+  @override
+  String roomSelected(String name, String n) {
+    return 'Комната $name · $n ПК';
+  }
+
+  @override
+  String get staffHold => 'Забронирован кассиром';
+
+  @override
+  String get pcReservedShort => 'Забронирован';
+
+  @override
+  String get dynamicPriceHint => 'Динамическая цена · прогноз на время брони';
+
+  @override
+  String get friendsInBooking => 'Друзья в брони';
+
+  @override
+  String get friendsInBookingHint =>
+      'Друг займёт своё место без кода. Остальным местам подойдёт код брони.';
+
+  @override
+  String get roomMembers => 'Участники комнаты';
+
+  @override
+  String get roomMembersHint =>
+      'Участники войдут в комнату без кода. Хозяином аренды остаётесь вы.';
+
+  @override
+  String get noFriends =>
+      'Друзей пока нет. Кто войдёт в клубе по коду вашей брони, станет вашим другом.';
+
+  @override
+  String get friendOwnPlace => 'своё место, без кода';
+
+  @override
+  String get you => 'Вы';
+
+  @override
+  String get oneSeat => 'одно место';
+
+  @override
+  String get byCode => 'По коду брони';
+
+  @override
+  String moreN(String n) {
+    return 'ещё $n';
+  }
+
+  @override
+  String get seatSwapHint =>
+      'Кто за каким ПК — видно в «Моих бронях», там же друга можно пересадить.';
+
+  @override
+  String totalLine(String price, String n) {
+    return '$price × $n ПК, одна оплата';
+  }
+
+  @override
+  String totalRoom(String price) {
+    return '$price за комнату, одна оплата';
+  }
+
+  @override
+  String tooManyFriends(String n) {
+    return 'Друзей не больше, чем мест: $n';
+  }
+
+  @override
+  String pcsBooked(String names) {
+    return 'ПК $names забронированы. Ждем вас!';
+  }
+
+  @override
+  String roomBooked(String name) {
+    return 'Комната $name забронирована. Ждем вас!';
+  }
+
+  @override
+  String get youOrByCode => 'вы или по коду';
+
+  @override
+  String get accessCode => 'Код брони';
+
+  @override
+  String get accessCodeHint =>
+      'Друзья вводят код на ПК в клубе. Назначенным друзьям и участникам комнаты код не нужен.';
+
+  @override
+  String get burnHint =>
+      'Если не прийти, бронь сгорит в конце окна — деньги не возвращаются.';
+
+  @override
+  String get myBookings => 'Мои брони';
+
+  @override
+  String get noBookings => 'Активных броней нет';
+
+  @override
+  String friendsBooking(String owner) {
+    return 'Бронь друга $owner';
+  }
+
+  @override
+  String get assignFriend => 'Назначить друга';
+
+  @override
+  String get removeFriend => 'Снять друга';
+
+  @override
+  String get editMembers => 'Изменить участников';
+
+  @override
+  String get cancelBookingConfirm =>
+      'Бронь отменится целиком, со всеми ПК. Деньги не возвращаются, тарифы останутся у вас в очереди.';
+
+  @override
+  String get openDoor => 'Открыть дверь';
+
+  @override
+  String get doorOpened => 'Команда на открытие отправлена';
+
+  @override
+  String get doorNoLock => 'У этой зоны нет замка';
+
+  @override
+  String get doorCooldown => 'Дверь уже открывается';
+
+  @override
+  String get doorUnauthorized =>
+      'Открыть дверь можно, если у вас идёт сессия или бронь в ближайший час';
+
+  @override
+  String get roomNotRenter => 'Управляет арендой хозяин комнаты';
+
+  @override
+  String get roomMemberGone => 'Этот игрок уже не в комнате';
+
+  @override
+  String get roomLeaveNotAllowed =>
+      'Уйти с продолжением можно только при оплаченном тарифе';
+
+  @override
+  String get roomBookedByOthers => 'Комната забронирована';
+
+  @override
+  String get pcBusyAt => 'ПК уже занят на это время';
+
+  @override
+  String get notEnoughMoney => 'Недостаточно средств на балансе клуба';
+
+  @override
+  String get startOnFriendPc => 'Запустить на ПК друга';
+
+  @override
+  String sessionStartedFor(String name) {
+    return 'Сессия запущена для $name';
+  }
+
+  @override
+  String placeClaimed(String name) {
+    return 'занял $name';
+  }
+
+  @override
+  String get placeBurned => 'сгорело';
+
+  @override
+  String get placeCancelled => 'отменено';
+
+  @override
+  String get unassignedSeat => 'свободное место';
+
+  @override
+  String get leaveRoomTitle => 'В комнате остаются игроки';
+
+  @override
+  String transferTo(String name) {
+    return 'Передать аренду $name';
+  }
+
+  @override
+  String get stopForAll => 'Завершить аренду для всех';
+
+  @override
+  String leaveContinue(String time) {
+    return 'Уйти — аренда продолжится до $time';
+  }
+
+  @override
+  String get codeCopied => 'Код скопирован';
+
+  @override
+  String get bookingLive => 'идёт сейчас';
+
+  @override
+  String get noFreePcsSelected => 'Выберите хотя бы один свободный ПК';
+
+  @override
+  String get selectZoneOnly => 'Все места брони должны быть в одной зоне';
 }

@@ -2019,6 +2019,360 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Ничего не найдено'**
   String get nothingFound;
+
+  /// No description provided for @choosePcs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите компьютеры'**
+  String get choosePcs;
+
+  /// No description provided for @choosePcsHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Можно выбрать несколько ПК одной зоны — для себя и друзей. Комната бронируется целиком.'**
+  String get choosePcsHint;
+
+  /// No description provided for @selectedPcs.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выбрано ПК: {n}'**
+  String selectedPcs(String n);
+
+  /// No description provided for @roomSelected.
+  ///
+  /// In ru, this message translates to:
+  /// **'Комната {name} · {n} ПК'**
+  String roomSelected(String name, String n);
+
+  /// No description provided for @staffHold.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забронирован кассиром'**
+  String get staffHold;
+
+  /// No description provided for @pcReservedShort.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забронирован'**
+  String get pcReservedShort;
+
+  /// No description provided for @dynamicPriceHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Динамическая цена · прогноз на время брони'**
+  String get dynamicPriceHint;
+
+  /// No description provided for @friendsInBooking.
+  ///
+  /// In ru, this message translates to:
+  /// **'Друзья в брони'**
+  String get friendsInBooking;
+
+  /// No description provided for @friendsInBookingHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Друг займёт своё место без кода. Остальным местам подойдёт код брони.'**
+  String get friendsInBookingHint;
+
+  /// No description provided for @roomMembers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Участники комнаты'**
+  String get roomMembers;
+
+  /// No description provided for @roomMembersHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Участники войдут в комнату без кода. Хозяином аренды остаётесь вы.'**
+  String get roomMembersHint;
+
+  /// No description provided for @noFriends.
+  ///
+  /// In ru, this message translates to:
+  /// **'Друзей пока нет. Кто войдёт в клубе по коду вашей брони, станет вашим другом.'**
+  String get noFriends;
+
+  /// No description provided for @friendOwnPlace.
+  ///
+  /// In ru, this message translates to:
+  /// **'своё место, без кода'**
+  String get friendOwnPlace;
+
+  /// No description provided for @you.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы'**
+  String get you;
+
+  /// No description provided for @oneSeat.
+  ///
+  /// In ru, this message translates to:
+  /// **'одно место'**
+  String get oneSeat;
+
+  /// No description provided for @byCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'По коду брони'**
+  String get byCode;
+
+  /// No description provided for @moreN.
+  ///
+  /// In ru, this message translates to:
+  /// **'ещё {n}'**
+  String moreN(String n);
+
+  /// No description provided for @seatSwapHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Кто за каким ПК — видно в «Моих бронях», там же друга можно пересадить.'**
+  String get seatSwapHint;
+
+  /// No description provided for @totalLine.
+  ///
+  /// In ru, this message translates to:
+  /// **'{price} × {n} ПК, одна оплата'**
+  String totalLine(String price, String n);
+
+  /// No description provided for @totalRoom.
+  ///
+  /// In ru, this message translates to:
+  /// **'{price} за комнату, одна оплата'**
+  String totalRoom(String price);
+
+  /// No description provided for @tooManyFriends.
+  ///
+  /// In ru, this message translates to:
+  /// **'Друзей не больше, чем мест: {n}'**
+  String tooManyFriends(String n);
+
+  /// No description provided for @pcsBooked.
+  ///
+  /// In ru, this message translates to:
+  /// **'ПК {names} забронированы. Ждем вас!'**
+  String pcsBooked(String names);
+
+  /// No description provided for @roomBooked.
+  ///
+  /// In ru, this message translates to:
+  /// **'Комната {name} забронирована. Ждем вас!'**
+  String roomBooked(String name);
+
+  /// No description provided for @youOrByCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'вы или по коду'**
+  String get youOrByCode;
+
+  /// No description provided for @accessCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'Код брони'**
+  String get accessCode;
+
+  /// No description provided for @accessCodeHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Друзья вводят код на ПК в клубе. Назначенным друзьям и участникам комнаты код не нужен.'**
+  String get accessCodeHint;
+
+  /// No description provided for @burnHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Если не прийти, бронь сгорит в конце окна — деньги не возвращаются.'**
+  String get burnHint;
+
+  /// No description provided for @myBookings.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мои брони'**
+  String get myBookings;
+
+  /// No description provided for @noBookings.
+  ///
+  /// In ru, this message translates to:
+  /// **'Активных броней нет'**
+  String get noBookings;
+
+  /// No description provided for @friendsBooking.
+  ///
+  /// In ru, this message translates to:
+  /// **'Бронь друга {owner}'**
+  String friendsBooking(String owner);
+
+  /// No description provided for @assignFriend.
+  ///
+  /// In ru, this message translates to:
+  /// **'Назначить друга'**
+  String get assignFriend;
+
+  /// No description provided for @removeFriend.
+  ///
+  /// In ru, this message translates to:
+  /// **'Снять друга'**
+  String get removeFriend;
+
+  /// No description provided for @editMembers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменить участников'**
+  String get editMembers;
+
+  /// No description provided for @cancelBookingConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Бронь отменится целиком, со всеми ПК. Деньги не возвращаются, тарифы останутся у вас в очереди.'**
+  String get cancelBookingConfirm;
+
+  /// No description provided for @openDoor.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открыть дверь'**
+  String get openDoor;
+
+  /// No description provided for @doorOpened.
+  ///
+  /// In ru, this message translates to:
+  /// **'Команда на открытие отправлена'**
+  String get doorOpened;
+
+  /// No description provided for @doorNoLock.
+  ///
+  /// In ru, this message translates to:
+  /// **'У этой зоны нет замка'**
+  String get doorNoLock;
+
+  /// No description provided for @doorCooldown.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дверь уже открывается'**
+  String get doorCooldown;
+
+  /// No description provided for @doorUnauthorized.
+  ///
+  /// In ru, this message translates to:
+  /// **'Открыть дверь можно, если у вас идёт сессия или бронь в ближайший час'**
+  String get doorUnauthorized;
+
+  /// No description provided for @roomNotRenter.
+  ///
+  /// In ru, this message translates to:
+  /// **'Управляет арендой хозяин комнаты'**
+  String get roomNotRenter;
+
+  /// No description provided for @roomMemberGone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Этот игрок уже не в комнате'**
+  String get roomMemberGone;
+
+  /// No description provided for @roomLeaveNotAllowed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уйти с продолжением можно только при оплаченном тарифе'**
+  String get roomLeaveNotAllowed;
+
+  /// No description provided for @roomBookedByOthers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Комната забронирована'**
+  String get roomBookedByOthers;
+
+  /// No description provided for @pcBusyAt.
+  ///
+  /// In ru, this message translates to:
+  /// **'ПК уже занят на это время'**
+  String get pcBusyAt;
+
+  /// No description provided for @notEnoughMoney.
+  ///
+  /// In ru, this message translates to:
+  /// **'Недостаточно средств на балансе клуба'**
+  String get notEnoughMoney;
+
+  /// No description provided for @startOnFriendPc.
+  ///
+  /// In ru, this message translates to:
+  /// **'Запустить на ПК друга'**
+  String get startOnFriendPc;
+
+  /// No description provided for @sessionStartedFor.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сессия запущена для {name}'**
+  String sessionStartedFor(String name);
+
+  /// No description provided for @placeClaimed.
+  ///
+  /// In ru, this message translates to:
+  /// **'занял {name}'**
+  String placeClaimed(String name);
+
+  /// No description provided for @placeBurned.
+  ///
+  /// In ru, this message translates to:
+  /// **'сгорело'**
+  String get placeBurned;
+
+  /// No description provided for @placeCancelled.
+  ///
+  /// In ru, this message translates to:
+  /// **'отменено'**
+  String get placeCancelled;
+
+  /// No description provided for @unassignedSeat.
+  ///
+  /// In ru, this message translates to:
+  /// **'свободное место'**
+  String get unassignedSeat;
+
+  /// No description provided for @leaveRoomTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'В комнате остаются игроки'**
+  String get leaveRoomTitle;
+
+  /// No description provided for @transferTo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Передать аренду {name}'**
+  String transferTo(String name);
+
+  /// No description provided for @stopForAll.
+  ///
+  /// In ru, this message translates to:
+  /// **'Завершить аренду для всех'**
+  String get stopForAll;
+
+  /// No description provided for @leaveContinue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уйти — аренда продолжится до {time}'**
+  String leaveContinue(String time);
+
+  /// No description provided for @codeCopied.
+  ///
+  /// In ru, this message translates to:
+  /// **'Код скопирован'**
+  String get codeCopied;
+
+  /// No description provided for @bookingLive.
+  ///
+  /// In ru, this message translates to:
+  /// **'идёт сейчас'**
+  String get bookingLive;
+
+  /// No description provided for @noFreePcsSelected.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите хотя бы один свободный ПК'**
+  String get noFreePcsSelected;
+
+  /// No description provided for @selectZoneOnly.
+  ///
+  /// In ru, this message translates to:
+  /// **'Все места брони должны быть в одной зоне'**
+  String get selectZoneOnly;
 }
 
 class _AppLocalizationsDelegate

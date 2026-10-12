@@ -15,9 +15,16 @@ abstract class Zone with _$Zone {
     @JsonKey(fromJson: numFromJson) num? y,
     @JsonKey(name: 'x_len', fromJson: numFromJson) num? xLen,
     @JsonKey(name: 'y_len', fromJson: numFromJson) num? yLen,
+    String? mode,
+    @JsonKey(name: 'door_type') String? doorType,
   }) = _Zone;
 
   factory Zone.fromJson(Map<String, dynamic> json) => _$ZoneFromJson(json);
+}
+
+extension ZoneX on Zone {
+  bool get isRoom => mode == 'room';
+  bool get hasDoor => doorType != null && doorType!.isNotEmpty;
 }
 
 @freezed
@@ -31,6 +38,7 @@ abstract class Computer with _$Computer {
     @JsonKey(name: 'zone_id') String? zoneId,
     @JsonKey(name: 'branch_id') String? branchId,
     @JsonKey(name: 'mac_address') String? macAddress,
+    @JsonKey(name: 'staff_hold') bool? staffHold,
   }) = _Computer;
 
   factory Computer.fromJson(Map<String, dynamic> json) => _$ComputerFromJson(json);
@@ -78,9 +86,16 @@ abstract class Tariff with _$Tariff {
     String? type,
     @JsonKey(name: 'zone_id') String? zoneId,
     TariffProperty? property,
+    @JsonKey(name: 'dynamic_price') Map<String, dynamic>? dynamicPrice,
   }) = _Tariff;
 
   factory Tariff.fromJson(Map<String, dynamic> json) => _$TariffFromJson(json);
+}
+
+extension TariffX on Tariff {
+  bool get isDynamic => dynamicPrice != null && dynamicPrice!['price'] != null;
+  Object? get price => isDynamic ? dynamicPrice!['price'] : basePrice;
+  num get priceNum => num.tryParse(price?.toString() ?? '') ?? 0;
 }
 
 @freezed

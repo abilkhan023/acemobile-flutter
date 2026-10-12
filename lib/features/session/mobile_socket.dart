@@ -47,8 +47,12 @@ class SessionInfo {
     this.originalPrice,
     this.discountPercent,
     this.finalPrice,
+    this.roomRole,
+    this.zoneId,
   });
 
+  final String? roomRole;
+  final String? zoneId;
   final String sessionId;
   final String tariffType;
   final String? startedAt;
@@ -69,6 +73,8 @@ class SessionInfo {
         originalPrice: j['original_price']?.toString(),
         discountPercent: j['discount_percent']?.toString(),
         finalPrice: j['final_price']?.toString(),
+        roomRole: j['room_role']?.toString(),
+        zoneId: j['zone_id']?.toString(),
       );
 
   DateTime? get endsAtUtc {
@@ -131,6 +137,25 @@ class SocketState {
         timeOffset: timeOffset ?? this.timeOffset,
         walletsVersion: walletsVersion ?? this.walletsVersion,
       );
+}
+
+class SocketRequestError implements Exception {
+  const SocketRequestError(this.kind, [this.message]);
+
+  final String kind;
+  final String? message;
+
+  @override
+  String toString() => 'SocketRequestError($kind)';
+}
+
+class _PendingRequest {
+  _PendingRequest(this.completer, this.timer, this.requestId, this.expects);
+
+  final Completer<Map<String, dynamic>> completer;
+  final Timer timer;
+  final String requestId;
+  final Set<String> expects;
 }
 
 class _PendingStop {
@@ -257,7 +282,57 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
     if (!_disposed && state.status != SocketStatus.closed) state = state.copyWith(status: SocketStatus.closed);
   }
 
-  bool _send(String kind, [Map<String, dynamic> extra = const {}]) {
+  _PendingRequest? _pendingRequest;
+
+  Future<Map<String, dynamic>> request(Object kind, {required Set<String> expects, Duration timeout = const Duration(seconds: 10)}) {
+    _pendingRequest?.timer.cancel();
+    final prev = _pendingRequest;
+    if (prev != null && !prev.completer.isCompleted) prev.completer.completeError(const SocketRequestError('superseded'));
+    final completer = Completer<Map<String, dynamic>>();
+    final requestId = const Uuid().v4();
+    final timer = Timer(timeout, () {
+      if (identical(_pendingRequest?.completer, completer)) _pendingRequest = null;
+      if (!completer.isCompleted) completer.completeError(const SocketRequestError('timeout'));
+    });
+    _pendingRequest = _PendingRequest(completer, timer, requestId, expects);
+    if (!_send(kind, {'request_id': requestId})) {
+      timer.cancel();
+      _pendingRequest = null;
+      return Future.error(const SocketRequestError('socket_closed'));
+    }
+    return completer.future;
+  }
+
+  Future<Map<String, dynamic>> openDoor(String zoneId) => request({'open_door': {'zone_id': zoneId}}, expects: {'door_opened'});
+
+  Future<Map<String, dynamic>> roomMembers() => request('room_members', expects: {'room_members'});
+
+  Future<Map<String, dynamic>> leaveRoom(String action, {String? newHostUserId}) => request(
+        {'leave_room': {'action': action, 'new_host_user_id': ?newHostUserId}},
+        expects: {'room_left', 'session_stopped', 'session_ended'},
+      );
+
+  bool _settleRequest(String type, Map<String, dynamic> payload, String? requestId) {
+    final pending = _pendingRequest;
+    if (pending == null) return false;
+    if (requestId != null && requestId != pending.requestId) return false;
+    if (!pending.expects.contains(type)) return false;
+    pending.timer.cancel();
+    _pendingRequest = null;
+    if (!pending.completer.isCompleted) pending.completer.complete(payload);
+    return true;
+  }
+
+  bool _failRequest(String kind, String? message) {
+    final pending = _pendingRequest;
+    if (pending == null) return false;
+    pending.timer.cancel();
+    _pendingRequest = null;
+    if (!pending.completer.isCompleted) pending.completer.completeError(SocketRequestError(kind, message));
+    return true;
+  }
+
+  bool _send(Object kind, [Map<String, dynamic> extra = const {}]) {
     final channel = _channel;
     if (channel == null || state.status != SocketStatus.open) return false;
     channel.sink.add(jsonEncode({
@@ -322,7 +397,9 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
     final payload = data['data'];
     final map = payload is Map ? Map<String, dynamic>.from(payload) : <String, dynamic>{};
 
-    switch (data['message_type']) {
+    final type = data['message_type']?.toString() ?? '';
+    if (type != 'error' && _settleRequest(type, map, data['request_id']?.toString()) && type != 'session_stopped' && type != 'session_ended') return;
+    switch (type) {
       case 'context':
         final ctx = SessionContext.fromJson(map);
         state = state.copyWith(context: ctx);
@@ -347,6 +424,9 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
       case 'error':
         final kind = data['kind']?.toString();
         if (kind == 'invalid_token' || kind == 'token_expired') _handleInvalidToken(kind!);
+        if (kind != null && kind != 'invalid_token' && kind != 'token_expired' && kind != 'session_not_found') {
+          _failRequest(kind, (map['message'] ?? data['message'])?.toString());
+        }
         if (kind == 'session_not_found') {
           _clearSession();
           _settleStop(false, StateError('session_not_found'), data['request_id']?.toString());

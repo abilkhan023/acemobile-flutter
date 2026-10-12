@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../core/env.dart';
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
-import '../../../core/utils/money.dart';
 import '../../home/providers/home_providers.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
@@ -19,17 +17,18 @@ import '../../../shared/widgets/ace_page.dart';
 import '../../../shared/widgets/ace_sheet.dart';
 import '../../../shared/widgets/link_menu.dart';
 import '../../auth/providers/auth_provider.dart';
-import '../../balance/providers/balance_providers.dart';
 import '../data/booking_api.dart';
 import '../data/booking_models.dart';
 import '../data/clubs_api.dart';
 import '../data/models.dart';
 import '../logic/map_layout.dart';
 import '../providers/favorites.dart';
+import '../../bookings/data/bookings_api.dart';
+import '../../bookings/widgets/booking_sheet.dart';
+import '../../bookings/widgets/booking_view.dart';
 import '../widgets/computer_map.dart';
 import '../widgets/date_strip.dart';
 import '../widgets/review_card.dart';
-import '../widgets/tariffs_list.dart';
 import '../widgets/time_wheel.dart';
 
 enum _When { now, today, tomorrow, custom }
@@ -55,9 +54,9 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   _When _when = _When.now;
   String? _bookDay;
   String _bookTime = '12:00';
-  Computer? _computer;
-  List<Tariff> _tariffs = const [];
-  bool _loadingContinue = false;
+  final Set<String> _selected = {};
+  String? _selectedZoneId;
+  bool _sheetOpen = false;
 
   final _reviewController = TextEditingController();
 
@@ -142,7 +141,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
 
   Future<void> _refreshComputers() async {
     if (!mounted) return;
-    _computer = null;
+    _selected.clear();
+    _selectedZoneId = null;
     final booking = ref.read(bookingApiProvider);
     try {
       if (_book.isEmpty) {
@@ -163,12 +163,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     return context.l10n.dateAtTime(DateFormat('d MMM yyyy', locale).format(dt), DateFormat('H:mm').format(dt));
   }
 
-  String _formatDone(String value) {
-    final dt = DateTime.tryParse(value);
-    if (dt == null) return value;
-    final locale = Localizations.localeOf(context).toString();
-    return context.l10n.dateAtTime(DateFormat('d MMM yyyy', locale).format(dt), DateFormat('HH:mm').format(dt));
-  }
 
   Future<void> _share() async {
     final l = context.l10n;
@@ -183,64 +177,62 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     } catch (_) {}
   }
 
-  Future<void> _continueToTariffs() async {
-    final computer = _computer;
-    if (computer == null) return;
+  Zone? get _selectedZone => _zones.where((z) => z.id == _selectedZoneId).firstOrNull;
+
+  List<Computer> get _selectedComputers => [for (final c in _allComputers) if (_selected.contains(c.id)) c];
+
+  void _onPcTap(Computer c) {
     final l = context.l10n;
-    setState(() => _loadingContinue = true);
-    try {
-      final zoneId = computer.zoneId ?? (_zones.isNotEmpty ? _zones.first.id : '');
-      final tariffs = await ref.read(bookingApiProvider).availableTariffs(zoneId: zoneId, datetime: '$_book:00');
-      _tariffs = [
-        for (final t in tariffs)
-          if ((t.duration ?? 0) > 60) t,
-      ];
-      if (mounted) _openTariffSheet();
-    } catch (_) {
-      ref.read(toastProvider.notifier).danger(l.tariffsLoadFailed);
-    } finally {
-      if (mounted) setState(() => _loadingContinue = false);
+    final toast = ref.read(toastProvider.notifier);
+    if (!ComputerMap.isSelectable(c)) {
+      toast.warning(c.staffHold == true ? l.staffHold : l.pcReservedShort);
+      return;
     }
+    final zone = _zones.where((z) => z.id == c.zoneId).firstOrNull;
+    setState(() {
+      if (zone != null && zone.isRoom) {
+        final roomPcs = [for (final x in _allComputers) if (x.zoneId == zone.id) x.id];
+        if (_selectedZoneId == zone.id) {
+          _selected.clear();
+          _selectedZoneId = null;
+        } else {
+          _selected
+            ..clear()
+            ..addAll(roomPcs);
+          _selectedZoneId = zone.id;
+        }
+        return;
+      }
+      if (_selectedZoneId != c.zoneId || (_selectedZone?.isRoom ?? false)) {
+        _selected.clear();
+        _selectedZoneId = c.zoneId;
+      }
+      if (!_selected.remove(c.id)) _selected.add(c.id);
+      if (_selected.isEmpty) _selectedZoneId = null;
+    });
   }
 
-  void _openTariffSheet() {
-    final l = context.l10n;
-    final computer = _computer;
-    final book = _book;
-    final dateLabel = _reserveDateLabel();
-    String? selected;
-    var reserving = false;
-    final zoneName = _zones.where((z) => z.id == computer?.zoneId).firstOrNull?.name ?? '';
-    final wallet = (ref.read(walletsProvider).value ?? const []).where((w) => w.gameCenterId == _center?.id).firstOrNull;
-    showAceSheet(
+  Future<void> _openBooking() async {
+    final zone = _selectedZone;
+    final computers = _selectedComputers;
+    if (zone == null || computers.isEmpty || _sheetOpen) return;
+    _sheetOpen = true;
+    final names = {for (final c in _allComputers) c.id: c.name ?? ''};
+    final booking = await showBookingSheet(
       context,
-      title: l.pcInZone(computer?.name ?? '', zoneName),
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setSheet) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 16,
-          children: [
-            Text(l.bookingPcAt(computer?.name ?? '', dateLabel), style: AceText.text),
-            TariffsList(tariffs: _tariffs, selected: selected, serverTime: _serverTime, onSelect: (v) => setSheet(() => selected = v)),
-            if (wallet != null) Text(l.chargedFromClubBalance(_center?.name ?? '', formatMoney(wallet.balance)), style: AceText.text),
-            AceButton(
-              label: selected == null ? l.reserve : l.reserveFor(formatMoney(_tariffs.where((t) => t.id == selected).firstOrNull?.basePrice)),
-              style: AceButtonStyle.red,
-              loading: reserving,
-              disabled: selected == null,
-              onPressed: () async {
-                setSheet(() => reserving = true);
-                final ok = await _reserve(tariffId: selected!, computer: computer!, book: book);
-                if (ctx.mounted) Navigator.of(ctx).pop();
-                _afterReserve(ok, computer, book);
-              },
-            ),
-          ],
-        ),
-      ),
-    ).then((_) {
-      if (mounted && _computer != null) setState(() => _computer = null);
-    });
+      zone: zone,
+      computers: computers,
+      bookDateTime: _book,
+      dateLabel: _reserveDateLabel(),
+      gameCenterId: _center?.id,
+      centerName: _center?.name,
+      serverTime: _serverTime,
+    );
+    _sheetOpen = false;
+    if (!mounted || booking == null) return;
+    final friends = {for (final f in ref.read(friendsProvider).value ?? const <UserRef>[]) f.id: f.username};
+    _refreshComputers();
+    await showBookingSuccess(context, booking, computerNames: names, friendNames: friends, zoneName: zone.name);
   }
 
   DateTime get _now => DateTime.now();
@@ -315,51 +307,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       _When.tomorrow => selected ? '${l.tomorrow}, $_bookTime' : l.tomorrow,
       _When.custom => selected && _bookDay != null ? '${_dayLabel(_bookDay!, l)}, $_bookTime' : l.pickDate,
     };
-  }
-
-  Future<bool> _reserve({required String tariffId, required Computer computer, required String book}) async {
-    final api = ref.read(bookingApiProvider);
-    try {
-      final userTariffId = await api.createUserTariff(
-        tariffId: tariffId,
-        gameCenterId: _center?.id ?? '',
-        branchId: _branch?.id ?? widget.branchId,
-      );
-      await ref.read(reservationsApiProvider).create(dateTime: '$book:00', computerId: computer.id, userTariffId: userTariffId);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  void _afterReserve(bool ok, Computer computer, String book) {
-    if (!mounted) return;
-    setState(() => _computer = null);
-    _refreshComputers();
-    final l = context.l10n;
-    final name = computer.name ?? '';
-    showAceSheet(
-      context,
-      builder: (ctx) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: 20,
-        children: ok
-            ? [
-                SvgPicture.asset('assets/images/CheckCircle-true.svg', width: 40, height: 40, alignment: Alignment.centerLeft),
-                Text(l.bookingSuccess, style: AceText.title),
-                Text(l.pcReserved(name), style: AceText.title),
-                Text(l.bookingDetails(_formatDone('$book:00')), style: AceText.text),
-                Text(l.thanksForChoosing, style: AceText.text),
-                AceButton(label: l.ready, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
-              ]
-            : [
-                SvgPicture.asset('assets/images/WarningExclamination.svg', width: 40, height: 40, alignment: Alignment.centerLeft),
-                Text(l.somethingWentWrong, style: AceText.title),
-                Text(l.couldNotReserve(name), style: AceText.text),
-                AceButton(label: l.startOver, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
-              ],
-      ),
-    );
   }
 
   void _openTariffInfo() {
@@ -593,7 +540,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                     ),
                     Row(
                       children: [
-                        Expanded(child: Text(l.selectComputer, style: AceText.title)),
+                        Expanded(child: Text(l.choosePcs, style: AceText.title)),
                         if (!_loadingBooking)
                           AcePill(
                             height: 28,
@@ -603,6 +550,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                           ),
                       ],
                     ),
+                    Text(l.choosePcsHint, style: AceText.text),
                     if (_loadingBooking)
                       const Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Center(child: AceSpinner(color: AceColors.accent)))
                     else
@@ -610,17 +558,53 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                         size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
                         zones: _zones,
                         computers: _allComputers,
-                        selected: _computer,
-                        onSelect: (c) {
-                          if (_loadingContinue) return;
-                          setState(() => _computer = c);
-                          _continueToTariffs();
-                        },
+                        selected: _selected,
+                        onTap: _onPcTap,
                       ),
                   ],
                 ),
         ),
+        if (_selected.isNotEmpty) _selectionBar(l),
       ],
+    );
+  }
+
+  Widget _selectionBar(AppLocalizations l) {
+    final zone = _selectedZone;
+    final count = _selected.length;
+    final room = zone?.isRoom ?? false;
+    final names = _selectedComputers.map((c) => c.name ?? '').join(', ');
+    return SafeArea(
+      top: false,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 4, 16, 10),
+        padding: const EdgeInsets.fromLTRB(18, 10, 10, 10),
+        decoration: BoxDecoration(color: AceColors.card, borderRadius: BorderRadius.circular(AceRadius.card), boxShadow: AceShadows.bar),
+        child: Row(
+          spacing: 12,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 2,
+                children: [
+                  Text(room ? l.roomSelected(zone?.name ?? '', '$count') : l.selectedPcs('$count'), style: AceText.style(size: 15, weight: FontWeight.w600)),
+                  Text(room ? _reserveDateLabel() : names, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.caption),
+                ],
+              ),
+            ),
+            AceButton(
+              label: l.continueAction,
+              style: AceButtonStyle.red,
+              expand: false,
+              padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+              fontSize: 14,
+              onPressed: _openBooking,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

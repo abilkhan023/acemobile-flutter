@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/l10n.dart';
 import '../../../core/utils/money.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
@@ -58,8 +59,10 @@ class TariffsList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 8,
                       children: [
-                        Text(formatMoney(t.basePrice), style: AceText.style(size: 17, weight: FontWeight.w600)),
+                        Text(formatMoney(t.price), style: AceText.style(size: 17, weight: FontWeight.w600)),
                         Text('${t.name ?? ''} (${tariffTimeToBuy(t, serverTime)})', style: AceText.style(size: 13, weight: FontWeight.w400, color: selected == t.id ? const Color(0xD9FFFFFF) : AceColors.muted)),
+                        if (t.isDynamic)
+                          Text(context.l10n.dynamicPriceHint, style: AceText.style(size: 12, weight: FontWeight.w500, color: selected == t.id ? AceColors.white : const Color(0xFFF2A33A))),
                       ],
                     ),
                   ),

@@ -18,15 +18,20 @@ const _offBg = Color(0xFF1B181C);
 const _offFg = Color(0xFF4A454B);
 
 class ComputerMap extends StatelessWidget {
-  const ComputerMap({super.key, required this.size, required this.zones, required this.computers, required this.selected, required this.onSelect});
+  const ComputerMap({super.key, required this.size, required this.zones, required this.computers, required this.selected, required this.onTap});
 
   final MapSize size;
   final List<Zone> zones;
   final List<Computer> computers;
-  final Computer? selected;
-  final ValueChanged<Computer?> onSelect;
+  final Set<String> selected;
+  final ValueChanged<Computer> onTap;
 
   static String stateOf(Computer c) => (c.state ?? '').toUpperCase();
+
+  static bool isSelectable(Computer c) {
+    final s = stateOf(c);
+    return s != 'RESERVED' && s != 'TECHNICAL_WORK' && c.staffHold != true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +69,19 @@ class ComputerMap extends StatelessWidget {
                     AcePill(
                       height: 26,
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Text(zone.name, style: AceText.style(size: 12, weight: FontWeight.w600)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 6,
+                        children: [
+                          if (zones.where((z) => z.id == zone.id).firstOrNull?.isRoom == true)
+                            const Icon(Icons.meeting_room_outlined, size: 14, color: AceColors.accent),
+                          Text(zone.name, style: AceText.style(size: 12, weight: FontWeight.w600)),
+                        ],
+                      ),
                     ),
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final grid = _ZoneGrid(zone: zone, selected: selected, onSelect: onSelect);
+                      final grid = _ZoneGrid(zone: zone, selected: selected, onTap: onTap);
                       if (zone.cols * _pitch <= constraints.maxWidth) return grid;
                       return ShaderMask(
                         shaderCallback: (rect) => const LinearGradient(
@@ -113,11 +126,11 @@ class _Legend extends StatelessWidget {
 }
 
 class _ZoneGrid extends StatelessWidget {
-  const _ZoneGrid({required this.zone, required this.selected, required this.onSelect});
+  const _ZoneGrid({required this.zone, required this.selected, required this.onTap});
 
   final ZoneLayout zone;
-  final Computer? selected;
-  final ValueChanged<Computer?> onSelect;
+  final Set<String> selected;
+  final ValueChanged<Computer> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -136,11 +149,8 @@ class _ZoneGrid extends StatelessWidget {
                   child: _Pc(
                     computer: computer,
                     state: ComputerMap.stateOf(computer),
-                    selected: selected?.id == computer.id,
-                    onTap: () {
-                      if (ComputerMap.stateOf(computer) == 'RESERVED') return;
-                      onSelect(selected?.id == computer.id ? null : computer);
-                    },
+                    selected: selected.contains(computer.id),
+                    onTap: () => onTap(computer),
                   ),
                 ),
         ],
@@ -160,7 +170,7 @@ class _Pc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = computer.name ?? '';
-    final (bg, fg) = switch (state) {
+    final (bg, fg) = switch (computer.staffHold == true ? 'RESERVED' : state) {
       'FREE' => (_freeBg, AceColors.white),
       'IN_USE' => (_busyBg, _busyFg),
       'RESERVED' || 'TECHNICAL_WORK' => (_soonBg, _soonFg),

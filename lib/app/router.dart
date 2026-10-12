@@ -26,6 +26,8 @@ import '../features/balance/ui/balance_screen.dart';
 import '../features/balance/ui/balance_story_screen.dart';
 import '../features/balance/ui/current_balance_screen.dart';
 import '../features/clubs/ui/club_screen.dart';
+import '../features/bookings/data/bookings_api.dart';
+import '../features/bookings/ui/bookings_screen.dart';
 import '../features/clubs/ui/clubs_feed_screen.dart';
 import '../features/locations/ui/locations_screen.dart';
 import '../features/news/ui/news_detail_screen.dart';
@@ -120,7 +122,8 @@ List<RouteBase> _routes() => [
       _route('/notifications', RouteMeta(title: (l) => l.notifications, hideFooter: true, layout: AceLayout.soon), (s) => const NotificationsScreen()),
       _route('/shop', RouteMeta(title: (l) => l.shop, hideFooter: true, layout: AceLayout.soon), (s) => const ShopScreen()),
       _route('/shop/order_details/:id', RouteMeta(title: (l) => l.orderDetails, hideFooter: true), (s) => const OrderDetailsScreen()),
-      _route('/activity', RouteMeta(title: (l) => l.activity, hideBack: true), (s) => RefreshOnEnter(providers: [activityProvider], child: const ActivityScreen())),
+      _route('/activity', RouteMeta(title: (l) => l.activity, hideBack: true), (s) => RefreshOnEnter(providers: [activityProvider, myBookingsProvider], child: const ActivityScreen())),
+      _route('/bookings', RouteMeta(title: (l) => l.myBookings, hideFooter: true, isDeep: true), (s) => RefreshOnEnter(providers: [myBookingsProvider, friendsProvider], child: const BookingsScreen())),
       _route('/activity/:id', RouteMeta(title: (l) => l.lastActivity, hideFooter: true), (s) => ActivityDetailScreen(key: ValueKey(s.pathParameters['id']), id: s.pathParameters['id']!)),
       _route('/locations', RouteMeta(title: (l) => l.locations, layout: AceLayout.empty, isDeep: true), (s) => RefreshOnEnter(providers: [availableGameCentersProvider], child: const LocationsScreen())),
       _route('/balance', RouteMeta(title: (l) => l.wallet, hideBack: true), (s) => RefreshOnEnter(providers: [walletsProvider, gameCentersProvider], child: const BalanceScreen())),

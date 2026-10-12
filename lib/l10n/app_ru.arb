@@ -517,5 +517,161 @@
     }
   },
   "searchClubs": "Поиск по клубам",
-  "nothingFound": "Ничего не найдено"
+  "nothingFound": "Ничего не найдено",
+  "choosePcs": "Выберите компьютеры",
+  "choosePcsHint": "Можно выбрать несколько ПК одной зоны — для себя и друзей. Комната бронируется целиком.",
+  "selectedPcs": "Выбрано ПК: {n}",
+  "@selectedPcs": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "roomSelected": "Комната {name} · {n} ПК",
+  "@roomSelected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "staffHold": "Забронирован кассиром",
+  "pcReservedShort": "Забронирован",
+  "dynamicPriceHint": "Динамическая цена · прогноз на время брони",
+  "friendsInBooking": "Друзья в брони",
+  "friendsInBookingHint": "Друг займёт своё место без кода. Остальным местам подойдёт код брони.",
+  "roomMembers": "Участники комнаты",
+  "roomMembersHint": "Участники войдут в комнату без кода. Хозяином аренды остаётесь вы.",
+  "noFriends": "Друзей пока нет. Кто войдёт в клубе по коду вашей брони, станет вашим другом.",
+  "friendOwnPlace": "своё место, без кода",
+  "you": "Вы",
+  "oneSeat": "одно место",
+  "byCode": "По коду брони",
+  "moreN": "ещё {n}",
+  "@moreN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "seatSwapHint": "Кто за каким ПК — видно в «Моих бронях», там же друга можно пересадить.",
+  "totalLine": "{price} × {n} ПК, одна оплата",
+  "@totalLine": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "totalRoom": "{price} за комнату, одна оплата",
+  "@totalRoom": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "tooManyFriends": "Друзей не больше, чем мест: {n}",
+  "@tooManyFriends": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pcsBooked": "ПК {names} забронированы. Ждем вас!",
+  "@pcsBooked": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "roomBooked": "Комната {name} забронирована. Ждем вас!",
+  "@roomBooked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youOrByCode": "вы или по коду",
+  "accessCode": "Код брони",
+  "accessCodeHint": "Друзья вводят код на ПК в клубе. Назначенным друзьям и участникам комнаты код не нужен.",
+  "burnHint": "Если не прийти, бронь сгорит в конце окна — деньги не возвращаются.",
+  "myBookings": "Мои брони",
+  "noBookings": "Активных броней нет",
+  "friendsBooking": "Бронь друга {owner}",
+  "@friendsBooking": {
+    "placeholders": {
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "assignFriend": "Назначить друга",
+  "removeFriend": "Снять друга",
+  "editMembers": "Изменить участников",
+  "cancelBookingConfirm": "Бронь отменится целиком, со всеми ПК. Деньги не возвращаются, тарифы останутся у вас в очереди.",
+  "openDoor": "Открыть дверь",
+  "doorOpened": "Команда на открытие отправлена",
+  "doorNoLock": "У этой зоны нет замка",
+  "doorCooldown": "Дверь уже открывается",
+  "doorUnauthorized": "Открыть дверь можно, если у вас идёт сессия или бронь в ближайший час",
+  "roomNotRenter": "Управляет арендой хозяин комнаты",
+  "roomMemberGone": "Этот игрок уже не в комнате",
+  "roomLeaveNotAllowed": "Уйти с продолжением можно только при оплаченном тарифе",
+  "roomBookedByOthers": "Комната забронирована",
+  "pcBusyAt": "ПК уже занят на это время",
+  "notEnoughMoney": "Недостаточно средств на балансе клуба",
+  "startOnFriendPc": "Запустить на ПК друга",
+  "sessionStartedFor": "Сессия запущена для {name}",
+  "@sessionStartedFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeClaimed": "занял {name}",
+  "@placeClaimed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeBurned": "сгорело",
+  "placeCancelled": "отменено",
+  "unassignedSeat": "свободное место",
+  "leaveRoomTitle": "В комнате остаются игроки",
+  "transferTo": "Передать аренду {name}",
+  "@transferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stopForAll": "Завершить аренду для всех",
+  "leaveContinue": "Уйти — аренда продолжится до {time}",
+  "@leaveContinue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "codeCopied": "Код скопирован",
+  "bookingLive": "идёт сейчас",
+  "noFreePcsSelected": "Выберите хотя бы один свободный ПК",
+  "selectZoneOnly": "Все места брони должны быть в одной зоне"
 }
