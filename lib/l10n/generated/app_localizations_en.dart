@@ -1264,4 +1264,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get membersSaved => 'Members saved';
+
+  @override
+  String get walletsPerClub => 'Each club has its own wallet';
+
+  @override
+  String get walletsPerClubHint =>
+      'Money in one club can\'t be spent in another. Top up the wallet of the club where you play.';
 }

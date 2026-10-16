@@ -19,11 +19,11 @@ import '../../auth/providers/auth_controller.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../balance/providers/balance_providers.dart';
 import '../../home/providers/home_providers.dart';
-import '../../home/widgets/balance_sheet.dart';
 import '../../session/active_session_card.dart';
 import '../../session/mobile_socket.dart';
 import '../providers/club_live.dart';
 import '../providers/favorites.dart';
+import '../widgets/club_card.dart';
 import 'club_card_helpers.dart';
 
 enum _Filter { all, free, favorites }
@@ -103,11 +103,8 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
     final socket = auth.isAuth ? ref.watch(mobileSocketProvider) : null;
     final hasSession = socket?.hasActiveSession == true;
     final wallets = auth.isAuth ? ref.watch(walletClubsProvider).value : null;
-    num? total;
-    if (wallets != null) {
-      final own = wallets.where((w) => w.club != null).toList();
-      if (own.isNotEmpty) total = own.fold<num>(0, (acc, w) => acc + (num.tryParse(w.balance.toString()) ?? 0));
-    }
+    final own = [...?wallets?.where((w) => w.club != null)]
+      ..sort((a, b) => (num.tryParse(b.balance.toString()) ?? 0).compareTo(num.tryParse(a.balance.toString()) ?? 0));
     final q = _query.trim().toLowerCase();
     final visible = [
       for (final c in cards)
@@ -144,7 +141,7 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
                     height: 40,
                     color: AceColors.card,
                     padding: const EdgeInsets.symmetric(horizontal: 14),
-                    onTap: hasSession ? _openSession : () => showBalanceSheet(context),
+                    onTap: hasSession ? _openSession : () => context.go('/balance'),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       spacing: 8,
@@ -152,10 +149,29 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
                         if (hasSession) ...[
                           Container(width: 8, height: 8, decoration: const BoxDecoration(color: AceColors.success, shape: BoxShape.circle)),
                           Text(l.pcNumber(socket?.context?.computerName ?? ''), style: AceText.style(size: 13, weight: FontWeight.w600)),
-                          Container(width: 1, height: 16, color: AceColors.divider),
-                        ] else
+                        ] else ...[
                           const AceIcon('coin-vertical', size: 16, color: AceColors.accent),
-                        Text(total == null ? l.balance : formatMoney(total), style: AceText.style(size: 14, weight: FontWeight.w600)),
+                          if (own.isEmpty)
+                            Text(l.balance, style: AceText.style(size: 14, weight: FontWeight.w600))
+                          else
+                            SizedBox(
+                              width: 24 + 14.0 * (own.length.clamp(1, 3) - 1),
+                              height: 24,
+                              child: Stack(
+                                children: [
+                                  for (var i = 0; i < own.length && i < 3; i++)
+                                    Positioned(
+                                      left: 14.0 * i,
+                                      child: Container(
+                                        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AceColors.card, width: 2)),
+                                        child: ClubLogo(url: own[i].club?.logo, size: 22),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          if (own.length > 3) Text('+${own.length - 3}', style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.muted)),
+                        ],
                       ],
                     ),
                   ),
@@ -277,6 +293,9 @@ class _ClubFeedCard extends ConsumerWidget {
     final l = context.l10n;
     final live = ref.watch(clubLiveProvider(card.branch.id)).value;
     if (hideWhenBusy && live != null && live.free == 0) return const SizedBox.shrink();
+    final wallet = ref.watch(authProvider).isAuth
+        ? ref.watch(walletClubsProvider).value?.where((w) => w.club != null && w.wallet.gameCenterId == card.center?.id).firstOrNull
+        : null;
     final logo = card.img;
     final tariff = live?.tariffNow;
     final subtitle = [
@@ -306,6 +325,24 @@ class _ClubFeedCard extends ConsumerWidget {
                     ),
                   ),
                   Positioned(left: 12, top: 12, child: livePill(context, live)),
+                  if (wallet != null)
+                    Positioned(
+                      right: 12,
+                      top: 12,
+                      child: Container(
+                        height: 28,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(color: const Color(0xCC201D22), borderRadius: BorderRadius.circular(14)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 6,
+                          children: [
+                            const AceIcon('coin-vertical', size: 13, color: AceColors.accent),
+                            Text(formatMoney(wallet.ownBalance), style: AceText.style(size: 12, weight: FontWeight.w600)),
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

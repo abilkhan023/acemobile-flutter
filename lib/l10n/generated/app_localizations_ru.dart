@@ -1267,4 +1267,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get membersSaved => 'Участники сохранены';
+
+  @override
+  String get walletsPerClub => 'У каждого клуба свой кошелёк';
+
+  @override
+  String get walletsPerClubHint =>
+      'Деньги одного клуба нельзя потратить в другом. Пополняйте кошелёк клуба, где играете.';
 }

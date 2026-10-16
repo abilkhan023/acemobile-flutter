@@ -676,5 +676,7 @@
   "selectZoneOnly": "All seats must be in one zone",
   "pcOffline": "The PC is off — turn it on in the club and try again",
   "pcInUse": "Someone is already playing on this PC",
-  "membersSaved": "Members saved"
+  "membersSaved": "Members saved",
+  "walletsPerClub": "Each club has its own wallet",
+  "walletsPerClubHint": "Money in one club can't be spent in another. Top up the wallet of the club where you play."
 }

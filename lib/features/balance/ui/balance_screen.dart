@@ -21,8 +21,6 @@ class BalanceScreen extends ConsumerWidget {
     final wallets = ref.watch(walletClubsProvider);
     final items = (wallets.value ?? const <WalletClub>[]).where((w) => w.club != null).toList();
     if (wallets.isLoading && items.isEmpty) return const Center(child: AceSpinner(color: AceColors.accent));
-    final own = items;
-    final total = own.fold<num>(0, (acc, w) => acc + (num.tryParse(w.balance.toString()) ?? 0));
     return AcePage(
       gap: 14,
       children: [
@@ -33,8 +31,14 @@ class BalanceScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             spacing: 14,
             children: [
-              Text(l.totalAcrossNetwork, style: AceText.text),
-              Text(formatMoney(total), style: AceText.style(size: 36, weight: FontWeight.w700, height: 1).copyWith(letterSpacing: -0.5)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 6,
+                children: [
+                  Text(l.walletsPerClub, style: AceText.style(size: 18, weight: FontWeight.w700)),
+                  Text(l.walletsPerClubHint, style: AceText.text),
+                ],
+              ),
               Row(
                 spacing: 10,
                 children: [

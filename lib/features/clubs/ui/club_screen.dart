@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../core/env.dart';
 import '../../../core/toast/toast.dart';
 import '../../../core/utils/l10n.dart';
+import '../../../core/utils/money.dart';
 import '../../home/providers/home_providers.dart';
 import '../../../shared/theme/ace_colors.dart';
 import '../../../shared/theme/ace_theme.dart';
@@ -17,6 +18,7 @@ import '../../../shared/widgets/ace_page.dart';
 import '../../../shared/widgets/ace_sheet.dart';
 import '../../../shared/widgets/link_menu.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../balance/providers/balance_providers.dart';
 import '../data/booking_api.dart';
 import '../data/booking_models.dart';
 import '../data/clubs_api.dart';
@@ -458,6 +460,9 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final branch = _branch;
     final center = _center;
     final fav = ref.watch(favoritesProvider).contains(widget.branchId);
+    final wallet = ref.watch(authProvider).isAuth
+        ? ref.watch(walletClubsProvider).value?.where((w) => w.club != null && w.wallet.gameCenterId == branch?.gameCenterId).firstOrNull
+        : null;
     final future = _when != _When.now;
     final free = _allComputers.where((c) {
       final s = ComputerMap.stateOf(c);
@@ -526,6 +531,18 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                       spacing: 6,
                       runSpacing: 6,
                       children: [
+                        if (wallet != null)
+                          _chip(
+                            onTap: () => context.push('/balance/${wallet.key}'),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              spacing: 4,
+                              children: [
+                                const AceIcon('coin-vertical', size: 12, color: AceColors.accent),
+                                Text(formatMoney(wallet.ownBalance), style: AceText.style(size: 12, weight: FontWeight.w600)),
+                              ],
+                            ),
+                          ),
                         _chip(
                           onTap: _openReviews,
                           child: Row(

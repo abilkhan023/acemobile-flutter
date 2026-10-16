@@ -2391,6 +2391,18 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Участники сохранены'**
   String get membersSaved;
+
+  /// No description provided for @walletsPerClub.
+  ///
+  /// In ru, this message translates to:
+  /// **'У каждого клуба свой кошелёк'**
+  String get walletsPerClub;
+
+  /// No description provided for @walletsPerClubHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Деньги одного клуба нельзя потратить в другом. Пополняйте кошелёк клуба, где играете.'**
+  String get walletsPerClubHint;
 }
 
 class _AppLocalizationsDelegate

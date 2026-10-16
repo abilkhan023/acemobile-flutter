@@ -134,28 +134,25 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               if (wallets.isEmpty)
                 Text(l.noBalancesAvailable, style: AceText.text)
               else
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  child: Row(
-                    spacing: 10,
-                    children: [
-                      for (final w in wallets.where((w) => w.club != null))
-                        AcePill(
-                          height: 40,
-                          padding: const EdgeInsets.fromLTRB(8, 0, 14, 0),
-                          onTap: () => context.push('/current_balance'),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 8,
-                            children: [
-                              ClubLogo(url: w.club?.logo, size: 24),
-                              Text(formatMoney(w.balance), style: AceText.style(size: 14, weight: FontWeight.w600)),
-                            ],
-                          ),
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    for (final w in wallets.where((w) => w.club != null))
+                      AcePill(
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(8, 0, 14, 0),
+                        onTap: () => context.push('/current_balance'),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 8,
+                          children: [
+                            ClubLogo(url: w.club?.logo, size: 24),
+                            Text(formatMoney(w.balance), style: AceText.style(size: 14, weight: FontWeight.w600)),
+                          ],
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
             ],
           ),

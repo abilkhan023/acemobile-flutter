@@ -1254,4 +1254,11 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get membersSaved => 'Қатысушылар сақталды';
+
+  @override
+  String get walletsPerClub => 'Әр клубтың өз әмияны бар';
+
+  @override
+  String get walletsPerClubHint =>
+      'Бір клубтың ақшасын басқа клубта жұмсауға болмайды. Ойнайтын клубыңыздың әмиянын толтырыңыз.';
 }
