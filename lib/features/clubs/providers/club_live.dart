@@ -45,8 +45,8 @@ final clubLiveProvider = FutureProvider.family<ClubLive, String>((ref, branchId)
     for (final z in zones)
       ZoneLive(
         zone: z,
-        total: (byZone[z.id] ?? const []).length,
-        free: (byZone[z.id] ?? const []).where((c) => ComputerMap.stateOf(c) == 'FREE').length,
+        total: (byZone[z.id] ?? const []).where(ComputerMap.countsInCapacity).length,
+        free: (byZone[z.id] ?? const []).where(ComputerMap.isFree).length,
       ),
   ];
   Tariff? tariffNow;

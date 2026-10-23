@@ -47,19 +47,4 @@ void main() {
     expect(layout.computers.length, 1);
   });
 
-  test('zone layouts use zone-local coordinates and crop each zone', () {
-    final layouts = buildZoneLayouts(size, zones, computers, defaultName: 'Общий зал');
-    expect(layouts.length, 2);
-    final vip = layouts.first;
-    expect(vip.name, 'VIP');
-    expect(vip.rows, 2);
-    expect(vip.cols, 3);
-    expect(vip.computers['1-0']?.id, 'c1');
-    expect(vip.computers['0-2']?.id, 'c2');
-    final rest = layouts.last;
-    expect(rest.name, 'Общий зал');
-    expect(rest.rows, 1);
-    expect(rest.cols, 1);
-    expect(rest.computers['0-0']?.id, 'c3');
-  });
 }

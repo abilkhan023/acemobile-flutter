@@ -361,12 +361,6 @@ class _ClubFeedCard extends ConsumerWidget {
                     ],
                   ),
                   if (subtitle.isNotEmpty) Text(subtitle, style: AceText.text),
-                  if (live != null && live.zones.isNotEmpty)
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: [for (final z in live.zones) zonePill(context, z)],
-                    ),
                 ],
               ),
             ),

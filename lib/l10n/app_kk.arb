@@ -459,14 +459,6 @@
       }
     }
   },
-  "zoneBusy": "{zone} бос емес",
-  "@zoneBusy": {
-    "placeholders": {
-      "zone": {
-        "type": "String"
-      }
-    }
-  },
   "tariffNow": "қазіргі тариф «{name}» {price}",
   "@tariffNow": {
     "placeholders": {

@@ -459,14 +459,6 @@
       }
     }
   },
-  "zoneBusy": "{zone} full",
-  "@zoneBusy": {
-    "placeholders": {
-      "zone": {
-        "type": "String"
-      }
-    }
-  },
   "tariffNow": "current tariff «{name}» {price}",
   "@tariffNow": {
     "placeholders": {

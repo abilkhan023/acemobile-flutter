@@ -1972,12 +1972,6 @@ abstract class AppLocalizations {
   /// **'{free} из {total} свободно'**
   String freeOf(String free, String total);
 
-  /// No description provided for @zoneBusy.
-  ///
-  /// In ru, this message translates to:
-  /// **'{zone} занят'**
-  String zoneBusy(String zone);
-
   /// No description provided for @tariffNow.
   ///
   /// In ru, this message translates to:

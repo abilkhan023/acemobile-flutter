@@ -29,24 +29,3 @@ Widget livePill(BuildContext context, ClubLive? live) {
     ),
   );
 }
-
-Widget zonePill(BuildContext context, ZoneLive z) {
-  final l = context.l10n;
-  final name = z.zone.name ?? '';
-  final busy = z.free == 0;
-  return Container(
-    height: 26,
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    decoration: BoxDecoration(
-      color: busy ? const Color(0x2EF93829) : const Color(0x2434C77B),
-      borderRadius: BorderRadius.circular(AceRadius.pill),
-    ),
-    child: Center(
-      widthFactor: 1,
-      child: Text(
-        busy ? l.zoneBusy(name) : '$name ${z.free}',
-        style: AceText.style(size: 11, weight: FontWeight.w600, color: busy ? AceColors.accent : AceColors.success),
-      ),
-    ),
-  );
-}

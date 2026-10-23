@@ -1010,11 +1010,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String zoneBusy(String zone) {
-    return '$zone занят';
-  }
-
-  @override
   String tariffNow(String name, String price) {
     return 'сейчас тариф «$name» $price';
   }

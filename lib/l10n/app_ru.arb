@@ -459,14 +459,6 @@
       }
     }
   },
-  "zoneBusy": "{zone} занят",
-  "@zoneBusy": {
-    "placeholders": {
-      "zone": {
-        "type": "String"
-      }
-    }
-  },
   "tariffNow": "сейчас тариф «{name}» {price}",
   "@tariffNow": {
     "placeholders": {

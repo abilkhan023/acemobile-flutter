@@ -41,7 +41,7 @@ abstract final class AceRadius {
 }
 
 abstract final class AceShadows {
-  static const card = [BoxShadow(color: Color(0x59000000), offset: Offset(0, 14), blurRadius: 34)];
-  static const accent = [BoxShadow(color: Color(0x59F93829), offset: Offset(0, 16), blurRadius: 36)];
-  static const bar = [BoxShadow(color: Color(0x73000000), offset: Offset(0, 14), blurRadius: 34)];
+  static const card = [BoxShadow(color: Color(0x40000000), offset: Offset(0, 4), blurRadius: 12)];
+  static const accent = [BoxShadow(color: Color(0x40F93829), offset: Offset(0, 4), blurRadius: 12)];
+  static const bar = [BoxShadow(color: Color(0x59000000), offset: Offset(0, 6), blurRadius: 16)];
 }

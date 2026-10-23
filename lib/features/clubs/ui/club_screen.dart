@@ -463,11 +463,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final wallet = ref.watch(authProvider).isAuth
         ? ref.watch(walletClubsProvider).value?.where((w) => w.club != null && w.wallet.gameCenterId == branch?.gameCenterId).firstOrNull
         : null;
-    final future = _when != _When.now;
-    final free = _allComputers.where((c) {
-      final s = ComputerMap.stateOf(c);
-      return s == 'FREE' || (future && s == 'POWER_OFF' && ComputerMap.isSelectable(c));
-    }).length;
+    final free = _allComputers.where(ComputerMap.isFree).length;
     return Column(
       children: [
         Padding(
