@@ -670,5 +670,42 @@
   "pcInUse": "Бұл ПК-да біреу ойнап отыр",
   "membersSaved": "Қатысушылар сақталды",
   "walletsPerClub": "Әр клубтың өз әмияны бар",
-  "walletsPerClubHint": "Бір клубтың ақшасын басқа клубта жұмсауға болмайды. Ойнайтын клубыңыздың әмиянын толтырыңыз."
+  "walletsPerClubHint": "Бір клубтың ақшасын басқа клубта жұмсауға болмайды. Ойнайтын клубыңыздың әмиянын толтырыңыз.",
+  "busyUntil": "{time} дейін бос емес",
+  "@busyUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "freeOnlyUntil": "Тек {time} дейін бос — қысқарақ тариф таңдаңыз",
+  "@freeOnlyUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "busyNowUntil": "Қазір {time} дейін бос емес, броньға дейін босайды",
+  "@busyNowUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "onMaintenance": "Қызмет көрсетуде",
+  "pcUnavailable": "Қолжетімсіз",
+  "pickFutureTime": "Болашақ уақытты таңдаңыз",
+  "bookingHorizon": "Бронь 14 күн алға ашық",
+  "tariffUnavailableAtTime": "Бұл уақытқа тариф қолжетімсіз",
+  "withDiscount": "{percent} жеңілдікпен",
+  "@withDiscount": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  }
 }

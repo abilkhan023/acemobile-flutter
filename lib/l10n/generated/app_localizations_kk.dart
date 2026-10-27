@@ -1256,4 +1256,39 @@ class AppLocalizationsKk extends AppLocalizations {
   @override
   String get walletsPerClubHint =>
       'Бір клубтың ақшасын басқа клубта жұмсауға болмайды. Ойнайтын клубыңыздың әмиянын толтырыңыз.';
+
+  @override
+  String busyUntil(String time) {
+    return '$time дейін бос емес';
+  }
+
+  @override
+  String freeOnlyUntil(String time) {
+    return 'Тек $time дейін бос — қысқарақ тариф таңдаңыз';
+  }
+
+  @override
+  String busyNowUntil(String time) {
+    return 'Қазір $time дейін бос емес, броньға дейін босайды';
+  }
+
+  @override
+  String get onMaintenance => 'Қызмет көрсетуде';
+
+  @override
+  String get pcUnavailable => 'Қолжетімсіз';
+
+  @override
+  String get pickFutureTime => 'Болашақ уақытты таңдаңыз';
+
+  @override
+  String get bookingHorizon => 'Бронь 14 күн алға ашық';
+
+  @override
+  String get tariffUnavailableAtTime => 'Бұл уақытқа тариф қолжетімсіз';
+
+  @override
+  String withDiscount(String percent) {
+    return '$percent жеңілдікпен';
+  }
 }

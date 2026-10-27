@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/api_client.dart';
 import '../../../core/env.dart';
+import 'availability.dart';
 import 'booking_models.dart';
 import 'models.dart';
 
@@ -20,6 +21,17 @@ class BookingApi {
   Future<List<Computer>> computersMap({required String branchId, required String datetime}) => apiCall(
         () => _dio.get('/computers/map', queryParameters: {'branch_id': branchId, 'datetime': datetime}),
         (d) => unwrapList(d, Computer.fromJson),
+      );
+
+  Future<Availability> availability({required String branchId, String? datetime, String? tariffId, String? zoneId}) => apiCall(
+        () => _dio.get('/reservations/availability', queryParameters: {
+          'branch_id': branchId,
+          'datetime': ?datetime,
+          'timezone': Env.timezone,
+          'tariff_id': ?tariffId,
+          'zone_id': ?zoneId,
+        }),
+        (d) => Availability.fromJson((d as Map).cast<String, dynamic>()),
       );
 
   Future<String?> serverDatetime() => apiCall(() => _dio.get('/healthcheck'), (d) => d is Map ? d['datetime']?.toString() : null);

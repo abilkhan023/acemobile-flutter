@@ -1266,4 +1266,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get walletsPerClubHint =>
       'Money in one club can\'t be spent in another. Top up the wallet of the club where you play.';
+
+  @override
+  String busyUntil(String time) {
+    return 'Busy until $time';
+  }
+
+  @override
+  String freeOnlyUntil(String time) {
+    return 'Free only until $time — pick a shorter tariff';
+  }
+
+  @override
+  String busyNowUntil(String time) {
+    return 'In use until $time, will be free for your booking';
+  }
+
+  @override
+  String get onMaintenance => 'Under maintenance';
+
+  @override
+  String get pcUnavailable => 'Unavailable';
+
+  @override
+  String get pickFutureTime => 'Pick a time in the future';
+
+  @override
+  String get bookingHorizon => 'Booking is open 14 days ahead';
+
+  @override
+  String get tariffUnavailableAtTime => 'Tariff is not available at this time';
+
+  @override
+  String withDiscount(String percent) {
+    return 'with $percent discount';
+  }
 }

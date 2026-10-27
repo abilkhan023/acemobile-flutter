@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/api/api_exception.dart';
 import '../../../core/toast/toast.dart';
@@ -11,6 +12,7 @@ import '../../../shared/widgets/ace_button.dart';
 import '../../../shared/widgets/ace_icon.dart';
 import '../../../shared/widgets/ace_sheet.dart';
 import '../../balance/providers/balance_providers.dart';
+import '../../clubs/data/availability.dart';
 import '../../clubs/data/booking_api.dart';
 import '../../clubs/data/booking_models.dart';
 import '../../clubs/widgets/tariffs_list.dart';
@@ -35,6 +37,8 @@ Future<Booking?> showBookingSheet(
   required String? gameCenterId,
   required String? centerName,
   required DateTime? serverTime,
+  int? maxDuration,
+  String? branchId,
 }) {
   return showAceSheet<Booking>(
     context,
@@ -47,6 +51,8 @@ Future<Booking?> showBookingSheet(
       gameCenterId: gameCenterId,
       centerName: centerName,
       serverTime: serverTime,
+      maxDuration: maxDuration,
+      branchId: branchId,
     ),
   );
 }
@@ -60,6 +66,8 @@ class _BookingSheetBody extends ConsumerStatefulWidget {
     required this.gameCenterId,
     required this.centerName,
     required this.serverTime,
+    this.maxDuration,
+    this.branchId,
   });
 
   final Zone zone;
@@ -69,6 +77,8 @@ class _BookingSheetBody extends ConsumerStatefulWidget {
   final String? gameCenterId;
   final String? centerName;
   final DateTime? serverTime;
+  final int? maxDuration;
+  final String? branchId;
 
   @override
   ConsumerState<_BookingSheetBody> createState() => _BookingSheetBodyState();
@@ -78,8 +88,13 @@ class _BookingSheetBodyState extends ConsumerState<_BookingSheetBody> {
   late final Future<List<Tariff>> _tariffs = ref
       .read(bookingApiProvider)
       .availableTariffs(zoneId: widget.zone.id, datetime: '${widget.bookDateTime}:00')
-      .then((list) => [for (final t in list) if ((t.duration ?? 0) > 60) t]);
+      .then((list) => [
+            for (final t in list)
+              if ((t.duration ?? 0) > 60 && (widget.maxDuration == null || (t.duration ?? 0) <= widget.maxDuration!)) t,
+          ]);
   String? _tariffId;
+  Availability? _quote;
+  bool _quoting = false;
   final List<String> _friendIds = [];
   bool _booking = false;
 
@@ -97,6 +112,50 @@ class _BookingSheetBodyState extends ConsumerState<_BookingSheetBody> {
       }
       _friendIds.add(id);
     });
+  }
+
+  Future<void> _selectTariff(String? id) async {
+    setState(() {
+      _tariffId = id;
+      _quote = null;
+    });
+    final branchId = widget.branchId ?? widget.zone.branchId;
+    if (id == null || branchId == null) return;
+    setState(() => _quoting = true);
+    try {
+      final quote = await ref.read(bookingApiProvider).availability(
+            branchId: branchId,
+            datetime: '${widget.bookDateTime}:00',
+            tariffId: id,
+            zoneId: widget.zone.id,
+          );
+      if (mounted && _tariffId == id) setState(() => _quote = quote);
+    } catch (_) {}
+    if (mounted && _tariffId == id) setState(() => _quoting = false);
+  }
+
+  String? _blockReason(AppLocalizations l) {
+    final q = _quote;
+    if (q == null) return null;
+    if (q.reason != null) return l.tariffUnavailableAtTime;
+    String hm(DateTime t) => DateFormat('HH:mm').format(t);
+    if (_room) {
+      final room = q.rooms[widget.zone.id];
+      return room?.fits == false ? l.roomBookedByOthers : null;
+    }
+    for (final c in widget.computers) {
+      final a = q.computers[c.id];
+      if (a == null || a.fits != false) continue;
+      final name = c.name ?? '';
+      return switch (a.reason) {
+        'next_booking_at' when a.freeUntil != null => '$name: ${l.freeOnlyUntil(hm(a.freeUntil!))}',
+        'occupied_at_start' when a.freeFrom != null => '$name: ${l.busyUntil(hm(a.freeFrom!))}',
+        'phone_hold' => '$name: ${l.staffHold}',
+        'technical_work' => '$name: ${l.onMaintenance}',
+        _ => '$name: ${l.pcUnavailable}',
+      };
+    }
+    return null;
   }
 
   Future<void> _submit() async {
@@ -141,7 +200,10 @@ class _BookingSheetBodyState extends ConsumerState<_BookingSheetBody> {
       builder: (context, snap) {
         final tariffs = snap.data ?? const <Tariff>[];
         final tariff = tariffs.where((t) => t.id == _tariffId).firstOrNull;
-        final total = tariff == null ? 0 : (_room ? tariff.priceNum : tariff.priceNum * _seats);
+        final unit = _quote?.unitFinal ?? tariff?.priceNum ?? 0;
+        final total = tariff == null ? 0 : (_room ? unit : unit * _seats);
+        final block = _blockReason(l);
+        final discount = _quote?.discountPercent ?? 0;
         final friendNames = {for (final f in friends.value ?? const <UserRef>[]) f.id: f.username};
         final byCode = (_seats - _friendIds.length - 1).clamp(0, _seats);
         return Column(
@@ -159,7 +221,7 @@ class _BookingSheetBodyState extends ConsumerState<_BookingSheetBody> {
             else if (tariffs.isEmpty)
               Text(l.noTariffsAvailable, style: AceText.text)
             else
-              TariffsList(tariffs: tariffs, selected: _tariffId, serverTime: widget.serverTime, onSelect: (v) => setState(() => _tariffId = v)),
+              TariffsList(tariffs: tariffs, selected: _tariffId, serverTime: widget.serverTime, onSelect: _selectTariff),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 8,
@@ -217,18 +279,25 @@ class _BookingSheetBodyState extends ConsumerState<_BookingSheetBody> {
                 children: [
                   Expanded(
                     child: Text(
-                      _room ? l.totalRoom(formatMoney(tariff.price)) : l.totalLine(formatMoney(tariff.price), '$_seats'),
+                      [
+                        _room ? l.totalRoom(formatMoney(unit)) : l.totalLine(formatMoney(unit), '$_seats'),
+                        if (discount > 0) l.withDiscount('${discount % 1 == 0 ? discount.toInt() : discount}%'),
+                      ].join(' · '),
                       style: AceText.text,
                     ),
                   ),
-                  Text(formatMoney(total), style: AceText.style(size: 18, weight: FontWeight.w700)),
+                  if (_quoting)
+                    const AceSpinner(color: AceColors.accent)
+                  else
+                    Text(formatMoney(total), style: AceText.style(size: 18, weight: FontWeight.w700)),
                 ],
               ),
+            if (block != null) Text(block, style: AceText.style(size: 14, weight: FontWeight.w600, color: AceColors.accent)),
             AceButton(
               label: tariff == null ? l.reserve : l.reserveFor(formatMoney(total)),
               style: AceButtonStyle.red,
               loading: _booking,
-              disabled: tariff == null,
+              disabled: tariff == null || _quoting || block != null,
               onPressed: _submit,
             ),
           ],

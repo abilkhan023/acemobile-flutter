@@ -2397,6 +2397,60 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Деньги одного клуба нельзя потратить в другом. Пополняйте кошелёк клуба, где играете.'**
   String get walletsPerClubHint;
+
+  /// No description provided for @busyUntil.
+  ///
+  /// In ru, this message translates to:
+  /// **'Занят до {time}'**
+  String busyUntil(String time);
+
+  /// No description provided for @freeOnlyUntil.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свободен только до {time} — выберите тариф короче'**
+  String freeOnlyUntil(String time);
+
+  /// No description provided for @busyNowUntil.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сейчас занят до {time}, к брони освободится'**
+  String busyNowUntil(String time);
+
+  /// No description provided for @onMaintenance.
+  ///
+  /// In ru, this message translates to:
+  /// **'На обслуживании'**
+  String get onMaintenance;
+
+  /// No description provided for @pcUnavailable.
+  ///
+  /// In ru, this message translates to:
+  /// **'Недоступен'**
+  String get pcUnavailable;
+
+  /// No description provided for @pickFutureTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выберите время в будущем'**
+  String get pickFutureTime;
+
+  /// No description provided for @bookingHorizon.
+  ///
+  /// In ru, this message translates to:
+  /// **'Бронь открыта на 14 дней вперёд'**
+  String get bookingHorizon;
+
+  /// No description provided for @tariffUnavailableAtTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тариф недоступен на это время'**
+  String get tariffUnavailableAtTime;
+
+  /// No description provided for @withDiscount.
+  ///
+  /// In ru, this message translates to:
+  /// **'со скидкой {percent}'**
+  String withDiscount(String percent);
 }
 
 class _AppLocalizationsDelegate

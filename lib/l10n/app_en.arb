@@ -670,5 +670,42 @@
   "pcInUse": "Someone is already playing on this PC",
   "membersSaved": "Members saved",
   "walletsPerClub": "Each club has its own wallet",
-  "walletsPerClubHint": "Money in one club can't be spent in another. Top up the wallet of the club where you play."
+  "walletsPerClubHint": "Money in one club can't be spent in another. Top up the wallet of the club where you play.",
+  "busyUntil": "Busy until {time}",
+  "@busyUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "freeOnlyUntil": "Free only until {time} — pick a shorter tariff",
+  "@freeOnlyUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "busyNowUntil": "In use until {time}, will be free for your booking",
+  "@busyNowUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "onMaintenance": "Under maintenance",
+  "pcUnavailable": "Unavailable",
+  "pickFutureTime": "Pick a time in the future",
+  "bookingHorizon": "Booking is open 14 days ahead",
+  "tariffUnavailableAtTime": "Tariff is not available at this time",
+  "withDiscount": "with {percent} discount",
+  "@withDiscount": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  }
 }

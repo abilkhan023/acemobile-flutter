@@ -19,6 +19,7 @@ import '../../../shared/widgets/ace_sheet.dart';
 import '../../../shared/widgets/link_menu.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../balance/providers/balance_providers.dart';
+import '../data/availability.dart';
 import '../data/booking_api.dart';
 import '../data/booking_models.dart';
 import '../data/clubs_api.dart';
@@ -52,6 +53,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   List<Zone> _zones = const [];
   final Map<String, List<Computer>> _computersByZone = {};
   DateTime? _serverTime;
+  Map<String, PcAvailability> _avail = const {};
+  String? _availReason;
 
   _When _when = _When.now;
   String? _bookDay;
@@ -131,7 +134,23 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
 
   Future<void> _applyDatetimeStates() async {
     if (!mounted) return;
-    final states = await ref.read(bookingApiProvider).computersMap(branchId: widget.branchId, datetime: '$_book:00');
+    final api = ref.read(bookingApiProvider);
+    try {
+      final av = await api.availability(branchId: widget.branchId, datetime: _when == _When.now ? null : '$_book:00');
+      _avail = av.computers;
+      _availReason = av.reason;
+      for (final entry in _computersByZone.entries) {
+        _computersByZone[entry.key] = [
+          for (final c in entry.value)
+            if (av.computers[c.id] case final a?) c.copyWith(state: a.stateAt ?? c.state, staffHold: a.staffHold) else c,
+        ];
+      }
+      return;
+    } catch (_) {
+      _avail = const {};
+      _availReason = null;
+    }
+    final states = await api.computersMap(branchId: widget.branchId, datetime: '$_book:00');
     final byId = {for (final c in states) c.id: c};
     for (final entry in _computersByZone.entries) {
       _computersByZone[entry.key] = [
@@ -145,18 +164,11 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     if (!mounted) return;
     _selected.clear();
     _selectedZoneId = null;
-    final booking = ref.read(bookingApiProvider);
     try {
-      if (_book.isEmpty) {
-        await Future.wait(_zones.map((z) async => _computersByZone[z.id] = await booking.computersByZone(z.id)));
-      } else {
-        await _applyDatetimeStates();
-      }
+      await _applyDatetimeStates();
     } catch (_) {}
     if (mounted) setState(() {});
   }
-
-
 
   String _reserveDateLabel() {
     final dt = DateTime.tryParse(_book);
@@ -186,11 +198,45 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   void _onPcTap(Computer c) {
     final l = context.l10n;
     final toast = ref.read(toastProvider.notifier);
-    if (!ComputerMap.isSelectable(c)) {
-      toast.warning(c.staffHold == true ? l.staffHold : l.pcReservedShort);
+    final a = _avail[c.id];
+    final locale = Localizations.localeOf(context).toString();
+    String hm(DateTime t) => dateKey(t) == _bookDay ? DateFormat('HH:mm').format(t) : DateFormat('d MMM, HH:mm', locale).format(t);
+    if (_availReason case final reason?) {
+      toast.warning(_topReasonText(reason, l));
       return;
     }
+    if (!ComputerMap.isSelectable(c)) {
+      final freeFrom = a?.freeFrom;
+      toast.warning(
+        c.staffHold == true
+            ? l.staffHold
+            : ComputerMap.stateOf(c) == 'TECHNICAL_WORK'
+                ? l.onMaintenance
+                : freeFrom != null
+                    ? l.busyUntil(hm(freeFrom))
+                    : l.pcReservedShort,
+      );
+      return;
+    }
+    if (a?.reason == 'not_bookable') {
+      toast.warning(l.pcUnavailable);
+      return;
+    }
+    if (!_selected.contains(c.id) && a != null) {
+      if (a.freeUntil != null && (a.maxDuration ?? 0) < 12 * 3600) {
+        toast.warning(l.freeOnlyUntil(hm(a.freeUntil!)));
+      } else if (_when != _When.now && a.sessionUntil != null && a.sessionUntil!.isAfter(DateTime.now())) {
+        toast.success(l.busyNowUntil(hm(a.sessionUntil!)));
+      }
+    }
     final zone = _zones.where((z) => z.id == c.zoneId).firstOrNull;
+    if (zone != null && zone.isRoom && _selectedZoneId != zone.id) {
+      final busy = _allComputers.any((x) => x.zoneId == zone.id && (!ComputerMap.isSelectable(x) || _avail[x.id]?.reason == 'room_partially_busy'));
+      if (busy) {
+        toast.warning(l.roomBookedByOthers);
+        return;
+      }
+    }
     setState(() {
       if (zone != null && zone.isRoom) {
         final roomPcs = [for (final x in _allComputers) if (x.zoneId == zone.id) x.id];
@@ -214,6 +260,21 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     });
   }
 
+  String _topReasonText(String reason, AppLocalizations l) => switch (reason) {
+        'in_the_past' => l.pickFutureTime,
+        'beyond_horizon' => l.bookingHorizon,
+        _ => l.tariffUnavailableAtTime,
+      };
+
+  int? get _maxDuration {
+    int? min;
+    for (final id in _selected) {
+      final m = _avail[id]?.maxDuration;
+      if (m != null && (min == null || m < min)) min = m;
+    }
+    return min;
+  }
+
   Future<void> _openBooking() async {
     final zone = _selectedZone;
     final computers = _selectedComputers;
@@ -229,6 +290,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       gameCenterId: _center?.id,
       centerName: _center?.name,
       serverTime: _serverTime,
+      maxDuration: _maxDuration,
+      branchId: widget.branchId,
     );
     _sheetOpen = false;
     if (!mounted || booking == null) return;
@@ -279,6 +342,11 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
               label: '${l.apply} · ${_dayLabel(day, l)}, $time',
               style: AceButtonStyle.red,
               onPressed: () {
+                final picked = DateTime.tryParse('${day}T$time');
+                if (picked != null && picked.isBefore(_now.subtract(const Duration(minutes: 1)))) {
+                  ref.read(toastProvider.notifier).warning(l.pickFutureTime);
+                  return;
+                }
                 Navigator.of(ctx).pop();
                 setState(() {
                   _when = w;

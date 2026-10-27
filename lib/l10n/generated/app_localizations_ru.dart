@@ -1269,4 +1269,39 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get walletsPerClubHint =>
       'Деньги одного клуба нельзя потратить в другом. Пополняйте кошелёк клуба, где играете.';
+
+  @override
+  String busyUntil(String time) {
+    return 'Занят до $time';
+  }
+
+  @override
+  String freeOnlyUntil(String time) {
+    return 'Свободен только до $time — выберите тариф короче';
+  }
+
+  @override
+  String busyNowUntil(String time) {
+    return 'Сейчас занят до $time, к брони освободится';
+  }
+
+  @override
+  String get onMaintenance => 'На обслуживании';
+
+  @override
+  String get pcUnavailable => 'Недоступен';
+
+  @override
+  String get pickFutureTime => 'Выберите время в будущем';
+
+  @override
+  String get bookingHorizon => 'Бронь открыта на 14 дней вперёд';
+
+  @override
+  String get tariffUnavailableAtTime => 'Тариф недоступен на это время';
+
+  @override
+  String withDiscount(String percent) {
+    return 'со скидкой $percent';
+  }
 }

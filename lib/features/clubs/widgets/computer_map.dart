@@ -184,8 +184,7 @@ class _ZoneFrame extends StatelessWidget {
         ),
         if (name.isNotEmpty)
           Positioned(
-            left: 10,
-            right: 10,
+            left: 6,
             top: -_labelGap,
             child: Align(
               alignment: Alignment.centerLeft,
@@ -198,13 +197,10 @@ class _ZoneFrame extends StatelessWidget {
                   spacing: 4,
                   children: [
                     if (room) const Icon(Icons.meeting_room_outlined, size: 11, color: AceColors.accent),
-                    Flexible(
-                      child: Text(
-                        name.toUpperCase(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AceText.style(size: 10, weight: FontWeight.w700, color: _zoneLabel, height: 1).copyWith(letterSpacing: 1.2),
-                      ),
+                    Text(
+                      name.toUpperCase(),
+                      maxLines: 1,
+                      style: AceText.style(size: 10, weight: FontWeight.w700, color: _zoneLabel, height: 1).copyWith(letterSpacing: 1.2),
                     ),
                   ],
                 ),

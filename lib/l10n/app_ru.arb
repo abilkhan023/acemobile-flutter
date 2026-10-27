@@ -670,5 +670,42 @@
   "pcInUse": "На этом ПК уже играют",
   "membersSaved": "Участники сохранены",
   "walletsPerClub": "У каждого клуба свой кошелёк",
-  "walletsPerClubHint": "Деньги одного клуба нельзя потратить в другом. Пополняйте кошелёк клуба, где играете."
+  "walletsPerClubHint": "Деньги одного клуба нельзя потратить в другом. Пополняйте кошелёк клуба, где играете.",
+  "busyUntil": "Занят до {time}",
+  "@busyUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "freeOnlyUntil": "Свободен только до {time} — выберите тариф короче",
+  "@freeOnlyUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "busyNowUntil": "Сейчас занят до {time}, к брони освободится",
+  "@busyNowUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "onMaintenance": "На обслуживании",
+  "pcUnavailable": "Недоступен",
+  "pickFutureTime": "Выберите время в будущем",
+  "bookingHorizon": "Бронь открыта на 14 дней вперёд",
+  "tariffUnavailableAtTime": "Тариф недоступен на это время",
+  "withDiscount": "со скидкой {percent}",
+  "@withDiscount": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  }
 }
