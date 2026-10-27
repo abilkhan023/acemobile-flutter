@@ -529,7 +529,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                       children: [
                         if (wallet != null)
                           _chip(
-                            onTap: () => context.push('/balance/${wallet.key}'),
+                            onTap: () => openTopUp(ref, context, wallet),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               spacing: 4,

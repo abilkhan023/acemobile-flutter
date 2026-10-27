@@ -106,11 +106,15 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
     final own = [...?wallets?.where((w) => w.club != null)]
       ..sort((a, b) => (num.tryParse(b.balance.toString()) ?? 0).compareTo(num.tryParse(a.balance.toString()) ?? 0));
     final q = _query.trim().toLowerCase();
-    final visible = [
+    final matched = [
       for (final c in cards)
         if ((_filter != _Filter.favorites || favorites.contains(c.branch.id)) &&
             (q.isEmpty || c.title.toLowerCase().contains(q) || c.text.toLowerCase().contains(q)))
           c,
+    ];
+    final visible = [
+      ...matched.where((c) => favorites.contains(c.branch.id)),
+      ...matched.where((c) => !favorites.contains(c.branch.id)),
     ];
     return Stack(
       children: [
@@ -203,6 +207,7 @@ class _ClubsFeedScreenState extends ConsumerState<ClubsFeedScreen> {
               for (final c in visible)
                 _ClubFeedCard(
                   card: c,
+                  favorite: favorites.contains(c.branch.id),
                   hideWhenBusy: _filter == _Filter.free,
                   onTap: () => context.push('/clubs/${c.branch.id}'),
                 ),
@@ -282,9 +287,10 @@ class _FilterChip extends StatelessWidget {
 }
 
 class _ClubFeedCard extends ConsumerWidget {
-  const _ClubFeedCard({required this.card, required this.hideWhenBusy, required this.onTap});
+  const _ClubFeedCard({required this.card, required this.favorite, required this.hideWhenBusy, required this.onTap});
 
   final BranchCard card;
+  final bool favorite;
   final bool hideWhenBusy;
   final VoidCallback onTap;
 
@@ -354,7 +360,15 @@ class _ClubFeedCard extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text(card.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 17, weight: FontWeight.w600))),
+                      Expanded(
+                        child: Row(
+                          spacing: 6,
+                          children: [
+                            Flexible(child: Text(card.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 17, weight: FontWeight.w600))),
+                            if (favorite) const Icon(Icons.favorite, size: 16, color: AceColors.accent),
+                          ],
+                        ),
+                      ),
                       const AceIcon('star-filled', size: 12, color: AceColors.accent),
                       const SizedBox(width: 4),
                       Text('8.8', style: AceText.text),

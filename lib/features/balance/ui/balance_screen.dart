@@ -39,13 +39,7 @@ class BalanceScreen extends ConsumerWidget {
                   Text(l.walletsPerClubHint, style: AceText.text),
                 ],
               ),
-              Row(
-                spacing: 10,
-                children: [
-                  Expanded(child: AceButton(label: l.topUp, style: AceButtonStyle.red, padding: const EdgeInsets.symmetric(vertical: 13), fontSize: 14, onPressed: () => context.push('/balance_replenishment'))),
-                  Expanded(child: AceButton(label: l.currentBalance, style: AceButtonStyle.gray, padding: const EdgeInsets.symmetric(vertical: 13), fontSize: 14, onPressed: () => context.push('/current_balance'))),
-                ],
-              ),
+              AceButton(label: l.topUp, style: AceButtonStyle.red, padding: const EdgeInsets.symmetric(vertical: 13), fontSize: 14, onPressed: () => context.push('/balance_replenishment')),
             ],
           ),
         ),
@@ -56,7 +50,7 @@ class BalanceScreen extends ConsumerWidget {
             subtitle: w.club?.address ?? '',
             logo: w.club?.logo,
             trailing: Text(formatMoney(w.ownBalance), style: AceText.style(size: 16, weight: FontWeight.w700)),
-            onTap: () => context.push('/balance/${w.key}'),
+            onTap: () => openTopUp(ref, context, w),
           ),
       ],
     );

@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../auth/providers/auth_provider.dart';
 import '../../clubs/data/booking_api.dart';
@@ -62,6 +64,15 @@ class BalanceSelection extends Notifier<ClubWallet?> {
   void toggle(ClubWallet club) => state = state?.club.id == club.club.id ? null : club;
 
   void clear() => state = null;
+
+  void select(ClubWallet club) => state = club;
+}
+
+void openTopUp(WidgetRef ref, BuildContext context, WalletClub w) {
+  final club = w.club;
+  if (club == null) return;
+  ref.read(balanceSelectionProvider.notifier).select(ClubWallet(club: club, wallet: w.wallet));
+  context.push('/balance/form');
 }
 
 final balanceSelectionProvider = NotifierProvider<BalanceSelection, ClubWallet?>(BalanceSelection.new);
