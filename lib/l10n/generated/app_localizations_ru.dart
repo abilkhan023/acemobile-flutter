@@ -1304,4 +1304,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String withDiscount(String percent) {
     return 'со скидкой $percent';
   }
+
+  @override
+  String get whenToPlay => 'Когда играть?';
+
+  @override
+  String statesAt(String time) {
+    return 'Статусы компьютеров на $time';
+  }
+
+  @override
+  String get nowBusy => 'Сейчас занят';
 }

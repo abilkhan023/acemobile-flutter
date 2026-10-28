@@ -707,5 +707,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "whenToPlay": "Когда играть?",
+  "statesAt": "Статусы компьютеров на {time}",
+  "@statesAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nowBusy": "Сейчас занят"
 }

@@ -62,6 +62,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   final Set<String> _selected = {};
   String? _selectedZoneId;
   bool _sheetOpen = false;
+  bool _mapLoading = false;
+  int _statesRequest = 0;
 
   final _reviewController = TextEditingController();
 
@@ -111,7 +113,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       try {
         if (_book.isNotEmpty) await _applyDatetimeStates();
       } catch (_) {}
-    } catch (_) {} finally {
+    } catch (_) {
+    } finally {
       if (mounted) {
         setState(() {
           _loading = false;
@@ -135,8 +138,10 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   Future<void> _applyDatetimeStates() async {
     if (!mounted) return;
     final api = ref.read(bookingApiProvider);
+    final request = ++_statesRequest;
     try {
       final av = await api.availability(branchId: widget.branchId, datetime: _when == _When.now ? null : '$_book:00');
+      if (request != _statesRequest) return;
       _avail = av.computers;
       _availReason = av.reason;
       for (final entry in _computersByZone.entries) {
@@ -151,6 +156,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       _availReason = null;
     }
     final states = await api.computersMap(branchId: widget.branchId, datetime: '$_book:00');
+    if (request != _statesRequest) return;
     final byId = {for (final c in states) c.id: c};
     for (final entry in _computersByZone.entries) {
       _computersByZone[entry.key] = [
@@ -162,12 +168,16 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
 
   Future<void> _refreshComputers() async {
     if (!mounted) return;
-    _selected.clear();
-    _selectedZoneId = null;
+    final request = _statesRequest + 1;
+    setState(() {
+      _selected.clear();
+      _selectedZoneId = null;
+      _mapLoading = true;
+    });
     try {
       await _applyDatetimeStates();
     } catch (_) {}
-    if (mounted) setState(() {});
+    if (mounted && request == _statesRequest) setState(() => _mapLoading = false);
   }
 
   String _reserveDateLabel() {
@@ -177,23 +187,19 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     return context.l10n.dateAtTime(DateFormat('d MMM yyyy', locale).format(dt), DateFormat('H:mm').format(dt));
   }
 
-
   Future<void> _share() async {
     final l = context.l10n;
     try {
-      await SharePlus.instance.share(
-        ShareParams(
-          text: '${l.shareClubsText} https://${Env.deepLinkHost}/clubs/${widget.branchId}',
-          subject: l.shareTitle,
-          title: l.shareTitle,
-        ),
-      );
+      await SharePlus.instance.share(ShareParams(text: '${l.shareClubsText} https://${Env.deepLinkHost}/clubs/${widget.branchId}', subject: l.shareTitle, title: l.shareTitle));
     } catch (_) {}
   }
 
   Zone? get _selectedZone => _zones.where((z) => z.id == _selectedZoneId).firstOrNull;
 
-  List<Computer> get _selectedComputers => [for (final c in _allComputers) if (_selected.contains(c.id)) c];
+  List<Computer> get _selectedComputers => [
+    for (final c in _allComputers)
+      if (_selected.contains(c.id)) c,
+  ];
 
   void _onPcTap(Computer c) {
     final l = context.l10n;
@@ -205,16 +211,19 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       toast.warning(_topReasonText(reason, l));
       return;
     }
+    if (_mapLoading) return;
     if (!ComputerMap.isSelectable(c)) {
-      final freeFrom = a?.freeFrom;
+      final freeFrom = a?.freeFrom ?? a?.sessionUntil;
       toast.warning(
         c.staffHold == true
             ? l.staffHold
             : ComputerMap.stateOf(c) == 'TECHNICAL_WORK'
-                ? l.onMaintenance
-                : freeFrom != null
-                    ? l.busyUntil(hm(freeFrom))
-                    : l.pcReservedShort,
+            ? l.onMaintenance
+            : freeFrom != null
+            ? l.busyUntil(hm(freeFrom))
+            : ComputerMap.stateOf(c) == 'IN_USE'
+            ? l.nowBusy
+            : l.pcReservedShort,
       );
       return;
     }
@@ -225,7 +234,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     if (!_selected.contains(c.id) && a != null) {
       if (a.freeUntil != null && (a.maxDuration ?? 0) < 12 * 3600) {
         toast.warning(l.freeOnlyUntil(hm(a.freeUntil!)));
-      } else if (_when != _When.now && a.sessionUntil != null && a.sessionUntil!.isAfter(DateTime.now())) {
+      } else if (_when != _When.now && a.sessionUntil != null && a.sessionUntil!.isAfter(DateTime.now()) && !a.sessionUntil!.isAfter(DateTime.tryParse(_book) ?? DateTime.now())) {
         toast.success(l.busyNowUntil(hm(a.sessionUntil!)));
       }
     }
@@ -239,7 +248,10 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     }
     setState(() {
       if (zone != null && zone.isRoom) {
-        final roomPcs = [for (final x in _allComputers) if (x.zoneId == zone.id) x.id];
+        final roomPcs = [
+          for (final x in _allComputers)
+            if (x.zoneId == zone.id) x.id,
+        ];
         if (_selectedZoneId == zone.id) {
           _selected.clear();
           _selectedZoneId = null;
@@ -261,10 +273,10 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   }
 
   String _topReasonText(String reason, AppLocalizations l) => switch (reason) {
-        'in_the_past' => l.pickFutureTime,
-        'beyond_horizon' => l.bookingHorizon,
-        _ => l.tariffUnavailableAtTime,
-      };
+    'in_the_past' => l.pickFutureTime,
+    'beyond_horizon' => l.bookingHorizon,
+    _ => l.tariffUnavailableAtTime,
+  };
 
   int? get _maxDuration {
     int? min;
@@ -444,11 +456,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                         children: [
                           SizedBox(
                             width: 56,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              spacing: 4,
-                              children: [for (var i = 0; i < stars; i++) const AceIcon('star-filled', size: 8)],
-                            ),
+                            child: Row(mainAxisAlignment: MainAxisAlignment.end, spacing: 4, children: [for (var i = 0; i < stars; i++) const AceIcon('star-filled', size: 8)]),
                           ),
                           Expanded(
                             child: Stack(
@@ -519,8 +527,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     );
   }
 
-  Widget _chip({required Widget child, VoidCallback? onTap}) =>
-      AcePill(height: 30, padding: const EdgeInsets.symmetric(horizontal: 12), onTap: onTap, child: child);
+  Widget _chip({required Widget child, VoidCallback? onTap}) => AcePill(height: 30, padding: const EdgeInsets.symmetric(horizontal: 12), onTap: onTap, child: child);
 
   @override
   Widget build(BuildContext context) {
@@ -528,9 +535,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final branch = _branch;
     final center = _center;
     final fav = ref.watch(favoritesProvider).contains(widget.branchId);
-    final wallet = ref.watch(authProvider).isAuth
-        ? ref.watch(walletClubsProvider).value?.where((w) => w.club != null && w.wallet.gameCenterId == branch?.gameCenterId).firstOrNull
-        : null;
+    final wallet = ref.watch(authProvider).isAuth ? ref.watch(walletClubsProvider).value?.where((w) => w.club != null && w.wallet.gameCenterId == branch?.gameCenterId).firstOrNull : null;
     final free = _allComputers.where(ComputerMap.isFree).length;
     return Column(
       children: [
@@ -543,7 +548,12 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    Text(center?.name ?? branch?.name ?? '', maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.style(size: 16, weight: FontWeight.w600)),
+                    Text(
+                      center?.name ?? branch?.name ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AceText.style(size: 16, weight: FontWeight.w600),
+                    ),
                     if ((branch?.address ?? '').isNotEmpty) Text(branch!.address!, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.caption),
                   ],
                 ),
@@ -568,29 +578,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                   gap: 14,
                   padding: const EdgeInsets.fromLTRB(20, 6, 20, 24),
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      clipBehavior: Clip.none,
-                      child: Row(
-                        spacing: 8,
-                        children: [
-                          for (final w in _When.values)
-                            AcePill(
-                              height: 34,
-                              color: _when == w ? AceColors.accent : AceColors.cardAlt,
-                              onTap: () => _setWhen(w),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 6,
-                                children: [
-                                  if (w == _When.custom) AceIcon('calendar-alt', size: 15, color: _when == w ? AceColors.white : AceColors.muted),
-                                  Text(_whenLabel(w, l), style: AceText.style(size: 13, weight: FontWeight.w600, color: _when == w ? AceColors.white : AceColors.text)),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
@@ -618,10 +605,43 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                             ],
                           ),
                         ),
-                        _chip(onTap: _openTariffInfo, child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600))),
-                        _chip(onTap: _openMaps, child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600))),
+                        _chip(
+                          onTap: _openTariffInfo,
+                          child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600)),
+                        ),
+                        _chip(
+                          onTap: _openMaps,
+                          child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600)),
+                        ),
                         _chip(onTap: _share, child: const AceIcon('arrow-up-from-bracket', size: 14)),
                       ],
+                    ),
+                    Text(l.whenToPlay, style: AceText.title),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      clipBehavior: Clip.none,
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          for (final w in _When.values)
+                            AcePill(
+                              height: 34,
+                              color: _when == w ? AceColors.accent : AceColors.cardAlt,
+                              onTap: () => _setWhen(w),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 6,
+                                children: [
+                                  if (w == _When.custom) AceIcon('calendar-alt', size: 15, color: _when == w ? AceColors.white : AceColors.muted),
+                                  Text(
+                                    _whenLabel(w, l),
+                                    style: AceText.style(size: 13, weight: FontWeight.w600, color: _when == w ? AceColors.white : AceColors.text),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                     Row(
                       children: [
@@ -631,20 +651,43 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                             height: 28,
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             color: const Color(0x2434C77B),
-                            child: Text(l.freeCount('$free'), style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success)),
+                            child: Text(
+                              l.freeCount('$free'),
+                              style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success),
+                            ),
                           ),
                       ],
                     ),
+                    if (_when != _When.now && _bookDay != null)
+                      Text(
+                        l.statesAt('${_dayLabel(_bookDay!, l).toLowerCase()}, $_bookTime'),
+                        style: AceText.style(size: 14, weight: FontWeight.w600, color: AceColors.accent),
+                      ),
                     Text(l.choosePcsHint, style: AceText.text),
                     if (_loadingBooking)
-                      const Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Center(child: AceSpinner(color: AceColors.accent)))
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 40),
+                        child: Center(child: AceSpinner(color: AceColors.accent)),
+                      )
                     else
-                      ComputerMap(
-                        size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
-                        zones: _zones,
-                        computers: _allComputers,
-                        selected: _selected,
-                        onTap: _onPcTap,
+                      Stack(
+                        children: [
+                          AnimatedOpacity(
+                            opacity: _mapLoading ? 0.3 : 1,
+                            duration: const Duration(milliseconds: 150),
+                            child: ComputerMap(
+                              size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
+                              zones: _zones,
+                              computers: _allComputers,
+                              selected: _selected,
+                              onTap: _onPcTap,
+                            ),
+                          ),
+                          if (_mapLoading)
+                            const Positioned.fill(
+                              child: Center(child: AceSpinner(color: AceColors.accent)),
+                            ),
+                        ],
                       ),
                   ],
                 ),
@@ -679,14 +722,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
                 ],
               ),
             ),
-            AceButton(
-              label: l.continueAction,
-              style: AceButtonStyle.red,
-              expand: false,
-              padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
-              fontSize: 14,
-              onPressed: _openBooking,
-            ),
+            AceButton(label: l.continueAction, style: AceButtonStyle.red, expand: false, padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20), fontSize: 14, onPressed: _openBooking),
           ],
         ),
       ),

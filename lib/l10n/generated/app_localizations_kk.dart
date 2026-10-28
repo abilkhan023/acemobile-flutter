@@ -1291,4 +1291,15 @@ class AppLocalizationsKk extends AppLocalizations {
   String withDiscount(String percent) {
     return '$percent жеңілдікпен';
   }
+
+  @override
+  String get whenToPlay => 'Қашан ойнайсыз?';
+
+  @override
+  String statesAt(String time) {
+    return 'Компьютерлер күйі: $time';
+  }
+
+  @override
+  String get nowBusy => 'Қазір бос емес';
 }

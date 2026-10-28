@@ -1301,4 +1301,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String withDiscount(String percent) {
     return 'with $percent discount';
   }
+
+  @override
+  String get whenToPlay => 'When do you play?';
+
+  @override
+  String statesAt(String time) {
+    return 'Computer status for $time';
+  }
+
+  @override
+  String get nowBusy => 'Busy right now';
 }

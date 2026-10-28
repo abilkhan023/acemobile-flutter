@@ -2451,6 +2451,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'со скидкой {percent}'**
   String withDiscount(String percent);
+
+  /// No description provided for @whenToPlay.
+  ///
+  /// In ru, this message translates to:
+  /// **'Когда играть?'**
+  String get whenToPlay;
+
+  /// No description provided for @statesAt.
+  ///
+  /// In ru, this message translates to:
+  /// **'Статусы компьютеров на {time}'**
+  String statesAt(String time);
+
+  /// No description provided for @nowBusy.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сейчас занят'**
+  String get nowBusy;
 }
 
 class _AppLocalizationsDelegate

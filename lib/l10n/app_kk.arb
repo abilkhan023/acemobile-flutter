@@ -707,5 +707,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "whenToPlay": "Қашан ойнайсыз?",
+  "statesAt": "Компьютерлер күйі: {time}",
+  "@statesAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nowBusy": "Қазір бос емес"
 }

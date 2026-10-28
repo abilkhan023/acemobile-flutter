@@ -33,7 +33,7 @@ class ComputerMap extends StatelessWidget {
 
   static bool isSelectable(Computer c) {
     final s = stateOf(c);
-    return s != 'RESERVED' && s != 'TECHNICAL_WORK' && c.staffHold != true;
+    return s != 'RESERVED' && s != 'IN_USE' && s != 'TECHNICAL_WORK' && c.staffHold != true;
   }
 
   static bool countsInCapacity(Computer c) => stateOf(c) != 'TECHNICAL_WORK';

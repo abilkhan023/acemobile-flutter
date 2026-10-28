@@ -707,5 +707,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "whenToPlay": "When do you play?",
+  "statesAt": "Computer status for {time}",
+  "@statesAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nowBusy": "Busy right now"
 }
