@@ -34,8 +34,6 @@ import '../widgets/date_strip.dart';
 import '../widgets/review_card.dart';
 import '../widgets/time_wheel.dart';
 
-enum _When { now, today, tomorrow, custom }
-
 class ClubScreen extends ConsumerStatefulWidget {
   const ClubScreen({super.key, required this.branchId});
 
@@ -56,7 +54,8 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   Map<String, PcAvailability> _avail = const {};
   String? _availReason;
 
-  _When _when = _When.now;
+  bool _onMap = false;
+  bool _isNow = true;
   String? _bookDay;
   String _bookTime = '12:00';
   final Set<String> _selected = {};
@@ -110,9 +109,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       _bookTime = DateFormat('HH:mm').format(now);
       _bookDay = dateKey(now);
       await Future.wait(_zones.map((z) async => _computersByZone[z.id] = await booking.computersByZone(z.id)));
-      try {
-        if (_book.isNotEmpty) await _applyDatetimeStates();
-      } catch (_) {}
     } catch (_) {
     } finally {
       if (mounted) {
@@ -140,7 +136,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final api = ref.read(bookingApiProvider);
     final request = ++_statesRequest;
     try {
-      final av = await api.availability(branchId: widget.branchId, datetime: _when == _When.now ? null : '$_book:00');
+      final av = await api.availability(branchId: widget.branchId, datetime: _isNow ? null : '$_book:00');
       if (request != _statesRequest) return;
       _avail = av.computers;
       _availReason = av.reason;
@@ -234,7 +230,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     if (!_selected.contains(c.id) && a != null) {
       if (a.freeUntil != null && (a.maxDuration ?? 0) < 12 * 3600) {
         toast.warning(l.freeOnlyUntil(hm(a.freeUntil!)));
-      } else if (_when != _When.now && a.sessionUntil != null && a.sessionUntil!.isAfter(DateTime.now()) && !a.sessionUntil!.isAfter(DateTime.tryParse(_book) ?? DateTime.now())) {
+      } else if (!_isNow && a.sessionUntil != null && a.sessionUntil!.isAfter(DateTime.now()) && !a.sessionUntil!.isAfter(DateTime.tryParse(_book) ?? DateTime.now())) {
         toast.success(l.busyNowUntil(hm(a.sessionUntil!)));
       }
     }
@@ -314,64 +310,37 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
 
   DateTime get _now => DateTime.now();
 
-  DateTime _roundUp(DateTime t) => DateTime(t.year, t.month, t.day, t.hour + 1);
 
-  void _setWhen(_When w) {
-    if (w == _When.now) {
-      final now = _now;
-      setState(() {
-        _when = w;
-        _bookDay = dateKey(now);
-        _bookTime = DateFormat('HH:mm').format(now);
-      });
-      _refreshComputers();
-      return;
-    }
+  void _resetWhen() {
     final now = _now;
-    final day = switch (w) {
-      _When.today => dateKey(now),
-      _When.tomorrow => dateKey(now.add(const Duration(days: 1))),
-      _ => _when == _When.custom ? (_bookDay ?? dateKey(now)) : dateKey(now),
-    };
-    _openDateSheet(w, day, w == _When.custom);
+    _bookDay = dateKey(now);
+    _bookTime = DateFormat('HH:mm').format(now);
   }
 
-  void _openDateSheet(_When w, String initialDay, bool pickDay) {
-    final l = context.l10n;
-    var day = initialDay;
-    var time = _when == w ? _bookTime : DateFormat('HH:00').format(_roundUp(_now));
-    showAceSheet(
-      context,
-      title: pickDay ? l.selectDate : (w == _When.today ? l.today : l.tomorrow),
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setSheet) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 20,
-          children: [
-            if (pickDay) DateStrip(value: day, onChanged: (v) => setSheet(() => day = v)),
-            TimeWheel(value: time, onChanged: (v) => setSheet(() => time = v)),
-            AceButton(
-              label: '${l.apply} · ${_dayLabel(day, l)}, $time',
-              style: AceButtonStyle.red,
-              onPressed: () {
-                final picked = DateTime.tryParse('${day}T$time');
-                if (picked != null && picked.isBefore(_now.subtract(const Duration(minutes: 1)))) {
-                  ref.read(toastProvider.notifier).warning(l.pickFutureTime);
-                  return;
-                }
-                Navigator.of(ctx).pop();
-                setState(() {
-                  _when = w;
-                  _bookDay = day;
-                  _bookTime = time;
-                });
-                _refreshComputers();
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+  void _continue() {
+    final picked = DateTime.tryParse(_book);
+    final now = _now;
+    if (picked == null) return;
+    if (picked.isBefore(now.subtract(const Duration(minutes: 1)))) {
+      if (dateKey(picked) == dateKey(now) && now.difference(picked) < const Duration(minutes: 15)) {
+        _resetWhen();
+      } else {
+        ref.read(toastProvider.notifier).warning(context.l10n.pickFutureTime);
+        return;
+      }
+    }
+    final start = DateTime.tryParse(_book)!;
+    _isNow = start.difference(now).inMinutes.abs() < 2;
+    setState(() => _onMap = true);
+    _refreshComputers();
+  }
+
+  void _backToTime() {
+    setState(() {
+      _onMap = false;
+      _selected.clear();
+      _selectedZoneId = null;
+    });
   }
 
   String _dayLabel(String day, AppLocalizations l) {
@@ -379,16 +348,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     if (day == dateKey(now)) return l.today;
     if (day == dateKey(now.add(const Duration(days: 1)))) return l.tomorrow;
     return DateFormat('d MMM', Localizations.localeOf(context).toString()).format(parseDateKey(day));
-  }
-
-  String _whenLabel(_When w, AppLocalizations l) {
-    final selected = _when == w;
-    return switch (w) {
-      _When.now => l.now,
-      _When.today => selected ? '${l.today}, $_bookTime' : l.today,
-      _When.tomorrow => selected ? '${l.tomorrow}, $_bookTime' : l.tomorrow,
-      _When.custom => selected && _bookDay != null ? '${_dayLabel(_bookDay!, l)}, $_bookTime' : l.pickDate,
-    };
   }
 
   void _openTariffInfo() {
@@ -537,14 +496,14 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     final fav = ref.watch(favoritesProvider).contains(widget.branchId);
     final wallet = ref.watch(authProvider).isAuth ? ref.watch(walletClubsProvider).value?.where((w) => w.club != null && w.wallet.gameCenterId == branch?.gameCenterId).firstOrNull : null;
     final free = _allComputers.where(ComputerMap.isFree).length;
-    return Column(
+    final page = Column(
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 6),
           child: Row(
             spacing: 12,
             children: [
-              AceCircleButton(icon: 'chevron-left', onTap: () => context.canPop() ? context.pop() : context.go('/')),
+              AceCircleButton(icon: 'chevron-left', onTap: () => _onMap ? _backToTime() : (context.canPop() ? context.pop() : context.go('/'))),
               Expanded(
                 child: Column(
                   children: [
@@ -574,125 +533,135 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
         Expanded(
           child: _loading
               ? const Center(child: AceSpinner(color: AceColors.accent))
-              : AcePage(
-                  gap: 14,
-                  padding: const EdgeInsets.fromLTRB(20, 6, 20, 24),
+              : _onMap
+              ? _mapStep(l, free)
+              : _timeStep(l, wallet),
+        ),
+        if (!_loading && !_onMap)
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
+              child: AceButton(label: l.continueAction, style: AceButtonStyle.red, onPressed: _loadingBooking ? null : _continue),
+            ),
+          ),
+        if (_onMap && _selected.isNotEmpty) _selectionBar(l),
+      ],
+    );
+    return PopScope(
+      canPop: !_onMap,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && _onMap) _backToTime();
+      },
+      child: page,
+    );
+  }
+
+  Widget _timeStep(AppLocalizations l, WalletClub? wallet) {
+    return AcePage(
+      gap: 16,
+      padding: const EdgeInsets.fromLTRB(20, 6, 20, 16),
+      children: [
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            if (wallet != null)
+              _chip(
+                onTap: () => openTopUp(ref, context, wallet),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 4,
                   children: [
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: [
-                        if (wallet != null)
-                          _chip(
-                            onTap: () => openTopUp(ref, context, wallet),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              spacing: 4,
-                              children: [
-                                const AceIcon('coin-vertical', size: 12, color: AceColors.accent),
-                                Text(formatMoney(wallet.ownBalance), style: AceText.style(size: 12, weight: FontWeight.w600)),
-                              ],
-                            ),
-                          ),
-                        _chip(
-                          onTap: _openReviews,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: [
-                              const AceIcon('star-filled', size: 12, color: AceColors.accent),
-                              Text('8.8', style: AceText.style(size: 12, weight: FontWeight.w600)),
-                            ],
-                          ),
-                        ),
-                        _chip(
-                          onTap: _openTariffInfo,
-                          child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600)),
-                        ),
-                        _chip(
-                          onTap: _openMaps,
-                          child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600)),
-                        ),
-                        _chip(onTap: _share, child: const AceIcon('arrow-up-from-bracket', size: 14)),
-                      ],
-                    ),
-                    Text(l.whenToPlay, style: AceText.title),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      clipBehavior: Clip.none,
-                      child: Row(
-                        spacing: 8,
-                        children: [
-                          for (final w in _When.values)
-                            AcePill(
-                              height: 34,
-                              color: _when == w ? AceColors.accent : AceColors.cardAlt,
-                              onTap: () => _setWhen(w),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 6,
-                                children: [
-                                  if (w == _When.custom) AceIcon('calendar-alt', size: 15, color: _when == w ? AceColors.white : AceColors.muted),
-                                  Text(
-                                    _whenLabel(w, l),
-                                    style: AceText.style(size: 13, weight: FontWeight.w600, color: _when == w ? AceColors.white : AceColors.text),
-                                  ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: Text(l.choosePcs, style: AceText.title)),
-                        if (!_loadingBooking)
-                          AcePill(
-                            height: 28,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            color: const Color(0x2434C77B),
-                            child: Text(
-                              l.freeCount('$free'),
-                              style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success),
-                            ),
-                          ),
-                      ],
-                    ),
-                    if (_when != _When.now && _bookDay != null)
-                      Text(
-                        l.statesAt('${_dayLabel(_bookDay!, l).toLowerCase()}, $_bookTime'),
-                        style: AceText.style(size: 14, weight: FontWeight.w600, color: AceColors.accent),
-                      ),
-                    Text(l.choosePcsHint, style: AceText.text),
-                    if (_loadingBooking)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 40),
-                        child: Center(child: AceSpinner(color: AceColors.accent)),
-                      )
-                    else
-                      Stack(
-                        children: [
-                          AnimatedOpacity(
-                            opacity: _mapLoading ? 0.3 : 1,
-                            duration: const Duration(milliseconds: 150),
-                            child: ComputerMap(
-                              size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
-                              zones: _zones,
-                              computers: _allComputers,
-                              selected: _selected,
-                              onTap: _onPcTap,
-                            ),
-                          ),
-                          if (_mapLoading)
-                            const Positioned.fill(
-                              child: Center(child: AceSpinner(color: AceColors.accent)),
-                            ),
-                        ],
-                      ),
+                    const AceIcon('coin-vertical', size: 12, color: AceColors.accent),
+                    Text(formatMoney(wallet.ownBalance), style: AceText.style(size: 12, weight: FontWeight.w600)),
                   ],
                 ),
+              ),
+            _chip(
+              onTap: _openReviews,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 4,
+                children: [
+                  const AceIcon('star-filled', size: 12, color: AceColors.accent),
+                  Text('8.8', style: AceText.style(size: 12, weight: FontWeight.w600)),
+                ],
+              ),
+            ),
+            _chip(
+              onTap: _openTariffInfo,
+              child: Text(l.fromPerHour, style: AceText.style(size: 12, weight: FontWeight.w600)),
+            ),
+            _chip(
+              onTap: _openMaps,
+              child: Text(l.openOnMap, style: AceText.style(size: 12, weight: FontWeight.w600)),
+            ),
+            _chip(onTap: _share, child: const AceIcon('arrow-up-from-bracket', size: 14)),
+          ],
         ),
-        if (_selected.isNotEmpty) _selectionBar(l),
+        Text(l.whenToPlay, style: AceText.title),
+        DateStrip(value: _bookDay, count: 7, expand: true, onChanged: (v) => setState(() => _bookDay = v)),
+        TimeWheel(value: _bookTime, onChanged: (v) => setState(() => _bookTime = v)),
+      ],
+    );
+  }
+
+  Widget _mapStep(AppLocalizations l, int free) {
+    final when = _isNow ? l.now : '${_dayLabel(_bookDay!, l)}, $_bookTime';
+    return AcePage(
+      gap: 14,
+      padding: const EdgeInsets.fromLTRB(20, 6, 20, 24),
+      children: [
+        Row(
+          spacing: 10,
+          children: [
+            Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _backToTime,
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    const AceIcon('calendar-alt', size: 18, color: AceColors.accent),
+                    Flexible(
+                      child: Text(when, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.title),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (!_mapLoading)
+              AcePill(
+                height: 28,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                color: const Color(0x2434C77B),
+                child: Text(
+                  l.freeCount('$free'),
+                  style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success),
+                ),
+              ),
+          ],
+        ),
+        Stack(
+          children: [
+            AnimatedOpacity(
+              opacity: _mapLoading ? 0.3 : 1,
+              duration: const Duration(milliseconds: 150),
+              child: ComputerMap(
+                size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
+                zones: _zones,
+                computers: _allComputers,
+                selected: _selected,
+                onTap: _onPcTap,
+              ),
+            ),
+            if (_mapLoading)
+              const Positioned.fill(
+                child: Center(child: AceSpinner(color: AceColors.accent)),
+              ),
+          ],
+        ),
       ],
     );
   }

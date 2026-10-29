@@ -13,12 +13,13 @@ DateTime parseDateKey(String v) {
 }
 
 class DateStrip extends StatefulWidget {
-  const DateStrip({super.key, required this.value, required this.onChanged, this.label, this.count = 14});
+  const DateStrip({super.key, required this.value, required this.onChanged, this.label, this.count = 14, this.expand = false});
 
   final String? value;
   final ValueChanged<String> onChanged;
   final String? label;
   final int count;
+  final bool expand;
 
   @override
   State<DateStrip> createState() => _DateStripState();
@@ -103,45 +104,54 @@ class _DateStripState extends State<DateStrip> {
               Text(_caption(l, locale), style: AceText.text),
             ],
           ),
-        SizedBox(
-          height: 76,
-          child: ListView.separated(
-            controller: _controller,
-            scrollDirection: Axis.horizontal,
-            clipBehavior: Clip.none,
-            itemCount: widget.count,
-            separatorBuilder: (_, _) => const SizedBox(width: _gap),
-            itemBuilder: (context, i) {
-              final day = _days[i];
-              final key = dateKey(day);
-              final active = key == widget.value;
-              final weekend = day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
-              final color = active ? AceColors.white : (weekend ? AceColors.accent : null);
-              return GestureDetector(
-                onTap: () => widget.onChanged(key),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: _itemWidth,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: active ? AceColors.accent : AceColors.card,
-                    borderRadius: BorderRadius.circular(AceRadius.input),
-                    boxShadow: active ? AceShadows.accent : null,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 4,
-                    children: [
-                      Text(DateFormat.E(locale).format(day).toLowerCase(), style: AceText.style(size: 12, weight: FontWeight.w500, color: color ?? AceColors.dim)),
-                      Text('${day.day}', style: AceText.style(size: 20, weight: FontWeight.w700, color: color ?? AceColors.white).copyWith(fontFeatures: const [FontFeature.tabularFigures()])),
-                    ],
-                  ),
-                ),
-              );
-            },
+        if (widget.expand)
+          SizedBox(
+            height: 64,
+            child: Row(spacing: 6, children: [for (final day in _days) Expanded(child: _day(day, locale, compact: true))]),
+          )
+        else
+          SizedBox(
+            height: 76,
+            child: ListView.separated(
+              controller: _controller,
+              scrollDirection: Axis.horizontal,
+              clipBehavior: Clip.none,
+              itemCount: widget.count,
+              separatorBuilder: (_, _) => const SizedBox(width: _gap),
+              itemBuilder: (context, i) => _day(_days[i], locale),
+            ),
           ),
-        ),
       ],
+    );
+  }
+
+  Widget _day(DateTime day, String locale, {bool compact = false}) {
+    final key = dateKey(day);
+    final active = key == widget.value;
+    final weekend = day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
+    final color = active ? AceColors.white : (weekend ? AceColors.accent : null);
+    return GestureDetector(
+      onTap: () => widget.onChanged(key),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: compact ? null : _itemWidth,
+        padding: EdgeInsets.symmetric(vertical: compact ? 8 : 10),
+        decoration: BoxDecoration(color: active ? AceColors.accent : AceColors.card, borderRadius: BorderRadius.circular(AceRadius.input), boxShadow: active ? AceShadows.accent : null),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 4,
+          children: [
+            Text(
+              DateFormat.E(locale).format(day).toLowerCase(),
+              style: AceText.style(size: 12, weight: FontWeight.w500, color: color ?? AceColors.dim),
+            ),
+            Text(
+              '${day.day}',
+              style: AceText.style(size: compact ? 18 : 20, weight: FontWeight.w700, color: color ?? AceColors.white).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
