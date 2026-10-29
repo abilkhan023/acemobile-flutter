@@ -2469,6 +2469,30 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Сейчас занят'**
   String get nowBusy;
+
+  /// No description provided for @pcBusyTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Компьютер {name} занят'**
+  String pcBusyTitle(String name);
+
+  /// No description provided for @busyFromTo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забронирован с {from} по {to}'**
+  String busyFromTo(String from, String to);
+
+  /// No description provided for @techWork.
+  ///
+  /// In ru, this message translates to:
+  /// **'На тех. работах'**
+  String get techWork;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In ru, this message translates to:
+  /// **'Понятно'**
+  String get gotIt;
 }
 
 class _AppLocalizationsDelegate

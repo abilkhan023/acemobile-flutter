@@ -717,5 +717,26 @@
       }
     }
   },
-  "nowBusy": "Қазір бос емес"
+  "nowBusy": "Қазір бос емес",
+  "pcBusyTitle": "{name} компьютері бос емес",
+  "@pcBusyTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "busyFromTo": "{from} – {to} аралығында брондалған",
+  "@busyFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "techWork": "Техникалық жұмыстар",
+  "gotIt": "Түсінікті"
 }

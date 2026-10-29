@@ -717,5 +717,26 @@
       }
     }
   },
-  "nowBusy": "Busy right now"
+  "nowBusy": "Busy right now",
+  "pcBusyTitle": "Computer {name} is busy",
+  "@pcBusyTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "busyFromTo": "Booked from {from} to {to}",
+  "@busyFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "techWork": "Under maintenance",
+  "gotIt": "Got it"
 }

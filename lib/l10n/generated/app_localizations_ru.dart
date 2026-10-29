@@ -1315,4 +1315,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nowBusy => 'Сейчас занят';
+
+  @override
+  String pcBusyTitle(String name) {
+    return 'Компьютер $name занят';
+  }
+
+  @override
+  String busyFromTo(String from, String to) {
+    return 'Забронирован с $from по $to';
+  }
+
+  @override
+  String get techWork => 'На тех. работах';
+
+  @override
+  String get gotIt => 'Понятно';
 }

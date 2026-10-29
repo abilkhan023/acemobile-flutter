@@ -11,8 +11,6 @@ const _tile = 46.0;
 const _freeBg = AceColors.cardAlt;
 const _busyBg = Color(0x24F93829);
 const _busyFg = Color(0xFFC9645B);
-const _soonBg = Color(0x26F2A33A);
-const _soonFg = Color(0xFFF2A33A);
 const _offBg = Color(0xFF1B181C);
 const _offFg = Color(0xFF4A454B);
 const _floorBg = Color(0xFF161417);
@@ -59,7 +57,6 @@ class ComputerMap extends StatelessWidget {
             runSpacing: 6,
             children: [
               _Legend(color: AceColors.white, bg: _freeBg, label: l.legendFree),
-              _Legend(color: _soonFg, bg: _soonBg, label: l.legendBusySoon),
               _Legend(color: _busyFg, bg: _busyBg, label: l.legendBusy),
               _Legend(color: _offFg, bg: _offBg, label: l.legendOff),
             ],
@@ -75,16 +72,9 @@ class ComputerMap extends StatelessWidget {
                 final grid = _MapGrid(layout: layout, zones: zones, selected: selected, onTap: onTap);
                 if (layout.cols * _pitch <= constraints.maxWidth) return Center(child: grid);
                 return ShaderMask(
-                  shaderCallback: (rect) => const LinearGradient(
-                    colors: [Colors.white, Colors.white, Colors.transparent],
-                    stops: [0, 0.92, 1],
-                  ).createShader(rect),
+                  shaderCallback: (rect) => const LinearGradient(colors: [Colors.white, Colors.white, Colors.transparent], stops: [0, 0.92, 1]).createShader(rect),
                   blendMode: BlendMode.dstIn,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(right: 24),
-                    child: grid,
-                  ),
+                  child: SingleChildScrollView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.only(right: 24), child: grid),
                 );
               },
             ),
@@ -107,7 +97,15 @@ class _Legend extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 6,
       children: [
-        Container(width: 10, height: 10, decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(3), border: Border.all(color: color, width: 1.5))),
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(color: color, width: 1.5),
+          ),
+        ),
         Text(label, style: AceText.caption),
       ],
     );
@@ -135,7 +133,9 @@ class _MapGrid extends StatelessWidget {
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(color: _floorBg, borderRadius: BorderRadius.circular(6)),
-                child: CustomPaint(painter: _FloorPainter(rows: layout.rows, cols: layout.cols)),
+                child: CustomPaint(
+                  painter: _FloorPainter(rows: layout.rows, cols: layout.cols),
+                ),
               ),
             ),
             for (final zone in layout.zones)
@@ -152,12 +152,7 @@ class _MapGrid extends StatelessWidget {
               Positioned(
                 left: int.parse(key.split('-')[1]) * _pitch + (_pitch - _tile) / 2,
                 top: int.parse(key.split('-')[0]) * _pitch + (_pitch - _tile) / 2,
-                child: _Pc(
-                  computer: computer,
-                  state: ComputerMap.stateOf(computer),
-                  selected: selected.contains(computer.id),
-                  onTap: () => onTap(computer),
-                ),
+                child: _Pc(computer: computer, state: ComputerMap.stateOf(computer), selected: selected.contains(computer.id), onTap: () => onTap(computer)),
               ),
           ],
         ),
@@ -179,7 +174,10 @@ class _ZoneFrame extends StatelessWidget {
       children: [
         Positioned.fill(
           child: DecoratedBox(
-            decoration: BoxDecoration(border: Border.all(color: _zoneLine, width: 2), borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(
+              border: Border.all(color: _zoneLine, width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
         if (name.isNotEmpty)
@@ -225,8 +223,7 @@ class _Pc extends StatelessWidget {
     final name = computer.name ?? '';
     final (bg, fg) = switch (computer.staffHold == true ? 'RESERVED' : state) {
       'FREE' => (_freeBg, AceColors.white),
-      'IN_USE' => (_busyBg, _busyFg),
-      'RESERVED' || 'TECHNICAL_WORK' => (_soonBg, _soonFg),
+      'IN_USE' || 'RESERVED' || 'TECHNICAL_WORK' => (_busyBg, _busyFg),
       _ => (_offBg, _offFg),
     };
     return GestureDetector(
@@ -236,11 +233,7 @@ class _Pc extends StatelessWidget {
         width: _tile,
         height: _tile,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? AceColors.accent : bg,
-          borderRadius: BorderRadius.circular(AceRadius.tile),
-          boxShadow: selected ? AceShadows.accent : null,
-        ),
+        decoration: BoxDecoration(color: selected ? AceColors.accent : bg, borderRadius: BorderRadius.circular(AceRadius.tile), boxShadow: selected ? AceShadows.accent : null),
         child: Text(
           name,
           maxLines: 1,

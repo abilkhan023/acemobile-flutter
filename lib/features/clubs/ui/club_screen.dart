@@ -209,18 +209,7 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     }
     if (_mapLoading) return;
     if (!ComputerMap.isSelectable(c)) {
-      final freeFrom = a?.freeFrom ?? a?.sessionUntil;
-      toast.warning(
-        c.staffHold == true
-            ? l.staffHold
-            : ComputerMap.stateOf(c) == 'TECHNICAL_WORK'
-            ? l.onMaintenance
-            : freeFrom != null
-            ? l.busyUntil(hm(freeFrom))
-            : ComputerMap.stateOf(c) == 'IN_USE'
-            ? l.nowBusy
-            : l.pcReservedShort,
-      );
+      _showBusy(c, a, hm);
       return;
     }
     if (a?.reason == 'not_bookable') {
@@ -268,6 +257,43 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
     });
   }
 
+  void _showBusy(Computer c, PcAvailability? a, String Function(DateTime) hm) {
+    final l = context.l10n;
+    final state = ComputerMap.stateOf(c);
+    final (icon, text) = switch (state) {
+      _ when c.staffHold == true => (Icons.phone_in_talk_outlined, l.staffHold),
+      'TECHNICAL_WORK' => (Icons.build_outlined, l.techWork),
+      'IN_USE' => (Icons.schedule, a?.sessionUntil != null ? l.busyUntil(hm(a!.sessionUntil!)) : l.nowBusy),
+      _ when a?.reservedFrom != null && a?.reservedTo != null => (Icons.event_busy_outlined, l.busyFromTo(hm(a!.reservedFrom!), hm(a.reservedTo!))),
+      _ when (a?.freeFrom ?? a?.reservedTo) != null => (Icons.event_busy_outlined, l.busyUntil(hm((a!.freeFrom ?? a.reservedTo)!))),
+      _ => (Icons.event_busy_outlined, l.pcReservedShort),
+    };
+    showAceSheet(
+      context,
+      title: l.pcBusyTitle(c.name ?? ''),
+      builder: (ctx) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 20,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(color: AceColors.cardAlt, borderRadius: BorderRadius.circular(AceRadius.input)),
+            child: Row(
+              spacing: 12,
+              children: [
+                Icon(icon, size: 24, color: AceColors.accent),
+                Expanded(
+                  child: Text(text, style: AceText.style(size: 16, weight: FontWeight.w600)),
+                ),
+              ],
+            ),
+          ),
+          AceButton(label: l.gotIt, style: AceButtonStyle.red, onPressed: () => Navigator.of(ctx).pop()),
+        ],
+      ),
+    );
+  }
+
   String _topReasonText(String reason, AppLocalizations l) => switch (reason) {
     'in_the_past' => l.pickFutureTime,
     'beyond_horizon' => l.bookingHorizon,
@@ -309,7 +335,6 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
   }
 
   DateTime get _now => DateTime.now();
-
 
   void _resetWhen() {
     final now = _now;

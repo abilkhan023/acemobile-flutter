@@ -1312,4 +1312,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nowBusy => 'Busy right now';
+
+  @override
+  String pcBusyTitle(String name) {
+    return 'Computer $name is busy';
+  }
+
+  @override
+  String busyFromTo(String from, String to) {
+    return 'Booked from $from to $to';
+  }
+
+  @override
+  String get techWork => 'Under maintenance';
+
+  @override
+  String get gotIt => 'Got it';
 }

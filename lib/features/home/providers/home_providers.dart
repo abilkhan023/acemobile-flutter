@@ -53,8 +53,11 @@ class ActivityNotifier extends AsyncNotifier<List<Reservation>> {
     final userId = ref.watch(authProvider.select((s) => s.isAuth ? s.user?.id : null));
     if (userId == null) return const [];
     final list = await ref.read(reservationsApiProvider).list(userId: userId, onlyIsActive: false);
-    final sorted = [...list]..sort((a, b) => (b.isActive == true ? 1 : 0) - (a.isActive == true ? 1 : 0));
-    return sorted;
+    final old = DateTime(1970);
+    return [...list]..sort((a, b) {
+        final byActive = (b.isActive == true ? 1 : 0) - (a.isActive == true ? 1 : 0);
+        return byActive != 0 ? byActive : (b.dateTimeParsed ?? old).compareTo(a.dateTimeParsed ?? old);
+      });
   }
 
   Future<void> cancel(String id) async {

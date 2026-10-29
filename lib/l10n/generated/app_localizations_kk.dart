@@ -1302,4 +1302,20 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get nowBusy => 'Қазір бос емес';
+
+  @override
+  String pcBusyTitle(String name) {
+    return '$name компьютері бос емес';
+  }
+
+  @override
+  String busyFromTo(String from, String to) {
+    return '$from – $to аралығында брондалған';
+  }
+
+  @override
+  String get techWork => 'Техникалық жұмыстар';
+
+  @override
+  String get gotIt => 'Түсінікті';
 }

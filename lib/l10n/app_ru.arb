@@ -717,5 +717,26 @@
       }
     }
   },
-  "nowBusy": "Сейчас занят"
+  "nowBusy": "Сейчас занят",
+  "pcBusyTitle": "Компьютер {name} занят",
+  "@pcBusyTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "busyFromTo": "Забронирован с {from} по {to}",
+  "@busyFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "techWork": "На тех. работах",
+  "gotIt": "Понятно"
 }
