@@ -738,5 +738,32 @@
     }
   },
   "techWork": "Техникалық жұмыстар",
-  "gotIt": "Түсінікті"
+  "gotIt": "Түсінікті",
+  "pcFreeOnlyUntil": "{name} ПК {time} дейін бос",
+  "@pcFreeOnlyUntil": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pcUnavailableNamed": "{name} ПК қолжетімсіз",
+  "@pcUnavailableNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roomBookedNamed": "{name} бөлмесі брондалған",
+  "@roomBookedNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

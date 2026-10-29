@@ -213,21 +213,19 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
       return;
     }
     if (a?.reason == 'not_bookable') {
-      toast.warning(l.pcUnavailable);
+      toast.warning(l.pcUnavailableNamed(c.name ?? ''));
       return;
     }
     if (!_selected.contains(c.id) && a != null) {
       if (a.freeUntil != null && (a.maxDuration ?? 0) < 12 * 3600) {
-        toast.warning(l.freeOnlyUntil(hm(a.freeUntil!)));
-      } else if (!_isNow && a.sessionUntil != null && a.sessionUntil!.isAfter(DateTime.now()) && !a.sessionUntil!.isAfter(DateTime.tryParse(_book) ?? DateTime.now())) {
-        toast.success(l.busyNowUntil(hm(a.sessionUntil!)));
+        toast.warning(l.pcFreeOnlyUntil(c.name ?? '', hm(a.freeUntil!)));
       }
     }
     final zone = _zones.where((z) => z.id == c.zoneId).firstOrNull;
     if (zone != null && zone.isRoom && _selectedZoneId != zone.id) {
       final busy = _allComputers.any((x) => x.zoneId == zone.id && (!ComputerMap.isSelectable(x) || _avail[x.id]?.reason == 'room_partially_busy'));
       if (busy) {
-        toast.warning(l.roomBookedByOthers);
+        toast.warning(l.roomBookedNamed(zone.name ?? ''));
         return;
       }
     }

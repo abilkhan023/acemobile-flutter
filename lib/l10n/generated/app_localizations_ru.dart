@@ -1331,4 +1331,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get gotIt => 'Понятно';
+
+  @override
+  String pcFreeOnlyUntil(String name, String time) {
+    return 'ПК $name свободен до $time';
+  }
+
+  @override
+  String pcUnavailableNamed(String name) {
+    return 'ПК $name недоступен';
+  }
+
+  @override
+  String roomBookedNamed(String name) {
+    return 'Комната $name забронирована';
+  }
 }

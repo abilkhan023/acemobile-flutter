@@ -738,5 +738,32 @@
     }
   },
   "techWork": "Under maintenance",
-  "gotIt": "Got it"
+  "gotIt": "Got it",
+  "pcFreeOnlyUntil": "PC {name} is free until {time}",
+  "@pcFreeOnlyUntil": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pcUnavailableNamed": "PC {name} is unavailable",
+  "@pcUnavailableNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roomBookedNamed": "Room {name} is booked",
+  "@roomBookedNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -1318,4 +1318,19 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get gotIt => 'Түсінікті';
+
+  @override
+  String pcFreeOnlyUntil(String name, String time) {
+    return '$name ПК $time дейін бос';
+  }
+
+  @override
+  String pcUnavailableNamed(String name) {
+    return '$name ПК қолжетімсіз';
+  }
+
+  @override
+  String roomBookedNamed(String name) {
+    return '$name бөлмесі брондалған';
+  }
 }

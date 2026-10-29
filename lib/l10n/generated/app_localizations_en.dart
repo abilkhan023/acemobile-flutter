@@ -1328,4 +1328,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gotIt => 'Got it';
+
+  @override
+  String pcFreeOnlyUntil(String name, String time) {
+    return 'PC $name is free until $time';
+  }
+
+  @override
+  String pcUnavailableNamed(String name) {
+    return 'PC $name is unavailable';
+  }
+
+  @override
+  String roomBookedNamed(String name) {
+    return 'Room $name is booked';
+  }
 }

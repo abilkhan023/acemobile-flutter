@@ -738,5 +738,32 @@
     }
   },
   "techWork": "На тех. работах",
-  "gotIt": "Понятно"
+  "gotIt": "Понятно",
+  "pcFreeOnlyUntil": "ПК {name} свободен до {time}",
+  "@pcFreeOnlyUntil": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pcUnavailableNamed": "ПК {name} недоступен",
+  "@pcUnavailableNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roomBookedNamed": "Комната {name} забронирована",
+  "@roomBookedNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

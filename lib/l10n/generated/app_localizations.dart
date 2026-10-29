@@ -2493,6 +2493,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Понятно'**
   String get gotIt;
+
+  /// No description provided for @pcFreeOnlyUntil.
+  ///
+  /// In ru, this message translates to:
+  /// **'ПК {name} свободен до {time}'**
+  String pcFreeOnlyUntil(String name, String time);
+
+  /// No description provided for @pcUnavailableNamed.
+  ///
+  /// In ru, this message translates to:
+  /// **'ПК {name} недоступен'**
+  String pcUnavailableNamed(String name);
+
+  /// No description provided for @roomBookedNamed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Комната {name} забронирована'**
+  String roomBookedNamed(String name);
 }
 
 class _AppLocalizationsDelegate
