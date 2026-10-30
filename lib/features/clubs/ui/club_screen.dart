@@ -632,60 +632,66 @@ class _ClubScreenState extends ConsumerState<ClubScreen> {
 
   Widget _mapStep(AppLocalizations l, int free) {
     final when = _isNow ? l.now : '${_dayLabel(_bookDay!, l)}, $_bookTime';
-    return AcePage(
-      gap: 14,
-      padding: const EdgeInsets.fromLTRB(20, 6, 20, 24),
-      children: [
-        Row(
-          spacing: 10,
-          children: [
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: _backToTime,
-                child: Row(
-                  spacing: 8,
-                  children: [
-                    const AceIcon('calendar-alt', size: 18, color: AceColors.accent),
-                    Flexible(
-                      child: Text(when, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.title),
-                    ),
-                  ],
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, 6, 20, _selected.isEmpty ? 12 + MediaQuery.paddingOf(context).bottom : 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 14,
+        children: [
+          Row(
+            spacing: 10,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: _backToTime,
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      const AceIcon('calendar-alt', size: 18, color: AceColors.accent),
+                      Flexible(
+                        child: Text(when, maxLines: 1, overflow: TextOverflow.ellipsis, style: AceText.title),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            if (!_mapLoading)
-              AcePill(
-                height: 28,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                color: const Color(0x2434C77B),
-                child: Text(
-                  l.freeCount('$free'),
-                  style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success),
+              if (!_mapLoading)
+                AcePill(
+                  height: 28,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  color: const Color(0x2434C77B),
+                  child: Text(
+                    l.freeCount('$free'),
+                    style: AceText.style(size: 12, weight: FontWeight.w600, color: AceColors.success),
+                  ),
                 ),
-              ),
-          ],
-        ),
-        Stack(
-          children: [
-            AnimatedOpacity(
-              opacity: _mapLoading ? 0.3 : 1,
-              duration: const Duration(milliseconds: 150),
-              child: ComputerMap(
-                size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
-                zones: _zones,
-                computers: _allComputers,
-                selected: _selected,
-                onTap: _onPcTap,
-              ),
+            ],
+          ),
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                AnimatedOpacity(
+                  opacity: _mapLoading ? 0.3 : 1,
+                  duration: const Duration(milliseconds: 150),
+                  child: ComputerMap(
+                    size: const MapSize(xLen: Env.defaultMapSize, yLen: Env.defaultMapSize),
+                    zones: _zones,
+                    computers: _allComputers,
+                    selected: _selected,
+                    onTap: _onPcTap,
+                  ),
+                ),
+                if (_mapLoading)
+                  const Positioned.fill(
+                    child: Center(child: AceSpinner(color: AceColors.accent)),
+                  ),
+              ],
             ),
-            if (_mapLoading)
-              const Positioned.fill(
-                child: Center(child: AceSpinner(color: AceColors.accent)),
-              ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 

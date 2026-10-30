@@ -67,18 +67,177 @@ class ComputerMap extends StatelessWidget {
               child: Text(l.noComputers, textAlign: TextAlign.center, style: AceText.text),
             )
           else
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final grid = _MapGrid(layout: layout, zones: zones, selected: selected, onTap: onTap);
-                if (layout.cols * _pitch <= constraints.maxWidth) return Center(child: grid);
-                return ShaderMask(
-                  shaderCallback: (rect) => const LinearGradient(colors: [Colors.white, Colors.white, Colors.transparent], stops: [0, 0.92, 1]).createShader(rect),
-                  blendMode: BlendMode.dstIn,
-                  child: SingleChildScrollView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.only(right: 24), child: grid),
-                );
-              },
+            Expanded(
+              child: _MapViewer(
+                layout: layout,
+                child: _MapGrid(layout: layout, zones: zones, selected: selected, onTap: onTap),
+              ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _MapViewer extends StatefulWidget {
+  const _MapViewer({required this.layout, required this.child});
+
+  final MapLayout layout;
+  final Widget child;
+
+  @override
+  State<_MapViewer> createState() => _MapViewerState();
+}
+
+class _MapViewerState extends State<_MapViewer> with SingleTickerProviderStateMixin {
+  static const _pad = 12.0;
+
+  final _controller = TransformationController();
+  late final _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 220));
+  Animation<Matrix4>? _tween;
+  Object? _fitKey;
+  Size _viewport = Size.zero;
+  double _start = 1;
+  double _fit = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _anim.addListener(() {
+      final t = _tween;
+      if (t != null) _controller.value = t.value;
+    });
+  }
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Size get _content => Size(widget.layout.cols * _pitch + _pad * 2, widget.layout.rows * _pitch + _labelGap + _pad * 2);
+
+  double get _minScale => _fit < _start ? _fit : _start;
+
+  double get _maxScale => _start * 1.6;
+
+  double get _scale => _controller.value.entry(0, 0);
+
+  double _axis(double offset, double view, double content) {
+    if (content <= view) return (view - content) / 2;
+    return offset.clamp(view - content, 0);
+  }
+
+  Matrix4 _place(double s, double tx, double ty) {
+    final c = _content;
+    return Matrix4.translationValues(_axis(tx, _viewport.width, c.width * s), _axis(ty, _viewport.height, c.height * s), 0)..multiply(Matrix4.diagonal3Values(s, s, 1));
+  }
+
+  EdgeInsets get _margin {
+    final c = _content;
+    final h = (_viewport.width - c.width * _minScale) / 2;
+    final v = (_viewport.height - c.height * _minScale) / 2;
+    return EdgeInsets.symmetric(horizontal: h > 0 ? h : 0, vertical: v > 0 ? v : 0);
+  }
+
+  void _animateTo(Matrix4 target) {
+    _tween = Matrix4Tween(begin: _controller.value, end: target).animate(CurvedAnimation(parent: _anim, curve: Curves.easeOutCubic));
+    _anim.forward(from: 0);
+  }
+
+  void _zoom(double factor) {
+    final next = (_scale * factor).clamp(_minScale, _maxScale);
+    final k = next / _scale;
+    final cx = _viewport.width / 2;
+    final cy = _viewport.height / 2;
+    final t = _controller.value.getTranslation();
+    _animateTo(_place(next, cx - (cx - t.x) * k, cy - (cy - t.y) * k));
+  }
+
+  void _refit(Size viewport) {
+    final c = _content;
+    _viewport = viewport;
+    final h = viewport.height / c.height;
+    final w = viewport.width / c.width;
+    _fit = w < h ? w : h;
+    _start = h < 1 ? h : 1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final viewport = constraints.biggest;
+        final key = (widget.layout.cols, widget.layout.rows, viewport.width.round());
+        if (key != _fitKey) {
+          final first = _fitKey == null;
+          _fitKey = key;
+          _refit(viewport);
+          if (first) {
+            _controller.value = _place(_start, 0, 0);
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) _controller.value = _place(_start, 0, 0);
+            });
+          }
+        } else {
+          _viewport = viewport;
+        }
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: InteractiveViewer(
+                  transformationController: _controller,
+                  constrained: false,
+                  minScale: _minScale,
+                  maxScale: _maxScale,
+                  boundaryMargin: _margin,
+                  onInteractionStart: (_) => _anim.stop(),
+                  child: Padding(padding: const EdgeInsets.all(_pad), child: widget.child),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 8,
+              bottom: 8,
+              child: Column(
+                spacing: 8,
+                children: [
+                  _ZoomButton(icon: Icons.add, onTap: () => _zoom(1.3)),
+                  _ZoomButton(icon: Icons.remove, onTap: () => _zoom(1 / 1.3)),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _ZoomButton extends StatelessWidget {
+  const _ZoomButton({required this.icon, required this.onTap});
+
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        width: 38,
+        height: 38,
+        decoration: BoxDecoration(
+          color: AceColors.cardAlt.withValues(alpha: 0.92),
+          shape: BoxShape.circle,
+          border: Border.all(color: _zoneLine),
+        ),
+        child: Icon(icon, size: 20, color: AceColors.white),
       ),
     );
   }
