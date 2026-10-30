@@ -765,5 +765,35 @@
         "type": "String"
       }
     }
+  },
+  "availableSum": "доступно {sum}",
+  "@availableSum": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "refundBy": "{wallet}: возврат {sum}",
+  "@refundBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "popUpRefundBy": "{wallet}: возврат пополнения {sum}",
+  "@popUpRefundBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
   }
 }

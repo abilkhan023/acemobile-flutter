@@ -82,7 +82,13 @@ class _BalanceIdScreenState extends ConsumerState<BalanceIdScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(w?.displayName ?? '', style: AceText.style(size: 18)),
-                  Text(formatMoney(w?.ownBalance ?? 0), style: AceText.style(size: 18)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(formatMoney(w?.ownBalance ?? 0), style: AceText.style(size: 18)),
+                      if (w != null && w.hasHold) Text(l.availableSum(formatMoney(w.wallet.spendable)), style: AceText.caption),
+                    ],
+                  ),
                 ],
               ),
             ),

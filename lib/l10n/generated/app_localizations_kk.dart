@@ -1333,4 +1333,19 @@ class AppLocalizationsKk extends AppLocalizations {
   String roomBookedNamed(String name) {
     return '$name бөлмесі брондалған';
   }
+
+  @override
+  String availableSum(String sum) {
+    return 'қолжетімді $sum';
+  }
+
+  @override
+  String refundBy(String wallet, String sum) {
+    return '$wallet: қайтару $sum';
+  }
+
+  @override
+  String popUpRefundBy(String wallet, String sum) {
+    return '$wallet: толтыруды қайтару $sum';
+  }
 }

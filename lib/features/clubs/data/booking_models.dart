@@ -104,6 +104,8 @@ abstract class Wallet with _$Wallet {
     String? id,
     Object? balance,
     Object? bonuses,
+    Object? held,
+    Object? available,
     @JsonKey(name: 'user_id') String? userId,
     @JsonKey(name: 'game_center_id') String? gameCenterId,
     @JsonKey(name: 'game_center') Object? gameCenter,

@@ -1346,4 +1346,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String roomBookedNamed(String name) {
     return 'Комната $name забронирована';
   }
+
+  @override
+  String availableSum(String sum) {
+    return 'доступно $sum';
+  }
+
+  @override
+  String refundBy(String wallet, String sum) {
+    return '$wallet: возврат $sum';
+  }
+
+  @override
+  String popUpRefundBy(String wallet, String sum) {
+    return '$wallet: возврат пополнения $sum';
+  }
 }

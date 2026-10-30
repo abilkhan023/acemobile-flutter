@@ -765,5 +765,35 @@
         "type": "String"
       }
     }
+  },
+  "availableSum": "available {sum}",
+  "@availableSum": {
+    "placeholders": {
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "refundBy": "{wallet}: refund {sum}",
+  "@refundBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
+  },
+  "popUpRefundBy": "{wallet}: top-up refund {sum}",
+  "@popUpRefundBy": {
+    "placeholders": {
+      "wallet": {
+        "type": "String"
+      },
+      "sum": {
+        "type": "String"
+      }
+    }
   }
 }

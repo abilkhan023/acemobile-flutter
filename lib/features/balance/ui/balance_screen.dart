@@ -49,7 +49,14 @@ class BalanceScreen extends ConsumerWidget {
             title: w.displayName,
             subtitle: w.club?.address ?? '',
             logo: w.club?.logo,
-            trailing: Text(formatMoney(w.ownBalance), style: AceText.style(size: 16, weight: FontWeight.w700)),
+            trailing: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(formatMoney(w.ownBalance), style: AceText.style(size: 16, weight: FontWeight.w700)),
+                if (w.hasHold) Text(l.availableSum(formatMoney(w.wallet.spendable)), style: AceText.caption),
+              ],
+            ),
             onTap: () => openTopUp(ref, context, w),
           ),
       ],

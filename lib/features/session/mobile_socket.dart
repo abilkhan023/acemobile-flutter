@@ -456,10 +456,15 @@ class MobileSocket extends Notifier<SocketState> with WidgetsBindingObserver {
     }
     final wallet = event['wallet_type']?.toString().toLowerCase() == 'bonuses' ? l.walletBonuses : l.walletBalance;
     final sum = formatMoney(event['sum']);
-    if (event['action'] == 'pop_up') {
-      _toast.success(l.topUpBy(wallet, sum));
-    } else {
-      _toast.warning(l.withdrawBy(wallet, sum));
+    switch (event['operation'] ?? event['action']) {
+      case 'pop_up':
+        _toast.success(l.topUpBy(wallet, sum));
+      case 'refund':
+        _toast.success(l.refundBy(wallet, sum));
+      case 'pop_up_refund':
+        _toast.warning(l.popUpRefundBy(wallet, sum));
+      default:
+        _toast.warning(l.withdrawBy(wallet, sum));
     }
   }
 

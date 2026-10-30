@@ -2511,6 +2511,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Комната {name} забронирована'**
   String roomBookedNamed(String name);
+
+  /// No description provided for @availableSum.
+  ///
+  /// In ru, this message translates to:
+  /// **'доступно {sum}'**
+  String availableSum(String sum);
+
+  /// No description provided for @refundBy.
+  ///
+  /// In ru, this message translates to:
+  /// **'{wallet}: возврат {sum}'**
+  String refundBy(String wallet, String sum);
+
+  /// No description provided for @popUpRefundBy.
+  ///
+  /// In ru, this message translates to:
+  /// **'{wallet}: возврат пополнения {sum}'**
+  String popUpRefundBy(String wallet, String sum);
 }
 
 class _AppLocalizationsDelegate

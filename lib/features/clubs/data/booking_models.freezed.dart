@@ -1786,7 +1786,7 @@ $TariffPropertyCopyWith<$Res>? get property {
 /// @nodoc
 mixin _$Wallet {
 
- String? get id; Object? get balance; Object? get bonuses;@JsonKey(name: 'user_id') String? get userId;@JsonKey(name: 'game_center_id') String? get gameCenterId;@JsonKey(name: 'game_center') Object? get gameCenter; String? get username;
+ String? get id; Object? get balance; Object? get bonuses; Object? get held; Object? get available;@JsonKey(name: 'user_id') String? get userId;@JsonKey(name: 'game_center_id') String? get gameCenterId;@JsonKey(name: 'game_center') Object? get gameCenter; String? get username;
 /// Create a copy of Wallet
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1800,20 +1800,20 @@ $WalletCopyWith<Wallet> get copyWith => _$WalletCopyWithImpl<Wallet>(this as Wal
 @override
 bool operator ==(Object other) {
   final _this = this as Wallet;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Wallet&&(identical(other.id, _this.id) || other.id == _this.id)&&const DeepCollectionEquality().equals(other.balance, _this.balance)&&const DeepCollectionEquality().equals(other.bonuses, _this.bonuses)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.gameCenterId, _this.gameCenterId) || other.gameCenterId == _this.gameCenterId)&&const DeepCollectionEquality().equals(other.gameCenter, _this.gameCenter)&&(identical(other.username, _this.username) || other.username == _this.username));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Wallet&&(identical(other.id, _this.id) || other.id == _this.id)&&const DeepCollectionEquality().equals(other.balance, _this.balance)&&const DeepCollectionEquality().equals(other.bonuses, _this.bonuses)&&const DeepCollectionEquality().equals(other.held, _this.held)&&const DeepCollectionEquality().equals(other.available, _this.available)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.gameCenterId, _this.gameCenterId) || other.gameCenterId == _this.gameCenterId)&&const DeepCollectionEquality().equals(other.gameCenter, _this.gameCenter)&&(identical(other.username, _this.username) || other.username == _this.username));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Wallet;
-  return Object.hash(runtimeType,_this.id,const DeepCollectionEquality().hash(_this.balance),const DeepCollectionEquality().hash(_this.bonuses),_this.userId,_this.gameCenterId,const DeepCollectionEquality().hash(_this.gameCenter),_this.username);
+  return Object.hash(runtimeType,_this.id,const DeepCollectionEquality().hash(_this.balance),const DeepCollectionEquality().hash(_this.bonuses),const DeepCollectionEquality().hash(_this.held),const DeepCollectionEquality().hash(_this.available),_this.userId,_this.gameCenterId,const DeepCollectionEquality().hash(_this.gameCenter),_this.username);
 }
 
 @override
 String toString() {
   final _this = this as Wallet;
-  return 'Wallet(id: ${_this.id}, balance: ${_this.balance}, bonuses: ${_this.bonuses}, userId: ${_this.userId}, gameCenterId: ${_this.gameCenterId}, gameCenter: ${_this.gameCenter}, username: ${_this.username})';
+  return 'Wallet(id: ${_this.id}, balance: ${_this.balance}, bonuses: ${_this.bonuses}, held: ${_this.held}, available: ${_this.available}, userId: ${_this.userId}, gameCenterId: ${_this.gameCenterId}, gameCenter: ${_this.gameCenter}, username: ${_this.username})';
 }
 
 
@@ -1824,7 +1824,7 @@ abstract mixin class $WalletCopyWith<$Res>  {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) _then) = _$WalletCopyWithImpl;
 @useResult
 $Res call({
- String? id, Object? balance, Object? bonuses,@JsonKey(name: 'user_id') String? userId,@JsonKey(name: 'game_center_id') String? gameCenterId,@JsonKey(name: 'game_center') Object? gameCenter, String? username
+ String? id, Object? balance, Object? bonuses, Object? held, Object? available,@JsonKey(name: 'user_id') String? userId,@JsonKey(name: 'game_center_id') String? gameCenterId,@JsonKey(name: 'game_center') Object? gameCenter, String? username
 });
 
 
@@ -1841,10 +1841,10 @@ class _$WalletCopyWithImpl<$Res>
 
 /// Create a copy of Wallet
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? balance = freezed,Object? bonuses = freezed,Object? userId = freezed,Object? gameCenterId = freezed,Object? gameCenter = freezed,Object? username = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? balance = freezed,Object? bonuses = freezed,Object? held = freezed,Object? available = freezed,Object? userId = freezed,Object? gameCenterId = freezed,Object? gameCenter = freezed,Object? username = freezed,}) {
   return _then(Wallet(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,balance: freezed == balance ? _self.balance : balance ,bonuses: freezed == bonuses ? _self.bonuses : bonuses ,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String?,balance: freezed == balance ? _self.balance : balance ,bonuses: freezed == bonuses ? _self.bonuses : bonuses ,held: freezed == held ? _self.held : held ,available: freezed == available ? _self.available : available ,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,gameCenterId: freezed == gameCenterId ? _self.gameCenterId : gameCenterId // ignore: cast_nullable_to_non_nullable
 as String?,gameCenter: freezed == gameCenter ? _self.gameCenter : gameCenter ,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -1932,10 +1932,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  Object? balance,  Object? bonuses, @JsonKey(name: 'user_id')  String? userId, @JsonKey(name: 'game_center_id')  String? gameCenterId, @JsonKey(name: 'game_center')  Object? gameCenter,  String? username)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  Object? balance,  Object? bonuses,  Object? held,  Object? available, @JsonKey(name: 'user_id')  String? userId, @JsonKey(name: 'game_center_id')  String? gameCenterId, @JsonKey(name: 'game_center')  Object? gameCenter,  String? username)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Wallet() when $default != null:
-return $default(_that.id,_that.balance,_that.bonuses,_that.userId,_that.gameCenterId,_that.gameCenter,_that.username);case _:
+return $default(_that.id,_that.balance,_that.bonuses,_that.held,_that.available,_that.userId,_that.gameCenterId,_that.gameCenter,_that.username);case _:
   return orElse();
 
 }
@@ -1953,10 +1953,10 @@ return $default(_that.id,_that.balance,_that.bonuses,_that.userId,_that.gameCent
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  Object? balance,  Object? bonuses, @JsonKey(name: 'user_id')  String? userId, @JsonKey(name: 'game_center_id')  String? gameCenterId, @JsonKey(name: 'game_center')  Object? gameCenter,  String? username)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  Object? balance,  Object? bonuses,  Object? held,  Object? available, @JsonKey(name: 'user_id')  String? userId, @JsonKey(name: 'game_center_id')  String? gameCenterId, @JsonKey(name: 'game_center')  Object? gameCenter,  String? username)  $default,) {final _that = this;
 switch (_that) {
 case _Wallet():
-return $default(_that.id,_that.balance,_that.bonuses,_that.userId,_that.gameCenterId,_that.gameCenter,_that.username);case _:
+return $default(_that.id,_that.balance,_that.bonuses,_that.held,_that.available,_that.userId,_that.gameCenterId,_that.gameCenter,_that.username);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1973,10 +1973,10 @@ return $default(_that.id,_that.balance,_that.bonuses,_that.userId,_that.gameCent
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  Object? balance,  Object? bonuses, @JsonKey(name: 'user_id')  String? userId, @JsonKey(name: 'game_center_id')  String? gameCenterId, @JsonKey(name: 'game_center')  Object? gameCenter,  String? username)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  Object? balance,  Object? bonuses,  Object? held,  Object? available, @JsonKey(name: 'user_id')  String? userId, @JsonKey(name: 'game_center_id')  String? gameCenterId, @JsonKey(name: 'game_center')  Object? gameCenter,  String? username)?  $default,) {final _that = this;
 switch (_that) {
 case _Wallet() when $default != null:
-return $default(_that.id,_that.balance,_that.bonuses,_that.userId,_that.gameCenterId,_that.gameCenter,_that.username);case _:
+return $default(_that.id,_that.balance,_that.bonuses,_that.held,_that.available,_that.userId,_that.gameCenterId,_that.gameCenter,_that.username);case _:
   return null;
 
 }
@@ -1988,12 +1988,14 @@ return $default(_that.id,_that.balance,_that.bonuses,_that.userId,_that.gameCent
 @JsonSerializable()
 
 class _Wallet implements Wallet {
-  const _Wallet({this.id, this.balance, this.bonuses, @JsonKey(name: 'user_id') this.userId, @JsonKey(name: 'game_center_id') this.gameCenterId, @JsonKey(name: 'game_center') this.gameCenter, this.username});
+  const _Wallet({this.id, this.balance, this.bonuses, this.held, this.available, @JsonKey(name: 'user_id') this.userId, @JsonKey(name: 'game_center_id') this.gameCenterId, @JsonKey(name: 'game_center') this.gameCenter, this.username});
   factory _Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 
 @override final  String? id;
 @override final  Object? balance;
 @override final  Object? bonuses;
+@override final  Object? held;
+@override final  Object? available;
 @override@JsonKey(name: 'user_id') final  String? userId;
 @override@JsonKey(name: 'game_center_id') final  String? gameCenterId;
 @override@JsonKey(name: 'game_center') final  Object? gameCenter;
@@ -2012,18 +2014,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Wallet&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.balance, balance)&&const DeepCollectionEquality().equals(other.bonuses, bonuses)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.gameCenterId, gameCenterId) || other.gameCenterId == gameCenterId)&&const DeepCollectionEquality().equals(other.gameCenter, gameCenter)&&(identical(other.username, username) || other.username == username));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Wallet&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.balance, balance)&&const DeepCollectionEquality().equals(other.bonuses, bonuses)&&const DeepCollectionEquality().equals(other.held, held)&&const DeepCollectionEquality().equals(other.available, available)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.gameCenterId, gameCenterId) || other.gameCenterId == gameCenterId)&&const DeepCollectionEquality().equals(other.gameCenter, gameCenter)&&(identical(other.username, username) || other.username == username));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,const DeepCollectionEquality().hash(balance),const DeepCollectionEquality().hash(bonuses),userId,gameCenterId,const DeepCollectionEquality().hash(gameCenter),username);
+    return Object.hash(runtimeType,id,const DeepCollectionEquality().hash(balance),const DeepCollectionEquality().hash(bonuses),const DeepCollectionEquality().hash(held),const DeepCollectionEquality().hash(available),userId,gameCenterId,const DeepCollectionEquality().hash(gameCenter),username);
 }
 
 @override
 String toString() {
-    return 'Wallet(id: $id, balance: $balance, bonuses: $bonuses, userId: $userId, gameCenterId: $gameCenterId, gameCenter: $gameCenter, username: $username)';
+    return 'Wallet(id: $id, balance: $balance, bonuses: $bonuses, held: $held, available: $available, userId: $userId, gameCenterId: $gameCenterId, gameCenter: $gameCenter, username: $username)';
 }
 
 
@@ -2034,7 +2036,7 @@ abstract mixin class _$WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
   factory _$WalletCopyWith(_Wallet value, $Res Function(_Wallet) _then) = __$WalletCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, Object? balance, Object? bonuses,@JsonKey(name: 'user_id') String? userId,@JsonKey(name: 'game_center_id') String? gameCenterId,@JsonKey(name: 'game_center') Object? gameCenter, String? username
+ String? id, Object? balance, Object? bonuses, Object? held, Object? available,@JsonKey(name: 'user_id') String? userId,@JsonKey(name: 'game_center_id') String? gameCenterId,@JsonKey(name: 'game_center') Object? gameCenter, String? username
 });
 
 
@@ -2051,10 +2053,10 @@ class __$WalletCopyWithImpl<$Res>
 
 /// Create a copy of Wallet
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? balance = freezed,Object? bonuses = freezed,Object? userId = freezed,Object? gameCenterId = freezed,Object? gameCenter = freezed,Object? username = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? balance = freezed,Object? bonuses = freezed,Object? held = freezed,Object? available = freezed,Object? userId = freezed,Object? gameCenterId = freezed,Object? gameCenter = freezed,Object? username = freezed,}) {
   return _then(_Wallet(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,balance: freezed == balance ? _self.balance : balance ,bonuses: freezed == bonuses ? _self.bonuses : bonuses ,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String?,balance: freezed == balance ? _self.balance : balance ,bonuses: freezed == bonuses ? _self.bonuses : bonuses ,held: freezed == held ? _self.held : held ,available: freezed == available ? _self.available : available ,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,gameCenterId: freezed == gameCenterId ? _self.gameCenterId : gameCenterId // ignore: cast_nullable_to_non_nullable
 as String?,gameCenter: freezed == gameCenter ? _self.gameCenter : gameCenter ,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,

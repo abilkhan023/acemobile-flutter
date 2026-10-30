@@ -273,7 +273,7 @@ class _BookingSheetBodyState extends ConsumerState<_BookingSheetBody> {
                 ],
               ),
             ),
-            if (wallet != null) Text(l.chargedFromClubBalance(widget.centerName ?? '', formatMoney(wallet.balance)), style: AceText.text),
+            if (wallet != null) Text(l.chargedFromClubBalance(widget.centerName ?? '', formatMoney(wallet.spendable)), style: AceText.text),
             if (tariff != null)
               Row(
                 children: [

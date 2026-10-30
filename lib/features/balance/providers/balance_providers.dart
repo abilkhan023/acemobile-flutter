@@ -27,8 +27,15 @@ class WalletClub {
   String get name => club?.name ?? '';
   String get displayName => club?.name ?? (wallet.gameCenter is String ? wallet.gameCenter! as String : '');
   Object get ownBalance => wallet.balance ?? 0;
+  bool get hasHold => wallet.hasHold;
   String get key => wallet.gameCenterId ?? wallet.id ?? '';
   Object get balance => club == null ? 0 : (wallet.balance ?? 0);
+}
+
+extension WalletHoldX on Wallet {
+  num get heldNum => num.tryParse('${held ?? ''}') ?? 0;
+  bool get hasHold => heldNum > 0 && available != null;
+  Object get spendable => hasHold ? available! : (balance ?? 0);
 }
 
 class ClubWallet {
